@@ -1,0 +1,21 @@
+{
+	"node": "n8n-nodes-pacto.pacto",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Sales", "Productivity", "AI"],
+	"subcategories": {
+		"AI": ["Tools"]
+	},
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://api-docs.pactosolucoes.com.br/"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://github.com/PedroHSGuimaraes/n8n-nodes-pacto#readme"
+			}
+		]
+	}
+}

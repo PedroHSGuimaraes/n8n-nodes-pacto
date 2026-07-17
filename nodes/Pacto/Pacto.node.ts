@@ -23,6 +23,17 @@ function hasValue(value: unknown): boolean {
 	return value !== undefined && value !== null && value !== '';
 }
 
+function formatDateValue(
+	field: PactoOperationDefinition['inputFields'][number],
+	value: unknown,
+): unknown {
+	if (field.type !== 'dateTime' || typeof value !== 'string') return value;
+	if (/yyyy\s*[-/]?mm\s*[-/]?dd/i.test(field.description ?? '')) {
+		return value.replace(/\D/g, '').slice(0, 8);
+	}
+	return value;
+}
+
 function setNestedValue(target: IDataObject, path: string[], value: unknown): void {
 	let current = target;
 	for (const segment of path.slice(0, -1)) {
@@ -75,7 +86,7 @@ function splitInputValues(
 	};
 
 	for (const field of operation.inputFields) {
-		const value = values[field.id];
+		const value = formatDateValue(field, values[field.id]);
 		const credentialHeader =
 			field.location === 'header' && CREDENTIAL_HEADERS.has(field.path[0].toLowerCase());
 		if (!credentialHeader && field.required && !hasValue(value)) {

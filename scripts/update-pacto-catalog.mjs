@@ -64,6 +64,10 @@ function mergeSchema(spec, schema) {
 
 function titleCase(value) {
 	const terms = {
+		dt: 'Data',
+		data: 'Data',
+		inicio: 'Início',
+		fim: 'Fim',
 		codigo: 'Código',
 		cnpj: 'CNPJ',
 		cpf: 'CPF',
@@ -82,12 +86,21 @@ function titleCase(value) {
 		.join(' ');
 }
 
-function mapperFieldType(schema) {
+function isDateField(schema, name = '', description = '') {
+	return (
+		schema.format === 'date' ||
+		schema.format === 'date-time' ||
+		/(^|[_-])(dt|data|date)([_-]|$)/i.test(name) ||
+		/\bdata\b|\bdate\b|yyyy\s*[-/]?mm\s*[-/]?dd/i.test(description)
+	);
+}
+
+function mapperFieldType(schema, name, description) {
 	if (schema.enum?.length) return 'options';
 	if (schema.type === 'boolean') return 'boolean';
 	if (schema.type === 'integer' || schema.type === 'number') return 'number';
 	if (schema.type === 'array') return 'array';
-	if (schema.format === 'date' || schema.format === 'date-time') return 'dateTime';
+	if (isDateField(schema, name, description)) return 'dateTime';
 	return 'string';
 }
 
@@ -120,7 +133,7 @@ function getBodyFields(spec, schema, parent = [], required = false, depth = 0) {
 				path: propertyPath,
 				displayName: propertyPath.map(titleCase).join(' — '),
 				required: isRequired,
-				type: mapperFieldType(propertySchema),
+				type: mapperFieldType(propertySchema, name, propertySchema.description),
 				options: mapperOptions(propertySchema),
 				description: plainText(propertySchema.description),
 				defaultValue: primitiveDefault(propertySchema.example ?? propertySchema.default),
@@ -138,7 +151,7 @@ function getInputFields(spec, parameters, requestBody) {
 			path: [parameter.name],
 			displayName: titleCase(parameter.name),
 			required: parameter.required,
-			type: mapperFieldType(schema),
+			type: mapperFieldType(schema, parameter.name, parameter.description),
 			options: mapperOptions(schema),
 			description: parameter.description,
 			defaultValue: primitiveDefault(parameter.example ?? schema.example ?? schema.default),

@@ -45,6 +45,109 @@ function schemaType(spec, schema) {
 	return resolved.type ?? (resolved.properties ? 'object' : undefined);
 }
 
+function mergeSchema(spec, schema) {
+	const resolved = resolveReference(spec, schema) ?? {};
+	if (!resolved.allOf?.length) return resolved;
+	return resolved.allOf.reduce(
+		(merged, part) => {
+			const next = mergeSchema(spec, part);
+			return {
+				...merged,
+				...next,
+				properties: { ...(merged.properties ?? {}), ...(next.properties ?? {}) },
+				required: [...new Set([...(merged.required ?? []), ...(next.required ?? [])])],
+			};
+		},
+		{ ...resolved, allOf: undefined },
+	);
+}
+
+function titleCase(value) {
+	const terms = {
+		codigo: 'Código',
+		cnpj: 'CNPJ',
+		cpf: 'CPF',
+		email: 'E-mail',
+		id: 'ID',
+		matricula: 'Matrícula',
+		telefone: 'Telefone',
+		url: 'URL',
+	};
+	return value
+		.replace(/([a-z])([A-Z])/g, '$1 $2')
+		.replace(/[_-]+/g, ' ')
+		.split(' ')
+		.filter(Boolean)
+		.map((word) => terms[word.toLowerCase()] ?? `${word[0].toUpperCase()}${word.slice(1)}`)
+		.join(' ');
+}
+
+function mapperFieldType(schema) {
+	if (schema.enum?.length) return 'options';
+	if (schema.type === 'boolean') return 'boolean';
+	if (schema.type === 'integer' || schema.type === 'number') return 'number';
+	if (schema.type === 'array') return 'array';
+	if (schema.format === 'date' || schema.format === 'date-time') return 'dateTime';
+	return 'string';
+}
+
+function mapperOptions(schema) {
+	if (!schema.enum?.length) return undefined;
+	return schema.enum.map((value) => ({ name: titleCase(String(value)), value }));
+}
+
+function primitiveDefault(value) {
+	return ['string', 'number', 'boolean'].includes(typeof value) || value === null
+		? value
+		: undefined;
+}
+
+function getBodyFields(spec, schema, parent = [], required = false, depth = 0) {
+	const resolved = mergeSchema(spec, schema);
+	if (depth > 4 || !resolved.properties) return [];
+	const requiredProperties = new Set(resolved.required ?? []);
+	return Object.entries(resolved.properties).flatMap(([name, property]) => {
+		const propertySchema = mergeSchema(spec, property);
+		const propertyPath = [...parent, name];
+		const isRequired = required || requiredProperties.has(name);
+		if (propertySchema.properties) {
+			return getBodyFields(spec, propertySchema, propertyPath, isRequired, depth + 1);
+		}
+		return [
+			{
+				id: `body__${propertyPath.join('__')}`,
+				location: 'body',
+				path: propertyPath,
+				displayName: propertyPath.map(titleCase).join(' — '),
+				required: isRequired,
+				type: mapperFieldType(propertySchema),
+				options: mapperOptions(propertySchema),
+				description: plainText(propertySchema.description),
+				defaultValue: primitiveDefault(propertySchema.example ?? propertySchema.default),
+			},
+		];
+	});
+}
+
+function getInputFields(spec, parameters, requestBody) {
+	const parameterFields = parameters.map((parameter) => {
+		const schema = mergeSchema(spec, parameter.schema);
+		return {
+			id: `${parameter.in}__${parameter.name}`,
+			location: parameter.in,
+			path: [parameter.name],
+			displayName: titleCase(parameter.name),
+			required: parameter.required,
+			type: mapperFieldType(schema),
+			options: mapperOptions(schema),
+			description: parameter.description,
+			defaultValue: primitiveDefault(parameter.example ?? schema.example ?? schema.default),
+		};
+	});
+	const jsonSchema = requestBody?.content?.['application/json']?.schema;
+	return [...parameterFields, ...getBodyFields(spec, jsonSchema)];
+}
+
 async function loadOfficialSpec() {
 	const html = await fetchText(DOCS_URL);
 	const mainPath = html.match(/\/static\/js\/main\.[^"]+\.js/)?.[0];
@@ -120,6 +223,7 @@ function buildCatalog(spec) {
 					description,
 					scope,
 					parameters,
+					inputFields: getInputFields(spec, parameters, requestBody),
 					requestBodyRequired: requestBody?.required === true,
 					requestContentTypes: contentTypes,
 					responseContentTypes: [
@@ -171,6 +275,18 @@ export interface PactoParameterDefinition {
 \texample?: unknown;
 }
 
+export interface PactoInputFieldDefinition {
+\tid: string;
+\tlocation: 'path' | 'query' | 'header' | 'body';
+\tpath: string[];
+\tdisplayName: string;
+\trequired: boolean;
+\ttype: 'boolean' | 'number' | 'string' | 'dateTime' | 'array' | 'options';
+\toptions?: INodePropertyOptions[];
+\tdescription?: string;
+\tdefaultValue?: string | number | boolean | null;
+}
+
 export interface PactoOperationDefinition {
 \tkey: string;
 \tarea: string;
@@ -181,6 +297,7 @@ export interface PactoOperationDefinition {
 \tdescription?: string;
 \tscope?: string;
 \tparameters: PactoParameterDefinition[];
+\tinputFields: PactoInputFieldDefinition[];
 \trequestBodyRequired: boolean;
 \trequestContentTypes: string[];
 \tresponseContentTypes: string[];
@@ -190,7 +307,7 @@ export const PACTO_API_BASE_URL = ${JSON.stringify(API_BASE_URL)};
 export const PACTO_OPENAPI_VERSION = ${JSON.stringify(spec.openapi)};
 export const PACTO_CATALOG_GENERATED_AT = ${JSON.stringify(generatedAt)};
 export const PACTO_AREA_OPTIONS: INodePropertyOptions[] = ${JSON.stringify(catalog.areas, null, '\t')};
-export const PACTO_OPERATIONS: PactoOperationDefinition[] = ${JSON.stringify(catalog.operations, null, '\t')};
+export const PACTO_OPERATIONS = ${JSON.stringify(catalog.operations, null, '\t')} as unknown as PactoOperationDefinition[];
 
 const operationByKey = new Map(
 \tPACTO_OPERATIONS.map((operation) => [\`\${operation.area}:\${operation.key}\`, operation]),

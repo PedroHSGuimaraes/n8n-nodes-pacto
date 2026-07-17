@@ -18,6 +18,15 @@ export class PactoApi implements ICredentialType {
 
 	properties: INodeProperties[] = [
 		{
+			displayName: 'Empresa ID',
+			name: 'empresaId',
+			type: 'number',
+			default: 0,
+			required: true,
+			description:
+				'ID da empresa/unidade no Sistema Pacto. Enviado automaticamente no header empresaId em todas as requisições.',
+		},
+		{
 			displayName: 'Secret Key',
 			name: 'secretKey',
 			type: 'string',
@@ -38,6 +47,7 @@ export class PactoApi implements ICredentialType {
 		requestOptions.headers.Authorization = isCredentialValidator
 			? String(credentials.secretKey)
 			: `Bearer ${String(credentials.secretKey)}`;
+		requestOptions.headers.empresaId = String(credentials.empresaId);
 		return requestOptions;
 	};
 

@@ -23,8 +23,8 @@ com provenance.
 - **Catálogo pesquisável** — cada operação mostra nome, método HTTP e rota.
 - **Secret_Key segura** — armazenada nas credenciais criptografadas do n8n e enviada como
   `Authorization: Bearer SECRET_KEY`.
-- **Parâmetros flexíveis** — path, query e headers em objetos JSON separados.
-- **Bodies JSON, raw, form URL encoded e multipart** — inclusive upload de binário.
+- **Campos amigáveis** — cada operação mostra campos de formulário com nomes e descrições da API.
+- **Sem JSON manual** — path, query, headers e body são montados automaticamente pelo node.
 - **Paginação Return All** — compatível com os padrões `page`/`size` e configurável para outros
   nomes e formatos de resposta.
 - **Downloads binários** — PDF, Excel, imagens e outros arquivos podem ser gravados em uma
@@ -47,7 +47,7 @@ n8n-nodes-pacto
 
 ## 🔑 Credencial
 
-Crie uma credencial **Pacto API** e cole a `Secret_Key`.
+Crie uma credencial **Pacto API**, informe o **Empresa ID** e cole a `Secret_Key`.
 
 ### Como gerar a Secret_Key
 
@@ -64,7 +64,8 @@ Crie uma credencial **Pacto API** e cole a `Secret_Key`.
 
 A credencial possui teste embutido no endpoint oficial
 `GET /psec/credential-validator`. A validação recebe a chave diretamente; as operações da API
-recebem o padrão Bearer definido pela OpenAPI.
+recebem o padrão Bearer definido pela OpenAPI. O **Empresa ID** é enviado automaticamente no
+header `empresaId` em todas as requisições.
 
 ## 🧩 Como usar
 
@@ -93,61 +94,28 @@ Area: Clientes
 Operation: Consultar cliente por código [GET /v1/cliente/{codigo}]
 ```
 
-Em **Path Parameters**:
-
-```json
-{
-  "codigo": 12345
-}
-```
-
-Se a operação exigir empresa, use **Header Parameters**:
-
-```json
-{
-  "empresaId": 10
-}
-```
+No campo **Código**, informe `12345`. O **Empresa ID** vem da credencial e não precisa ser
+repetido na operação.
 
 ### Exemplo — consultar clientes com filtros
 
-Selecione uma operação de consulta e preencha **Query Parameters**:
-
-```json
-{
-  "page": 0,
-  "size": 100,
-  "filters": "{\"quicksearchValue\":\"Maria\"}"
-}
-```
+Selecione uma operação de consulta e preencha os campos de paginação e filtro exibidos no
+formulário.
 
 Algumas rotas da Pacto recebem `filters` como uma string JSON codificada na query. Nesses casos,
 o valor interno precisa ser serializado, como no exemplo.
 
 ### Exemplo — criar ou atualizar
 
-Para operações `POST`, `PUT` ou `PATCH`, mantenha **Body Type → JSON** e informe **JSON Body**:
-
-```json
-{
-  "nome": "Maria Silva",
-  "email": "maria@empresa.com"
-}
-```
-
-O schema exato varia por operação e está na documentação oficial.
+Para operações `POST`, `PUT` ou `PATCH`, preencha os campos do formulário. O schema exato varia
+por operação e o node monta o corpo automaticamente.
 
 ## 🧱 Parâmetros
 
 | Campo | Uso |
 | --- | --- |
-| **Path Parameters** | Substitui `{codigo}`, `{id}`, `{matricula}` e outros placeholders da rota |
-| **Query Parameters** | Envia filtros, paginação, ordenação e parâmetros opcionais na URL |
-| **Header Parameters** | Envia cabeçalhos específicos, principalmente `empresaId` |
-| **JSON Body** | Corpo para operações com `application/json` |
-| **Raw Body** | Corpo textual para operações `text/plain` |
-| **Multipart Fields** | Campos textuais de um upload multipart |
-| **Binary Property** | Propriedade binária de entrada que contém arquivo para upload |
+| **Campos da operação** | Campos específicos da rota, gerados a partir da documentação oficial |
+| **Empresa ID** | Configurado uma vez na credencial e enviado automaticamente |
 
 O header `Authorization` informado manualmente é removido. A autenticação sempre vem da
 credencial selecionada.

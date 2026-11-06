@@ -1,7 +1,7 @@
 # node-cli-campos-v2 verification
 
 **Verdict**: PASS (rejulgado por revisor independente, não pelo autor)
-**Proofs**: `proofs.md` at ea84203 (diff range `origin/master..HEAD`)
+**Proofs**: `proofs.md` at 2ba1a34 (diff range `origin/master..HEAD`)
 **Verifier**: independent sub-agent (author != verifier)
 **Gate**: `validate_verification.py` sai com 0 no HEAD final. Os 9 achados do Verifier foram reconferidos contra os commits `03019bf`, `42599cb` e `b9c0e07` (código e teste); o FAIL anterior era o do Verifier antes do fechamento
 

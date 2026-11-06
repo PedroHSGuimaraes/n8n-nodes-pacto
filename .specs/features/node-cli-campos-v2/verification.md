@@ -3,6 +3,7 @@
 **Verdict**: FAIL
 **Proofs**: `proofs.md` at 195d34b
 **Verifier**: independent sub-agent (author != verifier)
+**Gate**: `validate_verification.py` saiu com 0 em `7fbc354`, depois que o autor fechou os 9 achados com commit e check; o veredito FAIL acima é o do Verifier antes do fechamento
 
 ## Checks
 

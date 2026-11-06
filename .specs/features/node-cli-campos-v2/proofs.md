@@ -1,6 +1,6 @@
 # node-cli-campos-v2 proofs
 
-**HEAD**: 42599cb
+**HEAD**: 7fbc354
 **Tree**: clean
 **Shell**: /bin/sh
 **Result**: 45 pass, 0 fail
@@ -58,13 +58,13 @@
 `Run unit` - exit 0
 
 ```
-  ✔ [C34] a versão é 1.1.0 e a seção Versões lista as mudanças (0.395432ms)
-  ✔ [C35] o pacote 1.1.0 empacota o node, a credencial e os ícones, e o publish aciona o stage na tag (1520.345932ms)
-✔ documentação e lançamento (1829.530535ms)
+  ✔ [C34] a versão é 1.1.0 e a seção Versões lista as mudanças (0.458235ms)
+  ✔ [C35] o pacote 1.1.0 empacota o node, a credencial e os ícones, e o publish aciona o stage na tag (1331.542309ms)
+✔ documentação e lançamento (1638.540079ms)
 ▶ versões do node
-  ✔ [C15] a lista da versão 2 omite as operações legacy e a da versão 1 as inclui (17.440617ms)
-  ✔ [C16] declara version [1, 2] e defaultVersion 2 (1.050977ms)
-✔ versões do node (19.734887ms)
+  ✔ [C15] a lista da versão 2 omite as operações legacy e a da versão 1 as inclui (4.57908ms)
+  ✔ [C16] declara version [1, 2] e defaultVersion 2 (0.593316ms)
+✔ versões do node (6.080597ms)
 ℹ tests 43
 ℹ suites 11
 ℹ pass 43
@@ -72,7 +72,7 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1916.736929
+ℹ duration_ms 1725.985688
 ```
 
 `npm run lint` - exit 0
@@ -92,8 +92,8 @@
 └  ✓ Build successful
 
 ▶ toolchain do node-cli
-  ✔ [C2] o build gera o node, a credencial e os ícones no dist (0.790808ms)
-✔ toolchain do node-cli (1.983746ms)
+  ✔ [C2] o build gera o node, a credencial e os ícones no dist (0.77583ms)
+✔ toolchain do node-cli (2.021112ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -101,5 +101,5 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 41.368465
+ℹ duration_ms 42.393801
 ```

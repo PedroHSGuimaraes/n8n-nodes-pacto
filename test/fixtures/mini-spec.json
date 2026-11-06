@@ -1,0 +1,561 @@
+{
+ "openapi": "3.0.1",
+ "info": {
+  "title": "Mini Pacto",
+  "version": "1"
+ },
+ "tags": [
+  {
+   "name": "Clientes",
+   "description": "Operações de clientes"
+  }
+ ],
+ "paths": {
+  "/psec/alunos": {
+   "get": {
+    "tags": [
+     "Clientes"
+    ],
+    "summary": "Consultar alunos",
+    "parameters": [
+     {
+      "name": "filters",
+      "in": "query",
+      "required": false,
+      "description": "Filtros disponíveis: quicksearchValue: termo de busca",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "empresaId",
+      "in": "header",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "description": "Página",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "size",
+      "in": "query",
+      "required": false,
+      "description": "Tamanho",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "content": {
+           "type": "array",
+           "items": {
+            "$ref": "#/components/schemas/Aluno"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/psec/alunos/{id}": {
+   "get": {
+    "tags": [
+     "Clientes"
+    ],
+    "summary": "Consultar aluno",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/produtos": {
+   "get": {
+    "tags": [
+     "Produto"
+    ],
+    "summary": "Consultar produtos",
+    "parameters": [
+     {
+      "name": "quicksearchValue",
+      "in": "query",
+      "required": false,
+      "description": "Busca",
+      "schema": {
+       "type": "string"
+      }
+     },
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "description": "Página",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "size",
+      "in": "query",
+      "required": false,
+      "description": "Tamanho",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "content": {
+           "type": "array",
+           "items": {
+            "$ref": "#/components/schemas/Produto"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/produtos/{codigo}": {
+   "get": {
+    "tags": [
+     "Produto"
+    ],
+    "summary": "Consultar produto",
+    "parameters": [
+     {
+      "name": "codigo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "Produto"
+    ],
+    "summary": "Excluir produto",
+    "parameters": [
+     {
+      "name": "codigo",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sem-pagina": {
+   "get": {
+    "tags": [
+     "Outros"
+    ],
+    "summary": "Sem paginação",
+    "parameters": [
+     {
+      "name": "filters",
+      "in": "query",
+      "required": false,
+      "description": "Filtros",
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "content": {
+           "type": "array",
+           "items": {
+            "$ref": "#/components/schemas/Aluno"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sem-pagina/{id}": {
+   "get": {
+    "tags": [
+     "Outros"
+    ],
+    "summary": "Item sem paginação",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sem-rotulo": {
+   "get": {
+    "tags": [
+     "Outros"
+    ],
+    "summary": "Sem rótulo",
+    "parameters": [
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "description": "Página",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "size",
+      "in": "query",
+      "required": false,
+      "description": "Tamanho",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "content": {
+           "type": "array",
+           "items": {
+            "$ref": "#/components/schemas/SemRotulo"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sem-rotulo/{id}": {
+   "get": {
+    "tags": [
+     "Outros"
+    ],
+    "summary": "Item sem rótulo",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sem-valor": {
+   "get": {
+    "tags": [
+     "Outros"
+    ],
+    "summary": "Sem valor",
+    "parameters": [
+     {
+      "name": "page",
+      "in": "query",
+      "required": false,
+      "description": "Página",
+      "schema": {
+       "type": "integer"
+      }
+     },
+     {
+      "name": "size",
+      "in": "query",
+      "required": false,
+      "description": "Tamanho",
+      "schema": {
+       "type": "integer"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "properties": {
+          "content": {
+           "type": "array",
+           "items": {
+            "$ref": "#/components/schemas/SemValor"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/sem-valor/{id}": {
+   "get": {
+    "tags": [
+     "Outros"
+    ],
+    "summary": "Item sem valor",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/gestao-armario": {
+   "get": {
+    "tags": [
+     "Armï¿½rio"
+    ],
+    "summary": "Consultar armï¿½rios",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/zeta": {
+   "get": {
+    "tags": [
+     "Zï¿½"
+    ],
+    "summary": "Rota de área sem correspondência",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/novo-ruim": {
+   "get": {
+    "tags": [
+     "Clientes"
+    ],
+    "summary": "Lista ï¿½nica",
+    "parameters": [],
+    "responses": {
+     "200": {
+      "description": "ok",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "Aluno": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "nome": {
+      "type": "string"
+     }
+    }
+   },
+   "Produto": {
+    "type": "object",
+    "properties": {
+     "codigo": {
+      "type": "integer"
+     },
+     "descricao": {
+      "type": "string"
+     }
+    }
+   },
+   "SemRotulo": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "integer"
+     },
+     "valor": {
+      "type": "string"
+     }
+    }
+   },
+   "SemValor": {
+    "type": "object",
+    "properties": {
+     "nome": {
+      "type": "string"
+     },
+     "codigoX": {
+      "type": "integer"
+     }
+    }
+   }
+  }
+ }
+}

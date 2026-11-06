@@ -4,15 +4,23 @@ import type {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
+	JsonObject,
 } from 'n8n-workflow';
-import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
+import { NodeApiError, NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
 import {
 	getPactoOperation,
 	PACTO_AREA_OPTIONS,
 	type PactoOperationDefinition,
 } from './helpers/catalog.generated';
+import {
+	getPactoLookup,
+	PACTO_LOOKUP_OPERATION_KEYS,
+	PACTO_QUICK_SEARCH_OPERATION_KEYS,
+} from './helpers/lookups.generated';
 import { buildEndpointPath, extractPageItems } from './helpers/utils';
+import { mergeQuickSearch, withRecordId } from './helpers/versionedInputs';
+import { listSearch } from './methods/listSearch';
 import { loadOptions } from './methods/loadOptions';
 import { resourceMapping } from './methods/resourceMapping';
 import { pactoApiRequest, type PactoRequestOptions } from './transport';
@@ -45,19 +53,29 @@ function setNestedValue(target: IDataObject, path: string[], value: unknown): vo
 	(current as Record<string, unknown>)[path[path.length - 1]] = value;
 }
 
-function responseBody(response: any): any {
-	return response?.body !== undefined && response?.statusCode !== undefined
-		? response.body
+// A API pode devolver o corpo direto ou o envelope { body, statusCode } do n8n; `unknown`
+// obriga a checar o formato antes de ler qualquer campo (antes era `any`, que o lint recusa).
+function responseBody(response: unknown): unknown {
+	const envelope = response as { body?: unknown; statusCode?: unknown } | null | undefined;
+	return envelope?.body !== undefined && envelope?.statusCode !== undefined
+		? envelope.body
 		: response;
 }
 
 function shouldStopPagination(
-	response: any,
+	response: unknown,
 	itemCount: number,
 	pageSize: number,
 	currentPage: number,
 ): boolean {
-	const body = responseBody(response);
+	// Só os campos de paginação importam aqui; o tipo parcial evita o `any` do código antigo.
+	const body = responseBody(response) as {
+		last?: boolean;
+		hasNext?: boolean;
+		has_more?: boolean;
+		totalPages?: number;
+		total_pages?: number;
+	} | null;
 	if (itemCount === 0 || itemCount < pageSize) return true;
 	if (body?.last === true || body?.hasNext === false || body?.has_more === false) return true;
 	if (typeof body?.totalPages === 'number' && currentPage + 1 >= body.totalPages) return true;
@@ -98,8 +116,12 @@ function splitInputValues(
 		}
 		if (!hasValue(value) || credentialHeader) continue;
 
+		// O campo do catálogo diz `header` (singular), mas o objeto da requisição guarda os
+		// cabeçalhos em `headers`. Sem este mapa, qualquer cabeçalho que não é da credencial
+		// (ex.: user-agent) quebrava com "Cannot set properties of undefined".
 		if (field.location === 'body') setNestedValue(request.body, field.path, value);
-		else request[field.location][field.path[0]] = value;
+		else if (field.location === 'header') request.headers[field.path[0]] = value as string;
+		else request[field.location][field.path[0]] = value as string;
 	}
 
 	return request;
@@ -139,7 +161,9 @@ export class Pacto implements INodeType {
 		name: 'pacto',
 		icon: { light: 'file:pacto.svg', dark: 'file:pacto.dark.svg' },
 		group: ['transform'],
-		version: 1,
+		// Versão leve: workflows salvos ficam na 1 (campos como no 1.0.3) e node novo nasce na 2.
+		version: [1, 2],
+		defaultVersion: 2,
 		subtitle: '={{$parameter["resource"] + ": " + $parameter["operation"]}}',
 		description:
 			'Use Pacto Soluções with friendly fields generated from the official API documentation.',
@@ -159,13 +183,69 @@ export class Pacto implements INodeType {
 				description: 'Área funcional da API Pacto',
 			},
 			{
-				displayName: 'Operation',
+				// Título no padrão "<Entidade> Name or ID" que o lint exige para lista carregada da API.
+				displayName: 'Operation Name or ID',
+				// O nome interno não muda: workflows salvos guardam a operação com este nome.
 				name: 'operation',
+				// Lista de opções que o usuário escolhe (cada operação do catálogo).
 				type: 'options',
+				// A operação não aceita expressão: ela define quais campos aparecem no formulário.
+				noDataExpression: true,
+				// As opções vêm do método getPactoOperations, que lê a área escolhida.
 				typeOptions: { loadOptionsMethod: 'getPactoOperations' },
+				// Sem operação escolhida ainda, o campo começa vazio.
 				default: '',
+				// Sem operação o node não sabe qual rota chamar.
 				required: true,
-				description: 'Operação que será executada',
+				// Texto padrão que o lint exige para lista dinâmica (aceita ID por expressão).
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
+			},
+			{
+				// Seletor do registro (versão 2): lista pesquisável da API ou ID colado.
+				displayName: 'Registro',
+				// Nome novo: o ID de caminho da versão 1 mora dentro do `fields` e continua lá.
+				name: 'recordId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				description: 'Escolha o registro na lista ou cole o ID',
+				// Só node novo (versão 2) e só operações que a geração ligou a uma lista da API.
+				displayOptions: {
+					show: {
+						'@version': [{ _cnd: { gte: 2 } }],
+						operation: PACTO_LOOKUP_OPERATION_KEYS,
+					},
+				},
+				modes: [
+					{
+						displayName: 'Da Lista',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Escolha um registro...',
+						typeOptions: { searchListMethod: 'searchPactoRecords', searchable: true },
+					},
+					{
+						displayName: 'Por ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'ex.: 42',
+					},
+				],
+			},
+			{
+				// Busca Rápida (versão 2): vira o `quicksearchValue` dentro do JSON de `filters`.
+				displayName: 'Busca Rápida',
+				name: 'quickSearch',
+				type: 'string',
+				default: '',
+				description: 'Texto para buscar na listagem, sem escrever JSON no campo Filters',
+				displayOptions: {
+					show: {
+						'@version': [{ _cnd: { gte: 2 } }],
+						operation: PACTO_QUICK_SEARCH_OPERATION_KEYS,
+					},
+				},
 			},
 			{
 				displayName: 'Fields',
@@ -193,7 +273,7 @@ export class Pacto implements INodeType {
 				name: 'returnAll',
 				type: 'boolean',
 				default: false,
-				description: 'Retornar todos os resultados de uma operação de listagem',
+				description: 'Whether to return all results or only up to a given limit',
 			},
 		],
 	};
@@ -201,6 +281,7 @@ export class Pacto implements INodeType {
 	methods = {
 		loadOptions,
 		resourceMapping,
+		listSearch,
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -220,7 +301,18 @@ export class Pacto implements INodeType {
 					);
 				}
 
-				const values = getFieldValues(this, itemIndex);
+				let values = getFieldValues(this, itemIndex);
+				// Versão do node deste item: 1 lê tudo do `fields`; 2 também lê recordId e quickSearch.
+				const typeVersion = this.getNode().typeVersion;
+				const lookup = typeVersion >= 2 ? getPactoLookup(area, operationKey) : undefined;
+				// O ID escolhido no seletor ocupa o lugar do campo de caminho (antes digitado à mão).
+				if (lookup) values = withRecordId(this, itemIndex, lookup, values);
+				// A Busca Rápida entra no JSON de `filters` só nas operações que aceitam esse filtro.
+				if (typeVersion >= 2 && PACTO_QUICK_SEARCH_OPERATION_KEYS.includes(operationKey)) {
+					const quickSearch = this.getNodeParameter('quickSearch', itemIndex, '') as string;
+					const merged = mergeQuickSearch(this, itemIndex, values.query__filters, quickSearch);
+					values = { ...values, query__filters: merged as string };
+				}
 				const input = splitInputValues(this, itemIndex, operation, values);
 				const endpoint = buildEndpointPath(this, operation, input.path);
 				const request = createRequest(operation, input);
@@ -271,6 +363,12 @@ export class Pacto implements INodeType {
 						pairedItem: { item: itemIndex },
 					});
 					continue;
+				}
+				// Erro da API fica NodeApiError (com o código HTTP, ex.: 401); reembrulhar tudo em
+				// NodeOperationError escondia o código de quem trata o erro. O construtor devolve o
+				// mesmo erro quando recebe um NodeApiError, então nada é perdido.
+				if (error instanceof NodeApiError) {
+					throw new NodeApiError(this.getNode(), error as unknown as JsonObject, { itemIndex });
 				}
 				throw new NodeOperationError(this.getNode(), error as Error, { itemIndex });
 			}

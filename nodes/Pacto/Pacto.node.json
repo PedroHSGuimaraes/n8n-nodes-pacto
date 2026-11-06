@@ -2,10 +2,7 @@
 	"node": "n8n-nodes-pacto.pacto",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
-	"categories": ["Sales", "Productivity", "AI"],
-	"subcategories": {
-		"AI": ["Tools"]
-	},
+	"categories": ["Sales", "Productivity"],
 	"resources": {
 		"credentialDocumentation": [
 			{

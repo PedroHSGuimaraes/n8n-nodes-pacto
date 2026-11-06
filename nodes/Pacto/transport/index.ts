@@ -1,9 +1,9 @@
 import type {
-	GenericValue,
 	IDataObject,
 	IExecuteFunctions,
 	IHttpRequestMethods,
 	IHttpRequestOptions,
+	ILoadOptionsFunctions,
 	JsonObject,
 } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
@@ -21,12 +21,14 @@ export interface PactoRequestOptions {
 	timeout?: number;
 }
 
+// `this` pode ser o contexto do execute ou o do editor (listSearch): os dois têm `helpers` e
+// `getNode`, que é tudo que esta função usa.
 export async function pactoApiRequest(
-	this: IExecuteFunctions,
+	this: IExecuteFunctions | ILoadOptionsFunctions,
 	method: string,
 	endpoint: string,
 	request: PactoRequestOptions = {},
-): Promise<any> {
+): Promise<unknown> {
 	const options: IHttpRequestOptions = {
 		method: method as IHttpRequestMethods,
 		baseURL: PACTO_API_BASE_URL,

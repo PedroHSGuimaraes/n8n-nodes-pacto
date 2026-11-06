@@ -1,10 +1,10 @@
-import type { IDataObject } from 'n8n-workflow';
+import type { IDataObject, INode } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
 
 import type { PactoOperationDefinition } from './catalog.generated';
 
 export function parseObjectParameter(
-	context: { getNode(): any },
+	context: { getNode(): INode },
 	value: unknown,
 	displayName: string,
 ): IDataObject {
@@ -29,7 +29,7 @@ export function parseObjectParameter(
 }
 
 export function buildEndpointPath(
-	context: { getNode(): any },
+	context: { getNode(): INode },
 	operation: PactoOperationDefinition,
 	pathParameters: IDataObject,
 ): string {

@@ -55,6 +55,8 @@ export class PactoApi implements ICredentialType {
 		request: {
 			baseURL: 'https://apigw.pactosolucoes.com.br',
 			url: '/psec/credential-validator',
+			// Sem timeout, uma API fora do ar deixaria o botão de testar a credencial preso.
+			timeout: 30000,
 		},
 	};
 }

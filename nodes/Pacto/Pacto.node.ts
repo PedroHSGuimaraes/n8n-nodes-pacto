@@ -4,6 +4,7 @@ import type {
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
+	JsonObject,
 } from 'n8n-workflow';
 import { NodeApiError, NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
@@ -363,9 +364,12 @@ export class Pacto implements INodeType {
 					});
 					continue;
 				}
-				// Erro da API (NodeApiError) e erro de validação do node já têm o tipo certo e o código
-				// HTTP; reembrulhar tudo em NodeOperationError escondia o 401 de quem trata o erro.
-				if (error instanceof NodeApiError || error instanceof NodeOperationError) throw error;
+				// Erro da API fica NodeApiError (com o código HTTP, ex.: 401); reembrulhar tudo em
+				// NodeOperationError escondia o código de quem trata o erro. O construtor devolve o
+				// mesmo erro quando recebe um NodeApiError, então nada é perdido.
+				if (error instanceof NodeApiError) {
+					throw new NodeApiError(this.getNode(), error as unknown as JsonObject, { itemIndex });
+				}
 				throw new NodeOperationError(this.getNode(), error as Error, { itemIndex });
 			}
 		}

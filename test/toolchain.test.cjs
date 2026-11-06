@@ -95,3 +95,52 @@ describe('toolchain do node-cli', () => {
 		assert.match(pkg.scripts.test, /test\/\*\.test\.cjs/);
 	});
 });
+
+describe('documentação e lançamento', () => {
+	it('[C8] o README tem as seções do padrão, o selo, o índice e o número atual de operações', () => {
+		const readme = read('README.md');
+		// Título de seção sem o emoji do começo, para comparar só o texto.
+		const headings = readme
+			.split('\n')
+			.filter((line) => line.startsWith('## '))
+			.map((line) => line.replace(/^##\s+\p{Extended_Pictographic}\uFE0F?\s*/u, '').trim());
+		for (const expected of [
+			'Funcionalidades',
+			'Instalação',
+			'Credenciais',
+			'Nós e Operações',
+			'Usar como Tool de Agente de IA',
+			'Exemplos',
+			'Desenvolvimento',
+			'Compatibilidade',
+			'Recursos',
+			'Publicação',
+			'Versões',
+			'Suporte',
+			'Apoie o projeto',
+			'Licença',
+		]) {
+			assert.ok(headings.includes(expected), `falta a seção "${expected}" (achei: ${headings})`);
+		}
+		// O node não tem gatilho, então o README não pode prometer uma seção Trigger.
+		assert.ok(!headings.includes('Trigger'));
+		assert.match(readme, /img\.shields\.io\/badge\/Buy_Me_a_Coffee/);
+		assert.match(readme, /\[Instalação\]\(#[^)]+\)/, 'o índice liga às seções');
+		// O número de operações vivas do catálogo atual aparece, com ponto de milhar (4.620).
+		const { PACTO_OPERATIONS } = require('../dist/nodes/Pacto/helpers/catalog.generated');
+		const live = PACTO_OPERATIONS.filter((operation) => !operation.legacy).length;
+		const formatted = String(live).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+		assert.ok(readme.includes(formatted), `o README deveria citar ${formatted} operações`);
+		assert.ok(!readme.includes('3.499'), 'o número velho do 1.0.3 saiu do README');
+	});
+
+	it('[C34] a versão é 1.1.0 e a seção Versões lista as mudanças', () => {
+		assert.equal(pkg.version, '1.1.0');
+		const versions = read('README.md').split(/^## .*Versões/m)[1] ?? '';
+		const entry = versions.split(/^## /m)[0];
+		assert.match(entry, /\*\*1\.1\.0\*\*/);
+		for (const topic of ['node-cli', 'versão 2', 'IDs', 'Busca Rápida', '131 operações']) {
+			assert.ok(entry.includes(topic), `a entrada 1.1.0 deveria citar "${topic}"`);
+		}
+	});
+});

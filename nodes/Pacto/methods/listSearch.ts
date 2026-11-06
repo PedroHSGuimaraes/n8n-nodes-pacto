@@ -62,7 +62,9 @@ export const listSearch = {
 		// Operação sem lista: o seletor mostra "sem resultados" e a pessoa cola o ID.
 		if (!lookup) return { results: [] };
 
-		const page = paginationToken ? Number(paginationToken) : 0;
+		// Token que não é número inteiro (lixo do editor) recomeça na página 0, em vez de page=NaN.
+		const requested = Number(paginationToken);
+		const page = Number.isInteger(requested) && requested >= 0 ? requested : 0;
 		const response = await pactoApiRequest.call(this, 'GET', lookup.listPath, {
 			qs: buildQuery(lookup, page, filter),
 			json: true,
@@ -79,8 +81,9 @@ export const listSearch = {
 			.map((item) => {
 				const value = String(item[lookup.valueField]);
 				const label = item[lookup.labelField];
-				// Sem rótulo, o próprio ID aparece como nome.
-				return { name: label === undefined || label === null ? value : String(label), value };
+				// Sem rótulo (ou rótulo vazio), o próprio ID aparece como nome.
+				const name = label === undefined || label === null ? '' : String(label);
+				return { name: name === '' ? value : name, value };
 			});
 
 		// Rota sem busca na API: filtra só a página que veio (a rota não oferece outra forma).

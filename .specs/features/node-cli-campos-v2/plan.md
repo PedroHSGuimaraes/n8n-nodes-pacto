@@ -169,6 +169,7 @@ A versão nova chega ao npm com provenance, aprovada pelo dono.
 | Campo de corpo em array (2.350) e de texto livre que a documentação não tipa | Sem tipo na documentação, o node não adivinha |
 | Novas operações ou rota própria além do catálogo | O pedido é sobre o preenchimento dos campos |
 | Trigger | A API Pacto não tem webhook documentado nesta especificação |
+| Esconder da lista de Area da versão 2 as 6 áreas que só têm operações `legacy` | O `resource` é uma lista estática; esconder exigiria um segundo `resource` por versão. A área aparece com a lista de operações vazia na versão 2, sem erro (achado do Verifier) |
 
 ## Assumptions
 

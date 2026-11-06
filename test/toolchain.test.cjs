@@ -143,4 +143,29 @@ describe('documentação e lançamento', () => {
 			assert.ok(entry.includes(topic), `a entrada 1.1.0 deveria citar "${topic}"`);
 		}
 	});
+	it('[C35] o pacote 1.1.0 empacota o node, a credencial e os ícones, e o publish aciona o stage na tag', () => {
+		// `npm pack --dry-run --json` lista o que iria no tarball sem criar o arquivo.
+		const { execFileSync } = require('node:child_process');
+		const output = execFileSync('npm', ['pack', '--dry-run', '--json', '--silent'], {
+			cwd: root,
+			encoding: 'utf8',
+		});
+		const [packed] = JSON.parse(output);
+		assert.equal(packed.version, '1.1.0');
+		const files = packed.files.map((file) => file.path);
+		for (const expected of [
+			'dist/nodes/Pacto/Pacto.node.js',
+			'dist/credentials/PactoApi.credentials.js',
+			'dist/nodes/Pacto/pacto.svg',
+			'dist/nodes/Pacto/pacto.dark.svg',
+			'dist/credentials/pacto.svg',
+			'dist/credentials/pacto.dark.svg',
+		]) {
+			assert.ok(files.includes(expected), `${expected} deveria ir no pacote`);
+		}
+		// A publicação dispara na tag v*.*.* e usa o stage publish.
+		const publish = read('.github/workflows/publish.yml');
+		assert.match(publish, /tags:\s*\n\s*- 'v\*\.\*\.\*'/);
+		assert.ok(publish.includes('stage publish'));
+	});
 });

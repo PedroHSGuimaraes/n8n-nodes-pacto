@@ -5,7 +5,7 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
+import { NodeApiError, NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 
 import {
 	getPactoOperation,
@@ -363,6 +363,9 @@ export class Pacto implements INodeType {
 					});
 					continue;
 				}
+				// Erro da API (NodeApiError) e erro de validação do node já têm o tipo certo e o código
+				// HTTP; reembrulhar tudo em NodeOperationError escondia o 401 de quem trata o erro.
+				if (error instanceof NodeApiError || error instanceof NodeOperationError) throw error;
 				throw new NodeOperationError(this.getNode(), error as Error, { itemIndex });
 			}
 		}

@@ -42,18 +42,24 @@ export function withRecordId(
 }
 
 // Junta a Busca Rápida ao JSON do parâmetro `filters`.
-// - busca vazia: devolve `filters` exatamente como a pessoa escreveu (nada é reescrito);
-// - busca preenchida: lê o JSON existente (se houver) e acrescenta `quicksearchValue`.
+// - busca vazia (ou só espaços): devolve `filters` exatamente como a pessoa escreveu;
+// - busca preenchida: lê o filtro existente (texto JSON ou objeto de expressão) e acrescenta
+//   `quicksearchValue`.
 export function mergeQuickSearch(
 	context: IExecuteFunctions,
 	itemIndex: number,
 	filters: unknown,
 	quickSearch: string,
 ): unknown {
-	if (quickSearch === '') return filters;
+	// Texto só de espaços não é busca: sem isso o JSON ganharia um quicksearchValue em branco.
+	const text = quickSearch.trim();
+	if (text === '') return filters;
 
 	let current: IDataObject = {};
-	if (typeof filters === 'string' && filters.trim() !== '') {
+	if (typeof filters === 'object' && filters !== null && !Array.isArray(filters)) {
+		// Uma expressão do n8n entrega o filtro já como objeto; ele precisa ser mantido.
+		current = filters as IDataObject;
+	} else if (typeof filters === 'string' && filters.trim() !== '') {
 		let parsed: unknown;
 		try {
 			parsed = JSON.parse(filters);
@@ -67,6 +73,11 @@ export function mergeQuickSearch(
 			});
 		}
 		current = parsed as IDataObject;
+	} else if (filters !== undefined && filters !== null && filters !== '') {
+		// Lista ou número vindos de expressão também não servem.
+		throw new NodeOperationError(context.getNode(), 'O campo Filters precisa ser um objeto JSON', {
+			itemIndex,
+		});
 	}
-	return JSON.stringify({ ...current, quicksearchValue: quickSearch });
+	return JSON.stringify({ ...current, quicksearchValue: text });
 }

@@ -6,7 +6,7 @@ Plan: `.specs/features/node-cli-campos-v2/plan.md`
 
 ## Intent
 
-37 checks in 5 slices · 4 one-way doors · 0 open
+41 checks in 5 slices · 4 one-way doors · 0 open
 
 ## Checks
 
@@ -75,7 +75,7 @@ Proof: run unit | ✔ [C16]
 **C17** - O gerador cria entrada de lista só para operação cujo primeiro parâmetro de caminho `{p}` tem `GET` na base com `page` e `size` e item com campo `p` e rótulo `nome`, `descricao`, `name` ou `titulo`, e imprime as bases descartadas com o motivo (S3 AC 2)
 Proof: run unit | ✔ [C17]
 
-**C18** - O gerador sai com código 1 e cita a rota quando uma entrada de lista aponta para rota ausente na documentação (S3 AC 3)
+**C18** - `assertLookupRoutes` lança citando a rota quando uma entrada de lista aponta para rota ausente na documentação, e todo erro do gerador sai com código 1 (a saída com código 1 é provada em C13b) (S3 AC 3)
 Proof: run unit | ✔ [C18]
 
 **C19** - Na versão 2, `recordId` é `resourceLocator` com modos `list` (padrão, `searchable`, `searchListMethod: 'searchPactoRecords'`) e `id`, mostrado só nas operações com lista; o `resourceMapper` omite `path__<p>` dessas operações só na versão 2 (S3 AC 4)
@@ -118,6 +118,7 @@ Proof: run unit | ✔ [C30]
 
 **C31** - `quickSearch` `silva` com `query__filters` `{"situacoesEnuns":["AT"]}` envia `{"situacoesEnuns":["AT"],"quicksearchValue":"silva"}` (S4 AC 3)
 Proof: run unit | ✔ [C31]
+Proof: run unit | ✔ [C31b]
 
 **C32** - `query__filters` que não é objeto JSON lança `NodeOperationError` `O campo Filters precisa ser um objeto JSON` (S4 AC 4)
 Proof: run unit | ✔ [C32]
@@ -130,8 +131,20 @@ Proof: run unit | ✔ [C33]
 **C34** - O package.json tem versão 1.1.0 e a seção Versões do README lista node-cli, versão 2 do node, IDs guiados, Busca Rápida e as 131 operações preservadas (S5 AC 1)
 Proof: run unit | ✔ [C34]
 
-**C35** - O pacote 1.1.0 empacota o `dist` (`npm pack --dry-run` sai com 0 e lista o node, a credencial e os ícones) e o workflow de publicação aciona o `stage publish` na tag `v1.1.0`; a fila "Staged Packages" e a aprovação do dono acontecem depois do merge (S5 AC 2, parte local)
-Proof: `npm pack --dry-run`
+**C35** - O pacote 1.1.0 empacota o `dist` (`npm pack --dry-run --json` lista o node, a credencial e os quatro ícones) e o workflow de publicação aciona o `stage publish` na tag `v*.*.*`; a fila "Staged Packages" e a aprovação do dono acontecem depois do merge (S5 AC 2, parte local)
+Proof: run unit | ✔ [C35]
+
+**C38** - O erro `401` da API chega do `execute` como `NodeApiError` com `httpCode` 401, na versão 2 (S2 AC 1, Surface do plano)
+Proof: run unit | ✔ [C38]
+
+**C39** - Uma operação com corpo JSON envia o corpo montado dos campos `body__*`, o `Content-Type: application/json` e `timeout` 30000 (S2 AC 1, achado do Verifier: o corpo não tinha teste)
+Proof: run unit | ✔ [C39]
+
+**C40** - O seletor usa o ID como nome quando o rótulo vem vazio e recomeça na página 0 quando o token não é número (S3 AC 8, achado do Verifier)
+Proof: run unit | ✔ [C40]
+
+**C41** - O teste da credencial tem `timeout` 30000 (regra de toda chamada HTTP com timeout; achado do Verifier)
+Proof: run unit | ✔ [C41]
 
 ## Coverage
 
@@ -144,8 +157,8 @@ Proof: `npm pack --dry-run`
 | regras de fim de lista (3) | `last: true` C25 · menos que `size` C25 · `page + 1 >= totalPages` C25 | - |
 | entradas de `filters` com Busca Rápida (3) | vazio C30 · com JSON C31 · JSON inválido C32 | - |
 | `searchPactoRecords` statuses (2) | 200 C23 · 401 C27 | - |
-| node `pacto` statuses (2) | 200 C9 · 401 C27 | - |
-| localização dos campos de entrada na requisição (4) | `path` C9 · `query` C10 · `header` C36 · `body` C9 | - |
+| node `pacto` statuses (2) | 200 C9 · 401 C38 | - |
+| localização dos campos de entrada na requisição (4) | `path` C9 · `query` C10 · `header` C36 · `body` C39 | - |
 | arquivos de publicação (2) | ci.yml C5 · publish.yml C6 | - |
 
 - Claims naming a status code, route or response shape: C9, C20, C21, C23, C27 - each has a proof that crosses the boundary (o `execute` ou o `listSearch` com contexto falso que grava a requisição)

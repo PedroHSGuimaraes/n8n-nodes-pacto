@@ -45,19 +45,29 @@ function setNestedValue(target: IDataObject, path: string[], value: unknown): vo
 	(current as Record<string, unknown>)[path[path.length - 1]] = value;
 }
 
-function responseBody(response: any): any {
-	return response?.body !== undefined && response?.statusCode !== undefined
-		? response.body
+// A API pode devolver o corpo direto ou o envelope { body, statusCode } do n8n; `unknown`
+// obriga a checar o formato antes de ler qualquer campo (antes era `any`, que o lint recusa).
+function responseBody(response: unknown): unknown {
+	const envelope = response as { body?: unknown; statusCode?: unknown } | null | undefined;
+	return envelope?.body !== undefined && envelope?.statusCode !== undefined
+		? envelope.body
 		: response;
 }
 
 function shouldStopPagination(
-	response: any,
+	response: unknown,
 	itemCount: number,
 	pageSize: number,
 	currentPage: number,
 ): boolean {
-	const body = responseBody(response);
+	// Só os campos de paginação importam aqui; o tipo parcial evita o `any` do código antigo.
+	const body = responseBody(response) as {
+		last?: boolean;
+		hasNext?: boolean;
+		has_more?: boolean;
+		totalPages?: number;
+		total_pages?: number;
+	} | null;
 	if (itemCount === 0 || itemCount < pageSize) return true;
 	if (body?.last === true || body?.hasNext === false || body?.has_more === false) return true;
 	if (typeof body?.totalPages === 'number' && currentPage + 1 >= body.totalPages) return true;
@@ -98,8 +108,12 @@ function splitInputValues(
 		}
 		if (!hasValue(value) || credentialHeader) continue;
 
+		// O campo do catálogo diz `header` (singular), mas o objeto da requisição guarda os
+		// cabeçalhos em `headers`. Sem este mapa, qualquer cabeçalho que não é da credencial
+		// (ex.: user-agent) quebrava com "Cannot set properties of undefined".
 		if (field.location === 'body') setNestedValue(request.body, field.path, value);
-		else request[field.location][field.path[0]] = value;
+		else if (field.location === 'header') request.headers[field.path[0]] = value as string;
+		else request[field.location][field.path[0]] = value as string;
 	}
 
 	return request;
@@ -159,13 +173,23 @@ export class Pacto implements INodeType {
 				description: 'Área funcional da API Pacto',
 			},
 			{
-				displayName: 'Operation',
+				// Título no padrão "<Entidade> Name or ID" que o lint exige para lista carregada da API.
+				displayName: 'Operation Name or ID',
+				// O nome interno não muda: workflows salvos guardam a operação com este nome.
 				name: 'operation',
+				// Lista de opções que o usuário escolhe (cada operação do catálogo).
 				type: 'options',
+				// A operação não aceita expressão: ela define quais campos aparecem no formulário.
+				noDataExpression: true,
+				// As opções vêm do método getPactoOperations, que lê a área escolhida.
 				typeOptions: { loadOptionsMethod: 'getPactoOperations' },
+				// Sem operação escolhida ainda, o campo começa vazio.
 				default: '',
+				// Sem operação o node não sabe qual rota chamar.
 				required: true,
-				description: 'Operação que será executada',
+				// Texto padrão que o lint exige para lista dinâmica (aceita ID por expressão).
+				description:
+					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 			},
 			{
 				displayName: 'Fields',
@@ -193,7 +217,7 @@ export class Pacto implements INodeType {
 				name: 'returnAll',
 				type: 'boolean',
 				default: false,
-				description: 'Retornar todos os resultados de uma operação de listagem',
+				description: 'Whether to return all results or only up to a given limit',
 			},
 		],
 	};

@@ -1,5 +1,4 @@
 import type {
-	GenericValue,
 	IDataObject,
 	IExecuteFunctions,
 	IHttpRequestMethods,
@@ -26,7 +25,7 @@ export async function pactoApiRequest(
 	method: string,
 	endpoint: string,
 	request: PactoRequestOptions = {},
-): Promise<any> {
+): Promise<unknown> {
 	const options: IHttpRequestOptions = {
 		method: method as IHttpRequestMethods,
 		baseURL: PACTO_API_BASE_URL,

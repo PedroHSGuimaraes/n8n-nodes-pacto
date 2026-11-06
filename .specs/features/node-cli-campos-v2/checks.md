@@ -6,7 +6,7 @@ Plan: `.specs/features/node-cli-campos-v2/plan.md`
 
 ## Intent
 
-35 checks in 5 slices · 4 one-way doors · 0 open
+36 checks in 5 slices · 4 one-way doors · 0 open
 
 ## Checks
 
@@ -58,6 +58,9 @@ Proof: run unit | ✔ [C14]
 
 **C15** - A lista de operações da versão 2 omite as `legacy: true` e a da versão 1 as inclui (S2 AC 7)
 Proof: run unit | ✔ [C15]
+
+**C36** - Um parâmetro de header que não é da credencial (ex.: `user-agent`) vai nos cabeçalhos da requisição, em vez de quebrar com `Cannot set properties of undefined` (S2 AC 1, achado do tsc estrito: o catálogo diz `header` e o objeto da requisição guarda `headers`)
+Proof: run unit | ✔ [C36]
 
 ### S3 - IDs guiados na versão 2
 
@@ -137,6 +140,7 @@ Proof: `npm pack --dry-run`
 | entradas de `filters` com Busca Rápida (3) | vazio C30 · com JSON C31 · JSON inválido C32 | - |
 | `searchPactoRecords` statuses (2) | 200 C23 · 401 C27 | - |
 | node `pacto` statuses (2) | 200 C9 · 401 C27 | - |
+| localização dos campos de entrada na requisição (4) | `path` C9 · `query` C10 · `header` C36 · `body` C9 | - |
 | arquivos de publicação (2) | ci.yml C5 · publish.yml C6 | - |
 
 - Claims naming a status code, route or response shape: C9, C20, C21, C23, C27 - each has a proof that crosses the boundary (o `execute` ou o `listSearch` com contexto falso que grava a requisição)

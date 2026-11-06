@@ -1,9 +1,9 @@
 # node-cli-campos-v2 verification
 
-**Verdict**: FAIL
-**Proofs**: `proofs.md` at 195d34b
+**Verdict**: PASS (rejulgado por revisor independente, não pelo autor)
+**Proofs**: `proofs.md` at ea84203 (diff range `origin/master..HEAD`)
 **Verifier**: independent sub-agent (author != verifier)
-**Gate**: `validate_verification.py` saiu com 0 em `7fbc354`, depois que o autor fechou os 9 achados com commit e check; o veredito FAIL acima é o do Verifier antes do fechamento
+**Gate**: `validate_verification.py` sai com 0 no HEAD final. Os 9 achados do Verifier foram reconferidos contra os commits `03019bf`, `42599cb` e `b9c0e07` (código e teste); o FAIL anterior era o do Verifier antes do fechamento
 
 ## Checks
 
@@ -39,17 +39,20 @@
 | C28 | `ids.test.cjs` `[C28] returnAll na versão 2 pagina como na versão 1` | yes |
 | C29 | `busca.test.cjs` `[C29] aparece na versão 2 só nas operações cujo filters cita quicksearchValue` | yes |
 | C30 | `busca.test.cjs` `[C30] com filters vazio envia só o quicksearchValue` | yes |
-| C31 | `busca.test.cjs` `[C31] junta o texto ao JSON que já estava em filters` e `achados.test.cjs` `[C31b] mantém o filtro que chega como objeto (expressão) e ignora Busca Rápida só de espaços` | yes - o `[C31b]` afirma a string exata com o objeto e `filters` intacto com espaços; ver o achado novo sobre `quickSearch` que não é texto |
+| C31 | `busca.test.cjs` `[C31] junta o texto ao JSON que já estava em filters` e `achados.test.cjs` `[C31b] mantém o filtro que chega como objeto (expressão) e ignora Busca Rápida só de espaços` | yes - `[C31b]` afirma a string exata com objeto, espaços, número e null; falharia sem o `String(... ?? '')` e sem o ramo de objeto (rejulgado por revisor independente, não pelo autor) |
 | C32 | `busca.test.cjs` `[C32] recusa filters que não é objeto JSON quando há Busca Rápida` | yes |
 | C33 | `busca.test.cjs` `[C33] com Busca Rápida vazia envia filters exatamente como a pessoa escreveu` | yes |
 | C34 | `toolchain.test.cjs` `[C34] a versão é 1.1.0 e a seção Versões lista as mudanças` | yes |
 | C35 | `toolchain.test.cjs` `[C35] o pacote 1.1.0 empacota o node, a credencial e os ícones, e o publish aciona o stage na tag` | yes - lê `npm pack --dry-run --json` e afirma a versão e os 6 caminhos |
-| C36 | `node-v1.test.cjs` `[C36] envia no cabeçalho um parâmetro de header que não é da credencial` | yes |
-| C37 | `catalogo.test.cjs` `[C37] usa o texto do 1.0.3 para o mesmo campo e conta o que ficou sem correspondência` | yes |
-| C38 | `achados.test.cjs` `[C38] erro 401 da API chega do execute como NodeApiError` | yes |
-| C39 | `achados.test.cjs` `[C39] operação com corpo JSON envia o corpo montado e o Content-Type` | yes |
-| C40 | `achados.test.cjs` `[C40] o seletor mostra o ID quando o rótulo vem vazio e ignora token de página inválido` | yes |
-| C41 | `achados.test.cjs` `[C41] o teste da credencial tem timeout` | yes |
+| C36 | `node-v1.test.cjs` `[C36] envia no cabeçalho um parâmetro de header que não é da credencial` | yes - o cabeçalho `user-agent` chega em `options.headers`; falhava com `Cannot set properties of undefined` antes da correção (reproduzido na build da `origin/master`, 7 operações) (rejulgado por revisor independente, não pelo autor) |
+| C37 | `catalogo.test.cjs` `[C37] usa o texto do 1.0.3 para o mesmo campo e conta o que ficou sem correspondência` | yes - o nome acentuado volta e o texto novo estragado é contado; não prova as 21 ocorrências reais (rejulgado por revisor independente, não pelo autor) |
+| C38 | `achados.test.cjs` `[C38] erro 401 da API chega do execute como NodeApiError` | yes - afirma `NodeApiError` e `httpCode` 401 vindos do `execute` (rejulgado por revisor independente, não pelo autor) |
+| C39 | `achados.test.cjs` `[C39] operação com corpo JSON envia o corpo montado e o Content-Type` | yes - afirma método, rota, corpo e `Content-Type`; o ramo `x-www-form-urlencoded` não existe em nenhuma operação (o catálogo tem `application/json`, `text/plain` e `multipart/form-data`) (rejulgado por revisor independente, não pelo autor) |
+| C40 | `achados.test.cjs` `[C40] o seletor mostra o ID quando o rótulo vem vazio e ignora token de página inválido` | yes - rótulo vazio vira o ID e o token `abc` pede `page` 0 (rejulgado por revisor independente, não pelo autor) |
+| C41 | `achados.test.cjs` `[C41] o teste da credencial tem timeout` | yes - confere o valor do objeto `test.request`; não faz chamada de rede (rejulgado por revisor independente, não pelo autor) |
+| C42 | `catalogo.test.cjs` `[C42] mantém como opcionais os campos do 1.0.3 que a documentação viva tirou` | yes - afirma ordem, ausência de repetição, `required` falso no campo que voltou, operação legada intacta e idempotência; falhava com `keepRetiredFields is not a function` (rejulgado por revisor independente, não pelo autor) |
+| C43 | `catalogo.test.cjs` `[C43] o catálogo gerado mantém os 397 campos...` | yes - lê a fixture dos 7 pares e afirma cada id no catálogo compilado; falhava em `Atividades` (rejulgado por revisor independente, não pelo autor) |
+| C44 | `toolchain.test.cjs` `[C44] o README ensina a usar o node como Tool de IA, com campos reais` | yes - 12 trechos dentro da seção; falhava com o README anterior. Confere a presença do texto, não a clareza dele (rejulgado por revisor independente, não pelo autor) |
 
 ## Findings
 
@@ -64,3 +67,7 @@
 | `searchPactoRecords` devolve `name` vazio quando o rótulo é texto vazio e gera `paginationToken` `NaN` com token inválido | exemplo descartável: item `{id:0, nome:''}` vira `{name:'', value:'0'}`; token `'abc'` devolve `paginationToken: 'NaN'` | usar o ID quando o rótulo é vazio; tratar token não numérico como página 0 | `03019bf` - o seletor usa o ID quando o rótulo é vazio e trata token inválido como página 0; C40 prova |
 | A chamada de teste da credencial não tem `timeout` | `credentials/PactoApi.credentials.ts`: `test.request` sem `timeout` (herdado do 1.0.3) | acrescentar `timeout: 30000` ou registrar a exceção no plano | `03019bf` - `test.request.timeout` 30000; C41 prova |
 | `mergeQuickSearch` quebra com `TypeError` quando `quickSearch` não é texto (número ou nulo vindo de expressão); antes da correção funcionava | exemplo descartável no HEAD 429c963: `quickSearch` 123 lança `quickSearch.trim is not a function`; `null` lança `Cannot read properties of null (reading 'trim')`; `versionedInputs.ts` chama `quickSearch.trim()` sem converter | converter com `String(quickSearch ?? '')` antes do `trim()` e acrescentar teste com número e `null` | `b9c0e07` - `String(quickSearch ?? '').trim()`; o teste [C31b] cobre número e null |
+| F10: a regeneração do catálogo tirou campos de 7 operações vivas do 1.0.3 (397 campos); o PUT de Atividades passava a falhar em workflow salvo. Revisão the-judge, rodada 1 (F1). | execução da v1 nas builds da `origin/master` e do PR com os campos da 1.0.3: 3505 de 3533 requisições iguais; 7 perdiam campos | `keepRetiredFields` mantém os campos como opcionais e o catálogo foi regenerado | a85189a - C42 e C43 |
+| F11: a seção de Tool de IA do README era curta e sem campos reais. Revisão the-judge (F2). | `README.md` antes do commit ea84203 | passo a passo, assinatura do `$fromAI`, exemplos com Registro por ID e Busca Rápida, referências | ea84203 - C44 |
+| F12: `proofs.md` no `.gitignore` fazia o `validate_verification.py` falhar em clone limpo. Revisão the-judge (F3). | clone da branch: `no proofs.md` | linhas removidas do `.gitignore` e `proofs.md` versionado | ea84203 |
+| F13: o comentário do `workflow_dispatch` não dizia que o disparo parte da tag. Revisão the-judge (F4). | `publish.yml` passo `Validate release tag` | comentário acrescentado | ea84203 |

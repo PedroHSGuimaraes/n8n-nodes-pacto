@@ -1,6 +1,6 @@
 # Pacto: node-cli 0.55 e campos guiados (versão 2 do node)
 
-**Approved**: pendente
+**Approved**: 2026-11-06 - user: "Aprovo com antecedência (Recomendado · Jev 0,96)"
 
 > Build this with **tlc-implement**. Every criterion becomes a check with a proof; nothing under
 > the open questions is settled while building.
@@ -176,14 +176,12 @@ A versão nova chega ao npm com provenance, aprovada pelo dono.
 | O valor da lista é o campo com o mesmo nome do parâmetro de caminho (`id` para `{id}`, `codigo` para `{codigo}`) | Só a base cujo item tem esse campo vira lista | É a única ligação que a documentação sustenta; sem ela a base fica descartada e listada | n |
 | Tamanho da página do seletor | 20 itens | Mostra uma lista curta no editor e pede uma página por vez | n |
 | Idioma de rótulos e mensagens | PT-BR em Title Case sem preposição maiúscula, como o resto do node | O 1.0.3 já escreve em PT-BR | n |
+| As 323 operações que a documentação viva removeu | Ficam no catálogo com `legacy: true`, visíveis só na versão 1 (AD-009) | Workflow salvo guarda área e chave da operação; o dono decidiu que workflow salvo não quebra. Jev 1,00 contra remover 0,00 | y - user: "Aprovo com antecedência (Recomendado · Jev 0,96)" |
+| Seletor para ID de query e de corpo | Fora deste lançamento (ver Out of scope) | Vivem no `resourceMapper`, que não aceita Resource Locator por campo | y - user: "Aprovo com antecedência (Recomendado · Jev 0,96)" |
 | Número de operações do README | Sai do catálogo regenerado no dia | O 3.499 do 1.0.3 é do catálogo de 17/07/2026 | n |
 | A documentação viva não muda a chave de uma operação que o 1.0.3 publica sem aviso | O gerador falha só se perder um par que não consegue marcar `legacy` | A chave é `METHOD:path`, o gerador a monta sozinho | n |
 
-**Open questions:**
-
-- `blocks`: manter as 323 operações que a documentação viva removeu como `legacy` (esconder só na versão 2), ou removê-las? Recomendação: manter, porque workflow salvo usa o par `area` + `key`; remover quebra quem já usa.
-- `open`: a paginação da Pacto começa na página 0 ou 1? Recomendação: seguir o número que a resposta devolve (S3, critério 11) e confirmar com uma conta real antes do merge.
-- `open`: incluir também as listas de ID de query e de corpo, com um parâmetro fora do `resourceMapper`? Recomendação: não neste lançamento (Out of scope).
+**Open questions:** none - all resolved or logged above.
 
 ## Differences from the source
 

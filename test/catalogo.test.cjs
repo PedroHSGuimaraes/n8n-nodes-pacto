@@ -101,6 +101,56 @@ describe('catálogo regenerado sem perda', () => {
 		assert.deepEqual(missing, []);
 	});
 
+	// Regra protegida (achado F1 do revisor): quando a documentação viva tira campos de uma operação que o
+	// 1.0.3 publicava, o catálogo mantém esses campos como opcionais. Sem isso, o workflow salvo na versão 1
+	// deixa de enviá-los em silêncio (o PUT de Atividades perdia 19 campos de body e passava a exigir outros).
+	it('[C42] mantém como opcionais os campos do 1.0.3 que a documentação viva tirou', async () => {
+		const { keepRetiredFields } = await loadBuilder();
+		const field = (id, required) => ({ id, location: 'body', path: [id], required, type: 'string' });
+		const catalog = {
+			areas: [],
+			operations: [
+				{ area: 'A', key: 'PUT:/x/{id}', inputFields: [field('body__novo', true), field('body__fica', false)] },
+				{ area: 'A', key: 'GET:/legada', legacy: true, inputFields: [field('query__a', false)] },
+			],
+		};
+		const anterior = {
+			areas: [],
+			operations: [
+				{ area: 'A', key: 'PUT:/x/{id}', inputFields: [field('body__fica', true), field('body__velho', true)] },
+				{ area: 'A', key: 'GET:/legada', legacy: true, inputFields: [field('query__a', false)] },
+			],
+		};
+		const ids = (op) => op.inputFields.map((item) => item.id);
+		const merged = keepRetiredFields(catalog, anterior);
+		const put = merged.operations.find((op) => op.key === 'PUT:/x/{id}');
+		// Os campos novos ficam, o campo que sumiu volta no fim e nenhum campo repete.
+		assert.deepEqual(ids(put), ['body__novo', 'body__fica', 'body__velho']);
+		// O campo que voltou é opcional, mesmo que o 1.0.3 o exigisse; o campo vivo mantém o que a doc diz.
+		assert.equal(put.inputFields.find((item) => item.id === 'body__velho').required, false);
+		assert.equal(put.inputFields.find((item) => item.id === 'body__novo').required, true);
+		// Operação legada não muda, e rodar de novo sobre o resultado não muda nada.
+		assert.deepEqual(merged.operations.find((op) => op.legacy), catalog.operations[1]);
+		assert.deepEqual(keepRetiredFields(merged, merged), merged);
+	});
+
+	it('[C43] o catálogo gerado mantém os 397 campos que a documentação viva tirou de 7 operações', () => {
+		const { PACTO_OPERATIONS } = require('../dist/nodes/Pacto/helpers/catalog.generated');
+		const retirados = JSON.parse(
+			fs.readFileSync(path.join(__dirname, 'fixtures/campos-retirados-1.0.3.json'), 'utf8'),
+		).campos;
+		const byPair = new Map(PACTO_OPERATIONS.map((op) => [`${op.area}|${op.key}`, op]));
+		assert.equal(Object.keys(retirados).length, 7);
+		for (const [pair, ids] of Object.entries(retirados)) {
+			const present = new Set(byPair.get(pair).inputFields.map((item) => item.id));
+			assert.deepEqual(
+				ids.filter((id) => !present.has(id)),
+				[],
+				`${pair} perdeu campos do 1.0.3`,
+			);
+		}
+	});
+
 	it('[C13] troca o nome com caractere de substituição pelo valor do 1.0.3', async () => {
 		const { restoreAreaNames } = await loadBuilder();
 		const catalog = {

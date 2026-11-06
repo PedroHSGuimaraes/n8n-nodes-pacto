@@ -45,7 +45,7 @@ export interface PactoOperationDefinition {
 
 export const PACTO_API_BASE_URL = "https://apigw.pactosolucoes.com.br";
 export const PACTO_OPENAPI_VERSION = "3.0.1";
-export const PACTO_CATALOG_GENERATED_AT = "2026-11-06T21:08:25.719Z";
+export const PACTO_CATALOG_GENERATED_AT = "2026-11-06T21:39:14.497Z";
 export const PACTO_AREA_OPTIONS: INodePropertyOptions[] = [
 	{
 		"name": "acesso-dispensa-parq-controller",
@@ -33099,6 +33099,240 @@ const PACTO_OPERATIONS_PART_0: PactoOperationDefinition[] = [
 				"required": true,
 				"type": "string",
 				"description": "Código da nova atividade substituta"
+			},
+			{
+				"id": "body__aparelhoIds",
+				"location": "body",
+				"path": [
+					"aparelhoIds"
+				],
+				"displayName": "Aparelho Ids",
+				"required": false,
+				"type": "array",
+				"description": "Lista dos códigos dos aparelhos relacionados as atividades",
+				"defaultValue": "[1,2]"
+			},
+			{
+				"id": "body__ativa",
+				"location": "body",
+				"path": [
+					"ativa"
+				],
+				"displayName": "Ativa",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a atividade está ativa",
+				"defaultValue": true
+			},
+			{
+				"id": "body__atividadesRelacionadas",
+				"location": "body",
+				"path": [
+					"atividadesRelacionadas"
+				],
+				"displayName": "Atividades Relacionadas",
+				"required": false,
+				"type": "array",
+				"description": "Lista dos códigos das atividades relacionadas a que está sendo cadastrada",
+				"defaultValue": "[1,2,3]"
+			},
+			{
+				"id": "body__categoriaAtividadeIds",
+				"location": "body",
+				"path": [
+					"categoriaAtividadeIds"
+				],
+				"displayName": "Categoria Atividade Ids",
+				"required": false,
+				"type": "array",
+				"description": "Lista dos códigos das categoriais relacionadas a atividade",
+				"defaultValue": "[1,2]"
+			},
+			{
+				"id": "body__crossfit",
+				"location": "body",
+				"path": [
+					"crossfit"
+				],
+				"displayName": "Crossfit",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se é uma atividade do crossfit",
+				"defaultValue": false
+			},
+			{
+				"id": "body__descricao",
+				"location": "body",
+				"path": [
+					"descricao"
+				],
+				"displayName": "Descricao",
+				"required": false,
+				"type": "string",
+				"description": "Descrição da atividade física",
+				"defaultValue": "Ativida física recomendada para fortalecimento do grupo muscular das costas"
+			},
+			{
+				"id": "body__empresas",
+				"location": "body",
+				"path": [
+					"empresas"
+				],
+				"displayName": "Empresas",
+				"required": false,
+				"type": "array",
+				"description": "Empresas que a atividade física está relacionada"
+			},
+			{
+				"id": "body__grupoMuscularIds",
+				"location": "body",
+				"path": [
+					"grupoMuscularIds"
+				],
+				"displayName": "Grupo Muscular Ids",
+				"required": false,
+				"type": "array",
+				"description": "Lista dos códigos dos grupos musculares que são exercitados por essa ativdade",
+				"defaultValue": "[1]"
+			},
+			{
+				"id": "body__id",
+				"location": "body",
+				"path": [
+					"id"
+				],
+				"displayName": "ID",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador da atividade",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__imageUploads",
+				"location": "body",
+				"path": [
+					"imageUploads"
+				],
+				"displayName": "Image Uploads",
+				"required": false,
+				"type": "array",
+				"description": "Imagens que serão enviadas para o cadastro da atividade"
+			},
+			{
+				"id": "body__images",
+				"location": "body",
+				"path": [
+					"images"
+				],
+				"displayName": "Images",
+				"required": false,
+				"type": "array",
+				"description": "Lista de imagens da atividade"
+			},
+			{
+				"id": "body__linkVideos",
+				"location": "body",
+				"path": [
+					"linkVideos"
+				],
+				"displayName": "Link Videos",
+				"required": false,
+				"type": "array",
+				"description": "Lista de links de vídeos relacionados a atividade"
+			},
+			{
+				"id": "body__musculoIds",
+				"location": "body",
+				"path": [
+					"musculoIds"
+				],
+				"displayName": "Musculo Ids",
+				"required": false,
+				"type": "array",
+				"description": "Lista dos códigos dos músculos que são exercitados por essa atividade",
+				"defaultValue": "[1]"
+			},
+			{
+				"id": "body__nivelIds",
+				"location": "body",
+				"path": [
+					"nivelIds"
+				],
+				"displayName": "Nivel Ids",
+				"required": false,
+				"type": "array",
+				"description": "Lista dos níveis relacionados a essa atividade",
+				"defaultValue": "[3]"
+			},
+			{
+				"id": "body__nome",
+				"location": "body",
+				"path": [
+					"nome"
+				],
+				"displayName": "Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome da atividade física",
+				"defaultValue": "Treino de Costas"
+			},
+			{
+				"id": "body__serieApenasDuracao",
+				"location": "body",
+				"path": [
+					"serieApenasDuracao"
+				],
+				"displayName": "Serie Apenas Duracao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a série é de duração",
+				"defaultValue": false
+			},
+			{
+				"id": "body__tipo",
+				"location": "body",
+				"path": [
+					"tipo"
+				],
+				"displayName": "Tipo",
+				"required": false,
+				"type": "options",
+				"options": [
+					{
+						"name": "0",
+						"value": "0"
+					},
+					{
+						"name": "1",
+						"value": "1"
+					}
+				],
+				"description": "Tipo da atividade física. Valores disponíveis 0 - NEUROMUSCULAR (Neuromuscular) 1 - CARDIOVASCULAR (Cardiovascular)",
+				"defaultValue": "0"
+			},
+			{
+				"id": "body__usarNaPrescricao",
+				"location": "body",
+				"path": [
+					"usarNaPrescricao"
+				],
+				"displayName": "Usar Na Prescricao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se deve usar na pescrição de treinos",
+				"defaultValue": true
+			},
+			{
+				"id": "body__videoUri",
+				"location": "body",
+				"path": [
+					"videoUri"
+				],
+				"displayName": "Video Uri",
+				"required": false,
+				"type": "string",
+				"description": "URL do vídeo da atividade",
+				"defaultValue": "www.youtube.com/video-exemplo"
 			}
 		],
 		"requestBodyRequired": false,
@@ -296294,6 +296528,18 @@ const PACTO_OPERATIONS_PART_4: PactoOperationDefinition[] = [
 				"required": false,
 				"type": "array",
 				"description": ""
+			},
+			{
+				"id": "body__configTodaBaseAlunos",
+				"location": "body",
+				"path": [
+					"configTodaBaseAlunos"
+				],
+				"displayName": "Config Toda Base Alunos",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
 			}
 		],
 		"requestBodyRequired": true,
@@ -415679,6 +415925,17 @@ const PACTO_OPERATIONS_PART_5: PactoOperationDefinition[] = [
 				"type": "string",
 				"description": "Código da matrícula do cliente que será consultado",
 				"defaultValue": 1810
+			},
+			{
+				"id": "query__acessoClienteDTO",
+				"location": "query",
+				"path": [
+					"acessoClienteDTO"
+				],
+				"displayName": "Acesso Cliente DTO",
+				"required": false,
+				"type": "string",
+				"description": ""
 			}
 		],
 		"requestBodyRequired": false,
@@ -422263,6 +422520,17 @@ const PACTO_OPERATIONS_PART_5: PactoOperationDefinition[] = [
 				"type": "string",
 				"description": "Quantidade máxima de elementos por página",
 				"defaultValue": 10
+			},
+			{
+				"id": "query__codClienteTreino",
+				"location": "query",
+				"path": [
+					"codClienteTreino"
+				],
+				"displayName": "Cod Cliente Treino",
+				"required": false,
+				"type": "string",
+				"description": "Código do cliente no treino"
 			}
 		],
 		"requestBodyRequired": false,
@@ -718589,6 +718857,1799 @@ const PACTO_OPERATIONS_PART_7: PactoOperationDefinition[] = [
 				"type": "string",
 				"description": "",
 				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__ativa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"ativa"
+				],
+				"displayName": "Cliente — Empresa — Ativa",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa está ativa no sistema",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__setor",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"setor"
+				],
+				"displayName": "Cliente — Empresa — Setor",
+				"required": false,
+				"type": "string",
+				"description": "Setor ao qual a empresa pertence",
+				"defaultValue": "Academia"
+			},
+			{
+				"id": "body__cliente__empresa__estado__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Estado — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do estado",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__estado__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Estado — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo do estado",
+				"defaultValue": "Goiás"
+			},
+			{
+				"id": "body__cliente__empresa__estado__sigla",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"sigla"
+				],
+				"displayName": "Cliente — Empresa — Estado — Sigla",
+				"required": false,
+				"type": "string",
+				"description": "Sigla oficial do estado",
+				"defaultValue": "GO"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador da cidade",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cidade__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo da cidade",
+				"defaultValue": "Goiânia"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do estado",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo do estado",
+				"defaultValue": "Goiás"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__sigla",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"sigla"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Sigla",
+				"required": false,
+				"type": "string",
+				"description": "Sigla oficial do estado",
+				"defaultValue": "GO"
+			},
+			{
+				"id": "body__cliente__empresa__trabalharComPontuacao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"trabalharComPontuacao"
+				],
+				"displayName": "Cliente — Empresa — Trabalhar Com Pontuacao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa trabalha com pontuação",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarNfse",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarNfse"
+				],
+				"displayName": "Cliente — Empresa — Usar Nfse",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza NFSE (Nota Fiscal de Serviços Eletrônica)",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarNfce",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarNfce"
+				],
+				"displayName": "Cliente — Empresa — Usar Nfce",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza NFC-e (Nota Fiscal do Consumidor Eletrônica)",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellneHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellneHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellne Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração com MyWellness está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessEnviarVinculos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessEnviarVinculos"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Enviar Vinculos",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa envia vínculos para MyWellness",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessEnviarGrupos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessEnviarGrupos"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Enviar Grupos",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa envia grupos para MyWellness",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessFacilityUrl",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessFacilityUrl"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Facility URL",
+				"required": false,
+				"type": "string",
+				"description": "URL da instalação MyWellness Facility",
+				"defaultValue": "https://mywellness.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaMyWellneApiKey",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaMyWellneApiKey"
+				],
+				"displayName": "Cliente — Empresa — Integraca My Wellne Api Key",
+				"required": false,
+				"type": "string",
+				"description": "Chave API para integração com MyWellness",
+				"defaultValue": "api-key-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessUser"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação na integração MyWellness",
+				"defaultValue": "usuario-mywellness"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação na integração MyWellness",
+				"defaultValue": "senha-mywellness"
+			},
+			{
+				"id": "body__cliente__empresa__nrDiasVigenciaMyWellnessGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nrDiasVigenciaMyWellnessGymPass"
+				],
+				"displayName": "Cliente — Empresa — Nr Dias Vigencia My Wellness Gym Pass",
+				"required": false,
+				"type": "number",
+				"description": "Número de dias de vigência para GymPass na integração MyWellness",
+				"defaultValue": 30
+			},
+			{
+				"id": "body__cliente__empresa__tipoVigenciaMyWellnessGympass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tipoVigenciaMyWellnessGympass"
+				],
+				"displayName": "Cliente — Empresa — Tipo Vigencia My Wellness Gympass",
+				"required": false,
+				"type": "number",
+				"description": "Tipo de vigência para GymPass na integração MyWellness",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração MentorWeb está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebUrl",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebUrl"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web URL",
+				"required": false,
+				"type": "string",
+				"description": "URL para integração MentorWeb",
+				"defaultValue": "https://mentorweb.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebServico",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebServico"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Servico",
+				"required": false,
+				"type": "string",
+				"description": "Serviço utilizado na integração MentorWeb",
+				"defaultValue": "servico-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebUser"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação na integração MentorWeb",
+				"defaultValue": "usuario-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação na integração MentorWeb",
+				"defaultValue": "senha-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__utilizaSistemaEstacionamento",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaSistemaEstacionamento"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Sistema Estacionamento",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza sistema de estacionamento",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador da configuração de estacionamento",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpHost",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpHost"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Host",
+				"required": false,
+				"type": "string",
+				"description": "Host FTP utilizado para a integração com o sistema de estacionamento",
+				"defaultValue": "ftp.estacionamento.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpUser"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário FTP para autenticação na integração",
+				"defaultValue": "usuario-ftp"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpPass"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Pass",
+				"required": false,
+				"type": "string",
+				"description": "Senha FTP para autenticação na integração",
+				"defaultValue": "senha-ftp"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpPort",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpPort"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Port",
+				"required": false,
+				"type": "number",
+				"description": "Porta FTP utilizada para a conexão",
+				"defaultValue": 21
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaValor",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaValor"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Valor",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o valor deve ser enviado ao sistema de estacionamento",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaHorario",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaHorario"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Horario",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o horário deve ser enviado ao sistema de estacionamento",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaTelefoneEmail",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaTelefoneEmail"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Telefone E-mail",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o telefone e e-mail devem ser enviados ao sistema de estacionamento",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__nomeArquivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"nomeArquivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Nome Arquivo",
+				"required": false,
+				"type": "string",
+				"description": "Nome do arquivo gerado para integração com o sistema de estacionamento",
+				"defaultValue": "alunoEstacionamento.txt"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__produtosAdicionar",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"produtosAdicionar"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Produtos Adicionar",
+				"required": false,
+				"type": "string",
+				"description": "Lista de produtos que devem ser adicionados à integração",
+				"defaultValue": "PRODUTO1, PRODUTO2"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__empresa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"empresa"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Empresa",
+				"required": false,
+				"type": "number",
+				"description": "Código da empresa associada à configuração de estacionamento",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviarColaboradorAtivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviarColaboradorAtivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Enviar Colaborador Ativo",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se será gerado um novo txt com dados de colaboradores ativos para enviar ao FTP",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__nomeArquivoColaborador",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"nomeArquivoColaborador"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Nome Arquivo Colaborador",
+				"required": false,
+				"type": "string",
+				"description": "Nome do arquivo gerado para integração com o sistema de estacionamento",
+				"defaultValue": "nomearquivo_colaborador.txt"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__codificacaoArquivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"codificacaoArquivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Codificacao Arquivo",
+				"required": false,
+				"type": "number",
+				"description": "Codificação do arquivo de estacionamento - Padrão UTF-8",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__usarParceiroFidelidade",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarParceiroFidelidade"
+				],
+				"displayName": "Cliente — Empresa — Usar Parceiro Fidelidade",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza parceiros de fidelidade",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do parceiro de fidelidade",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tipoParceiro",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tipoParceiro"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tipo Parceiro",
+				"required": false,
+				"type": "number",
+				"description": "Tipo do parceiro de fidelidade",
+				"defaultValue": 2
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__validarCliente",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"validarCliente"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Validar Cliente",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o cliente deve ser validado antes da integração",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientId",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientId"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client ID",
+				"required": false,
+				"type": "string",
+				"description": "ID do cliente utilizado na autenticação da API do parceiro",
+				"defaultValue": "client-id-12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientSecret",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientSecret"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client Secret",
+				"required": false,
+				"type": "string",
+				"description": "Segredo do cliente utilizado na autenticação da API do parceiro",
+				"defaultValue": "client-secret-67890"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientIdRedemption",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientIdRedemption"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client ID Redemption",
+				"required": false,
+				"type": "string",
+				"description": "ID do cliente utilizado para resgate de pontos",
+				"defaultValue": "redemption-client-id-12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientSecretRedemption",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientSecretRedemption"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client Secret Redemption",
+				"required": false,
+				"type": "string",
+				"description": "Segredo do cliente utilizado para resgate de pontos",
+				"defaultValue": "redemption-client-secret-67890"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoLoja",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoLoja"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Loja",
+				"required": false,
+				"type": "string",
+				"description": "Código da loja associada ao parceiro de fidelidade",
+				"defaultValue": "LOJA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoMaquina",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoMaquina"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Maquina",
+				"required": false,
+				"type": "string",
+				"description": "Código da máquina utilizada na integração",
+				"defaultValue": "MAQUINA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoOferta",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoOferta"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Oferta",
+				"required": false,
+				"type": "string",
+				"description": "Código da oferta disponível no parceiro de fidelidade",
+				"defaultValue": "OFERTA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoResgate",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoResgate"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Resgate",
+				"required": false,
+				"type": "string",
+				"description": "Código utilizado para resgate de pontos",
+				"defaultValue": "RESCATE-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tags",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tags"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tags",
+				"required": false,
+				"type": "string",
+				"description": "Tags associadas ao parceiro de fidelidade",
+				"defaultValue": "tag1, tag2, tag3"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__cpf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"cpf"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — CPF",
+				"required": false,
+				"type": "string",
+				"description": "CPF do cliente associado ao parceiro de fidelidade",
+				"defaultValue": "123.456.789-00"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__token",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"token"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Token",
+				"required": false,
+				"type": "string",
+				"description": "Token de autenticação gerado para o parceiro de fidelidade",
+				"defaultValue": "token-abcdef12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__dataExpiracaoToken",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"dataExpiracaoToken"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Data Expiracao Token",
+				"required": false,
+				"type": "dateTime",
+				"description": "Data de expiração do token de autenticação",
+				"defaultValue": "2023-12-31T23:59:59Z"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__ambienteProducao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"ambienteProducao"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Ambiente Producao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o ambiente é de produção",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__parcelaVencidaGeraPonto",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"parcelaVencidaGeraPonto"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Parcela Vencida Gera Ponto",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se parcelas vencidas geram pontos no programa de fidelidade",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__empresa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"empresa"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Empresa",
+				"required": false,
+				"type": "number",
+				"description": "Código da empresa associada ao parceiro de fidelidade",
+				"defaultValue": 10
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tabelas",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tabelas"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tabelas",
+				"required": false,
+				"type": "array",
+				"description": "Lista de tabelas de fidelidade associadas ao parceiro"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__produtos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"produtos"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Produtos",
+				"required": false,
+				"type": "array",
+				"description": "Lista de produtos associados ao parceiro de fidelidade"
+			},
+			{
+				"id": "body__cliente__empresa__notificarWebhook",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"notificarWebhook"
+				],
+				"displayName": "Cliente — Empresa — Notificar Webhook",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa notifica via webhook",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__urlWebhookNotificar",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlWebhookNotificar"
+				],
+				"displayName": "Cliente — Empresa — URL Webhook Notificar",
+				"required": false,
+				"type": "string",
+				"description": "URL para notificação via webhook",
+				"defaultValue": "https://webhook.example.com/notify"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoAmigoFitHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoAmigoFitHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Amigo Fit Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração AmigoFit está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__nomeUsuarioAmigoFit",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nomeUsuarioAmigoFit"
+				],
+				"displayName": "Cliente — Empresa — Nome Usuario Amigo Fit",
+				"required": false,
+				"type": "string",
+				"description": "Nome de usuário para integração AmigoFit",
+				"defaultValue": "usuario-amigofit"
+			},
+			{
+				"id": "body__cliente__empresa__senhaUsuarioAmigoFit",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"senhaUsuarioAmigoFit"
+				],
+				"displayName": "Cliente — Empresa — Senha Usuario Amigo Fit",
+				"required": false,
+				"type": "string",
+				"description": "Senha para integração AmigoFit",
+				"defaultValue": "senha-amigofit"
+			},
+			{
+				"id": "body__cliente__empresa__cpfCodigoInternoWeHelp",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cpfCodigoInternoWeHelp"
+				],
+				"displayName": "Cliente — Empresa — CPF Código Interno We Help",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o CPF é usado como código interno no WeHelp",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__tokenBuzzLead",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenBuzzLead"
+				],
+				"displayName": "Cliente — Empresa — Token Buzz Lead",
+				"required": false,
+				"type": "string",
+				"description": "Token BuzzLead para integração",
+				"defaultValue": "token-buzzlead-12345"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSMS",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSMS"
+				],
+				"displayName": "Cliente — Empresa — Token SMS",
+				"required": false,
+				"type": "string",
+				"description": "Token SMS para envio de mensagens",
+				"defaultValue": "token-sms-67890"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSMSShortCode",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSMSShortCode"
+				],
+				"displayName": "Cliente — Empresa — Token SMSShort Code",
+				"required": false,
+				"type": "string",
+				"description": "Token ShortCode para envio de SMS",
+				"defaultValue": "shortcode-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360RelFatHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360RelFatHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Rel Fat Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração F360 Relatório Financeiro está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360FtpServer",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360FtpServer"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Ftp Server",
+				"required": false,
+				"type": "string",
+				"description": "Servidor FTP para integração F360",
+				"defaultValue": "ftp.f360.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360FtpPort",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360FtpPort"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Ftp Port",
+				"required": false,
+				"type": "number",
+				"description": "Porta FTP para integração F360",
+				"defaultValue": 21
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360User",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360User"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação FTP na integração F360",
+				"defaultValue": "usuario-f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Password",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Password"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação FTP na integração F360",
+				"defaultValue": "senha-f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Dir",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Dir"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Dir",
+				"required": false,
+				"type": "string",
+				"description": "Diretório FTP para integração F360",
+				"defaultValue": "/arquivos/f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Quinzenal",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Quinzenal"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Quinzenal",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração F360 é quinzenal",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Usar Conciliadora",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza conciliadora",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Empresa Conciliadora",
+				"required": false,
+				"type": "string",
+				"description": "Nome da empresa conciliadora",
+				"defaultValue": "Conciliadora Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__senhaConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"senhaConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Senha Conciliadora",
+				"required": false,
+				"type": "string",
+				"description": "Senha da empresa conciliadora",
+				"defaultValue": "senha-conciliadora"
+			},
+			{
+				"id": "body__cliente__empresa__codigoGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"codigoGymPass"
+				],
+				"displayName": "Cliente — Empresa — Código Gym Pass",
+				"required": false,
+				"type": "string",
+				"description": "Código GymPass associado à empresa",
+				"defaultValue": "gym-pass-12345"
+			},
+			{
+				"id": "body__cliente__empresa__tokenApiGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenApiGymPass"
+				],
+				"displayName": "Cliente — Empresa — Token Api Gym Pass",
+				"required": false,
+				"type": "string",
+				"description": "Token API para integração GymPass",
+				"defaultValue": "api-token-gympass"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Spivi está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviSourceName",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviSourceName"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Source Name",
+				"required": false,
+				"type": "string",
+				"description": "Nome da fonte na integração Spivi",
+				"defaultValue": "Fonte Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviSiteID",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviSiteID"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Site ID",
+				"required": false,
+				"type": "number",
+				"description": "ID do site na integração Spivi",
+				"defaultValue": 12345
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para integração Spivi",
+				"defaultValue": "senha-spivi"
+			},
+			{
+				"id": "body__cliente__empresa__usaIntegracoesCrm",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usaIntegracoesCrm"
+				],
+				"displayName": "Cliente — Empresa — Usa Integracoes Crm",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza integrações CRM",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__carenciaRenovacao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"carenciaRenovacao"
+				],
+				"displayName": "Cliente — Empresa — Carencia Renovacao",
+				"required": false,
+				"type": "number",
+				"description": "Período de carência para renovação em dias",
+				"defaultValue": 15
+			},
+			{
+				"id": "body__cliente__empresa__usarGestaoCreditosPersonal",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarGestaoCreditosPersonal"
+				],
+				"displayName": "Cliente — Empresa — Usar Gestao Creditos Personal",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza gestão de créditos personalizados",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__tipoGestaoNfse",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tipoGestaoNfse"
+				],
+				"displayName": "Cliente — Empresa — Tipo Gestao Nfse",
+				"required": false,
+				"type": "number",
+				"description": "Tipo de gestão de NFS-e",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cnpj",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cnpj"
+				],
+				"displayName": "Cliente — Empresa — CNPJ",
+				"required": false,
+				"type": "string",
+				"description": "CNPJ da empresa",
+				"defaultValue": "12.345.678/0001-90"
+			},
+			{
+				"id": "body__cliente__empresa__razaoSocial",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"razaoSocial"
+				],
+				"displayName": "Cliente — Empresa — Razao Social",
+				"required": false,
+				"type": "string",
+				"description": "Razão social da empresa",
+				"defaultValue": "RAZÃO SOCIAL DA EMPRESA"
+			},
+			{
+				"id": "body__cliente__empresa__email",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"email"
+				],
+				"displayName": "Cliente — Empresa — E-mail",
+				"required": false,
+				"type": "string",
+				"description": "E-mail oficial da empresa",
+				"defaultValue": "contato@empresa.com"
+			},
+			{
+				"id": "body__cliente__empresa__arredondamento",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"arredondamento"
+				],
+				"displayName": "Cliente — Empresa — Arredondamento",
+				"required": false,
+				"type": "number",
+				"description": "Arredondamento utilizado pela empresa",
+				"defaultValue": 2
+			},
+			{
+				"id": "body__cliente__empresa__habilitarCadastroEmpresaSesi",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"habilitarCadastroEmpresaSesi"
+				],
+				"displayName": "Cliente — Empresa — Habilitar Cadastro Empresa Sesi",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o cadastro SESI da empresa está habilitado",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__utilizaGestaoClientesComRestricoes",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaGestaoClientesComRestricoes"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Gestao Clientes Com Restricoes",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza gestão de clientes com restrições",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopNomeApp",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopNomeApp"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Nome App",
+				"required": false,
+				"type": "string",
+				"description": "Nome do aplicativo Nuvemshop",
+				"defaultValue": "App Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopEmail",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopEmail"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop E-mail",
+				"required": false,
+				"type": "string",
+				"description": "E-mail associado à conta Nuvemshop",
+				"defaultValue": "nuvemshop@example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopTokenAcesso",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopTokenAcesso"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Token Acesso",
+				"required": false,
+				"type": "string",
+				"description": "Token de acesso para Nuvemshop",
+				"defaultValue": "token-nuvemshop-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopStoreId",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopStoreId"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Store ID",
+				"required": false,
+				"type": "string",
+				"description": "ID da loja Nuvemshop",
+				"defaultValue": "store-id-67890"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Nuvemshop está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoFogueteHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoFogueteHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Foguete Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Foguete está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__permiteContratosConcomintante",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"permiteContratosConcomintante"
+				],
+				"displayName": "Cliente — Empresa — Permite Contratos Concomintante",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa permite contratos concomitantes",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__pontuarApenasCampanhasAtivas",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"pontuarApenasCampanhasAtivas"
+				],
+				"displayName": "Cliente — Empresa — Pontuar Apenas Campanhas Ativas",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__utilizarPactoPrint",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizarPactoPrint"
+				],
+				"displayName": "Cliente — Empresa — Utilizar Pacto Print",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza PactoPrint",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__bvObrigatorio",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"bvObrigatorio"
+				],
+				"displayName": "Cliente — Empresa — Bv Obrigatorio",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o BV é obrigatório",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoManyChatHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoManyChatHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Many Chat Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoManyChatTokenApi",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoManyChatTokenApi"
+				],
+				"displayName": "Cliente — Empresa — Integracao Many Chat Token Api",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__nomeCurto",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nomeCurto"
+				],
+				"displayName": "Cliente — Empresa — Nome Curto",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarSescDf"
+				],
+				"displayName": "Cliente — Empresa — Usar Sesc Df",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSescDf"
+				],
+				"displayName": "Cliente — Empresa — Token Sesc Df",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__utilizaConfigCancelamentoSesc",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaConfigCancelamentoSesc"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Config Cancelamento Sesc",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__horariocapacidadeporcategoria",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"horariocapacidadeporcategoria"
+				],
+				"displayName": "Cliente — Empresa — Horariocapacidadeporcategoria",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__capacidadeSimultanea",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"capacidadeSimultanea"
+				],
+				"displayName": "Cliente — Empresa — Capacidade Simultanea",
+				"required": false,
+				"type": "number",
+				"description": "",
+				"defaultValue": "<integer>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenIntegracaoCatraca",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenIntegracaoCatraca"
+				],
+				"displayName": "Cliente — Empresa — Token Integracao Catraca",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__urlIntegrcaoCatraca",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlIntegrcaoCatraca"
+				],
+				"displayName": "Cliente — Empresa — URL Integrcao Catraca",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarApiSescRo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarApiSescRo"
+				],
+				"displayName": "Cliente — Empresa — Usar Api Sesc Ro",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSescRo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSescRo"
+				],
+				"displayName": "Cliente — Empresa — Token Sesc Ro",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — Usar Api Sesc Ce",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — Token Api Sesc Ce",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__urlApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — URL Api Sesc Ce",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__timeZoneDefault",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"timeZoneDefault"
+				],
+				"displayName": "Cliente — Empresa — Time Zone Default",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__habilitarIntegracaoGladiumSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"habilitarIntegracaoGladiumSescDf"
+				],
+				"displayName": "Cliente — Empresa — Habilitar Integracao Gladium Sesc Df",
+				"required": false,
+				"type": "boolean",
+				"description": "Habilitar a integração com a Gladium SESC DF",
+				"defaultValue": false
 			}
 		],
 		"requestBodyRequired": true,
@@ -727450,6 +729511,1799 @@ const PACTO_OPERATIONS_PART_7: PactoOperationDefinition[] = [
 				"type": "string",
 				"description": "",
 				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__ativa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"ativa"
+				],
+				"displayName": "Cliente — Empresa — Ativa",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa está ativa no sistema",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__setor",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"setor"
+				],
+				"displayName": "Cliente — Empresa — Setor",
+				"required": false,
+				"type": "string",
+				"description": "Setor ao qual a empresa pertence",
+				"defaultValue": "Academia"
+			},
+			{
+				"id": "body__cliente__empresa__estado__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Estado — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do estado",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__estado__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Estado — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo do estado",
+				"defaultValue": "Goiás"
+			},
+			{
+				"id": "body__cliente__empresa__estado__sigla",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"sigla"
+				],
+				"displayName": "Cliente — Empresa — Estado — Sigla",
+				"required": false,
+				"type": "string",
+				"description": "Sigla oficial do estado",
+				"defaultValue": "GO"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador da cidade",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cidade__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo da cidade",
+				"defaultValue": "Goiânia"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do estado",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo do estado",
+				"defaultValue": "Goiás"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__sigla",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"sigla"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Sigla",
+				"required": false,
+				"type": "string",
+				"description": "Sigla oficial do estado",
+				"defaultValue": "GO"
+			},
+			{
+				"id": "body__cliente__empresa__trabalharComPontuacao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"trabalharComPontuacao"
+				],
+				"displayName": "Cliente — Empresa — Trabalhar Com Pontuacao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa trabalha com pontuação",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarNfse",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarNfse"
+				],
+				"displayName": "Cliente — Empresa — Usar Nfse",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza NFSE (Nota Fiscal de Serviços Eletrônica)",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarNfce",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarNfce"
+				],
+				"displayName": "Cliente — Empresa — Usar Nfce",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza NFC-e (Nota Fiscal do Consumidor Eletrônica)",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellneHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellneHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellne Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração com MyWellness está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessEnviarVinculos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessEnviarVinculos"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Enviar Vinculos",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa envia vínculos para MyWellness",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessEnviarGrupos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessEnviarGrupos"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Enviar Grupos",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa envia grupos para MyWellness",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessFacilityUrl",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessFacilityUrl"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Facility URL",
+				"required": false,
+				"type": "string",
+				"description": "URL da instalação MyWellness Facility",
+				"defaultValue": "https://mywellness.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaMyWellneApiKey",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaMyWellneApiKey"
+				],
+				"displayName": "Cliente — Empresa — Integraca My Wellne Api Key",
+				"required": false,
+				"type": "string",
+				"description": "Chave API para integração com MyWellness",
+				"defaultValue": "api-key-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessUser"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação na integração MyWellness",
+				"defaultValue": "usuario-mywellness"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação na integração MyWellness",
+				"defaultValue": "senha-mywellness"
+			},
+			{
+				"id": "body__cliente__empresa__nrDiasVigenciaMyWellnessGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nrDiasVigenciaMyWellnessGymPass"
+				],
+				"displayName": "Cliente — Empresa — Nr Dias Vigencia My Wellness Gym Pass",
+				"required": false,
+				"type": "number",
+				"description": "Número de dias de vigência para GymPass na integração MyWellness",
+				"defaultValue": 30
+			},
+			{
+				"id": "body__cliente__empresa__tipoVigenciaMyWellnessGympass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tipoVigenciaMyWellnessGympass"
+				],
+				"displayName": "Cliente — Empresa — Tipo Vigencia My Wellness Gympass",
+				"required": false,
+				"type": "number",
+				"description": "Tipo de vigência para GymPass na integração MyWellness",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração MentorWeb está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebUrl",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebUrl"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web URL",
+				"required": false,
+				"type": "string",
+				"description": "URL para integração MentorWeb",
+				"defaultValue": "https://mentorweb.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebServico",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebServico"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Servico",
+				"required": false,
+				"type": "string",
+				"description": "Serviço utilizado na integração MentorWeb",
+				"defaultValue": "servico-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebUser"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação na integração MentorWeb",
+				"defaultValue": "usuario-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação na integração MentorWeb",
+				"defaultValue": "senha-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__utilizaSistemaEstacionamento",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaSistemaEstacionamento"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Sistema Estacionamento",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza sistema de estacionamento",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador da configuração de estacionamento",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpHost",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpHost"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Host",
+				"required": false,
+				"type": "string",
+				"description": "Host FTP utilizado para a integração com o sistema de estacionamento",
+				"defaultValue": "ftp.estacionamento.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpUser"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário FTP para autenticação na integração",
+				"defaultValue": "usuario-ftp"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpPass"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Pass",
+				"required": false,
+				"type": "string",
+				"description": "Senha FTP para autenticação na integração",
+				"defaultValue": "senha-ftp"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpPort",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpPort"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Port",
+				"required": false,
+				"type": "number",
+				"description": "Porta FTP utilizada para a conexão",
+				"defaultValue": 21
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaValor",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaValor"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Valor",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o valor deve ser enviado ao sistema de estacionamento",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaHorario",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaHorario"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Horario",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o horário deve ser enviado ao sistema de estacionamento",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaTelefoneEmail",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaTelefoneEmail"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Telefone E-mail",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o telefone e e-mail devem ser enviados ao sistema de estacionamento",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__nomeArquivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"nomeArquivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Nome Arquivo",
+				"required": false,
+				"type": "string",
+				"description": "Nome do arquivo gerado para integração com o sistema de estacionamento",
+				"defaultValue": "alunoEstacionamento.txt"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__produtosAdicionar",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"produtosAdicionar"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Produtos Adicionar",
+				"required": false,
+				"type": "string",
+				"description": "Lista de produtos que devem ser adicionados à integração",
+				"defaultValue": "PRODUTO1, PRODUTO2"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__empresa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"empresa"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Empresa",
+				"required": false,
+				"type": "number",
+				"description": "Código da empresa associada à configuração de estacionamento",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviarColaboradorAtivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviarColaboradorAtivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Enviar Colaborador Ativo",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se será gerado um novo txt com dados de colaboradores ativos para enviar ao FTP",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__nomeArquivoColaborador",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"nomeArquivoColaborador"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Nome Arquivo Colaborador",
+				"required": false,
+				"type": "string",
+				"description": "Nome do arquivo gerado para integração com o sistema de estacionamento",
+				"defaultValue": "nomearquivo_colaborador.txt"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__codificacaoArquivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"codificacaoArquivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Codificacao Arquivo",
+				"required": false,
+				"type": "number",
+				"description": "Codificação do arquivo de estacionamento - Padrão UTF-8",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__usarParceiroFidelidade",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarParceiroFidelidade"
+				],
+				"displayName": "Cliente — Empresa — Usar Parceiro Fidelidade",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza parceiros de fidelidade",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do parceiro de fidelidade",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tipoParceiro",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tipoParceiro"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tipo Parceiro",
+				"required": false,
+				"type": "number",
+				"description": "Tipo do parceiro de fidelidade",
+				"defaultValue": 2
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__validarCliente",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"validarCliente"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Validar Cliente",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o cliente deve ser validado antes da integração",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientId",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientId"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client ID",
+				"required": false,
+				"type": "string",
+				"description": "ID do cliente utilizado na autenticação da API do parceiro",
+				"defaultValue": "client-id-12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientSecret",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientSecret"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client Secret",
+				"required": false,
+				"type": "string",
+				"description": "Segredo do cliente utilizado na autenticação da API do parceiro",
+				"defaultValue": "client-secret-67890"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientIdRedemption",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientIdRedemption"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client ID Redemption",
+				"required": false,
+				"type": "string",
+				"description": "ID do cliente utilizado para resgate de pontos",
+				"defaultValue": "redemption-client-id-12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientSecretRedemption",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientSecretRedemption"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client Secret Redemption",
+				"required": false,
+				"type": "string",
+				"description": "Segredo do cliente utilizado para resgate de pontos",
+				"defaultValue": "redemption-client-secret-67890"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoLoja",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoLoja"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Loja",
+				"required": false,
+				"type": "string",
+				"description": "Código da loja associada ao parceiro de fidelidade",
+				"defaultValue": "LOJA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoMaquina",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoMaquina"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Maquina",
+				"required": false,
+				"type": "string",
+				"description": "Código da máquina utilizada na integração",
+				"defaultValue": "MAQUINA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoOferta",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoOferta"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Oferta",
+				"required": false,
+				"type": "string",
+				"description": "Código da oferta disponível no parceiro de fidelidade",
+				"defaultValue": "OFERTA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoResgate",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoResgate"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Resgate",
+				"required": false,
+				"type": "string",
+				"description": "Código utilizado para resgate de pontos",
+				"defaultValue": "RESCATE-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tags",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tags"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tags",
+				"required": false,
+				"type": "string",
+				"description": "Tags associadas ao parceiro de fidelidade",
+				"defaultValue": "tag1, tag2, tag3"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__cpf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"cpf"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — CPF",
+				"required": false,
+				"type": "string",
+				"description": "CPF do cliente associado ao parceiro de fidelidade",
+				"defaultValue": "123.456.789-00"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__token",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"token"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Token",
+				"required": false,
+				"type": "string",
+				"description": "Token de autenticação gerado para o parceiro de fidelidade",
+				"defaultValue": "token-abcdef12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__dataExpiracaoToken",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"dataExpiracaoToken"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Data Expiracao Token",
+				"required": false,
+				"type": "dateTime",
+				"description": "Data de expiração do token de autenticação",
+				"defaultValue": "2023-12-31T23:59:59Z"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__ambienteProducao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"ambienteProducao"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Ambiente Producao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o ambiente é de produção",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__parcelaVencidaGeraPonto",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"parcelaVencidaGeraPonto"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Parcela Vencida Gera Ponto",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se parcelas vencidas geram pontos no programa de fidelidade",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__empresa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"empresa"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Empresa",
+				"required": false,
+				"type": "number",
+				"description": "Código da empresa associada ao parceiro de fidelidade",
+				"defaultValue": 10
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tabelas",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tabelas"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tabelas",
+				"required": false,
+				"type": "array",
+				"description": "Lista de tabelas de fidelidade associadas ao parceiro"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__produtos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"produtos"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Produtos",
+				"required": false,
+				"type": "array",
+				"description": "Lista de produtos associados ao parceiro de fidelidade"
+			},
+			{
+				"id": "body__cliente__empresa__notificarWebhook",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"notificarWebhook"
+				],
+				"displayName": "Cliente — Empresa — Notificar Webhook",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa notifica via webhook",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__urlWebhookNotificar",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlWebhookNotificar"
+				],
+				"displayName": "Cliente — Empresa — URL Webhook Notificar",
+				"required": false,
+				"type": "string",
+				"description": "URL para notificação via webhook",
+				"defaultValue": "https://webhook.example.com/notify"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoAmigoFitHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoAmigoFitHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Amigo Fit Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração AmigoFit está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__nomeUsuarioAmigoFit",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nomeUsuarioAmigoFit"
+				],
+				"displayName": "Cliente — Empresa — Nome Usuario Amigo Fit",
+				"required": false,
+				"type": "string",
+				"description": "Nome de usuário para integração AmigoFit",
+				"defaultValue": "usuario-amigofit"
+			},
+			{
+				"id": "body__cliente__empresa__senhaUsuarioAmigoFit",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"senhaUsuarioAmigoFit"
+				],
+				"displayName": "Cliente — Empresa — Senha Usuario Amigo Fit",
+				"required": false,
+				"type": "string",
+				"description": "Senha para integração AmigoFit",
+				"defaultValue": "senha-amigofit"
+			},
+			{
+				"id": "body__cliente__empresa__cpfCodigoInternoWeHelp",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cpfCodigoInternoWeHelp"
+				],
+				"displayName": "Cliente — Empresa — CPF Código Interno We Help",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o CPF é usado como código interno no WeHelp",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__tokenBuzzLead",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenBuzzLead"
+				],
+				"displayName": "Cliente — Empresa — Token Buzz Lead",
+				"required": false,
+				"type": "string",
+				"description": "Token BuzzLead para integração",
+				"defaultValue": "token-buzzlead-12345"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSMS",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSMS"
+				],
+				"displayName": "Cliente — Empresa — Token SMS",
+				"required": false,
+				"type": "string",
+				"description": "Token SMS para envio de mensagens",
+				"defaultValue": "token-sms-67890"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSMSShortCode",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSMSShortCode"
+				],
+				"displayName": "Cliente — Empresa — Token SMSShort Code",
+				"required": false,
+				"type": "string",
+				"description": "Token ShortCode para envio de SMS",
+				"defaultValue": "shortcode-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360RelFatHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360RelFatHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Rel Fat Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração F360 Relatório Financeiro está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360FtpServer",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360FtpServer"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Ftp Server",
+				"required": false,
+				"type": "string",
+				"description": "Servidor FTP para integração F360",
+				"defaultValue": "ftp.f360.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360FtpPort",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360FtpPort"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Ftp Port",
+				"required": false,
+				"type": "number",
+				"description": "Porta FTP para integração F360",
+				"defaultValue": 21
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360User",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360User"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação FTP na integração F360",
+				"defaultValue": "usuario-f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Password",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Password"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação FTP na integração F360",
+				"defaultValue": "senha-f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Dir",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Dir"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Dir",
+				"required": false,
+				"type": "string",
+				"description": "Diretório FTP para integração F360",
+				"defaultValue": "/arquivos/f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Quinzenal",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Quinzenal"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Quinzenal",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração F360 é quinzenal",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Usar Conciliadora",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza conciliadora",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Empresa Conciliadora",
+				"required": false,
+				"type": "string",
+				"description": "Nome da empresa conciliadora",
+				"defaultValue": "Conciliadora Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__senhaConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"senhaConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Senha Conciliadora",
+				"required": false,
+				"type": "string",
+				"description": "Senha da empresa conciliadora",
+				"defaultValue": "senha-conciliadora"
+			},
+			{
+				"id": "body__cliente__empresa__codigoGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"codigoGymPass"
+				],
+				"displayName": "Cliente — Empresa — Código Gym Pass",
+				"required": false,
+				"type": "string",
+				"description": "Código GymPass associado à empresa",
+				"defaultValue": "gym-pass-12345"
+			},
+			{
+				"id": "body__cliente__empresa__tokenApiGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenApiGymPass"
+				],
+				"displayName": "Cliente — Empresa — Token Api Gym Pass",
+				"required": false,
+				"type": "string",
+				"description": "Token API para integração GymPass",
+				"defaultValue": "api-token-gympass"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Spivi está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviSourceName",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviSourceName"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Source Name",
+				"required": false,
+				"type": "string",
+				"description": "Nome da fonte na integração Spivi",
+				"defaultValue": "Fonte Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviSiteID",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviSiteID"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Site ID",
+				"required": false,
+				"type": "number",
+				"description": "ID do site na integração Spivi",
+				"defaultValue": 12345
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para integração Spivi",
+				"defaultValue": "senha-spivi"
+			},
+			{
+				"id": "body__cliente__empresa__usaIntegracoesCrm",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usaIntegracoesCrm"
+				],
+				"displayName": "Cliente — Empresa — Usa Integracoes Crm",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza integrações CRM",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__carenciaRenovacao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"carenciaRenovacao"
+				],
+				"displayName": "Cliente — Empresa — Carencia Renovacao",
+				"required": false,
+				"type": "number",
+				"description": "Período de carência para renovação em dias",
+				"defaultValue": 15
+			},
+			{
+				"id": "body__cliente__empresa__usarGestaoCreditosPersonal",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarGestaoCreditosPersonal"
+				],
+				"displayName": "Cliente — Empresa — Usar Gestao Creditos Personal",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza gestão de créditos personalizados",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__tipoGestaoNfse",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tipoGestaoNfse"
+				],
+				"displayName": "Cliente — Empresa — Tipo Gestao Nfse",
+				"required": false,
+				"type": "number",
+				"description": "Tipo de gestão de NFS-e",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cnpj",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cnpj"
+				],
+				"displayName": "Cliente — Empresa — CNPJ",
+				"required": false,
+				"type": "string",
+				"description": "CNPJ da empresa",
+				"defaultValue": "12.345.678/0001-90"
+			},
+			{
+				"id": "body__cliente__empresa__razaoSocial",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"razaoSocial"
+				],
+				"displayName": "Cliente — Empresa — Razao Social",
+				"required": false,
+				"type": "string",
+				"description": "Razão social da empresa",
+				"defaultValue": "RAZÃO SOCIAL DA EMPRESA"
+			},
+			{
+				"id": "body__cliente__empresa__email",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"email"
+				],
+				"displayName": "Cliente — Empresa — E-mail",
+				"required": false,
+				"type": "string",
+				"description": "E-mail oficial da empresa",
+				"defaultValue": "contato@empresa.com"
+			},
+			{
+				"id": "body__cliente__empresa__arredondamento",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"arredondamento"
+				],
+				"displayName": "Cliente — Empresa — Arredondamento",
+				"required": false,
+				"type": "number",
+				"description": "Arredondamento utilizado pela empresa",
+				"defaultValue": 2
+			},
+			{
+				"id": "body__cliente__empresa__habilitarCadastroEmpresaSesi",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"habilitarCadastroEmpresaSesi"
+				],
+				"displayName": "Cliente — Empresa — Habilitar Cadastro Empresa Sesi",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o cadastro SESI da empresa está habilitado",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__utilizaGestaoClientesComRestricoes",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaGestaoClientesComRestricoes"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Gestao Clientes Com Restricoes",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza gestão de clientes com restrições",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopNomeApp",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopNomeApp"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Nome App",
+				"required": false,
+				"type": "string",
+				"description": "Nome do aplicativo Nuvemshop",
+				"defaultValue": "App Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopEmail",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopEmail"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop E-mail",
+				"required": false,
+				"type": "string",
+				"description": "E-mail associado à conta Nuvemshop",
+				"defaultValue": "nuvemshop@example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopTokenAcesso",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopTokenAcesso"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Token Acesso",
+				"required": false,
+				"type": "string",
+				"description": "Token de acesso para Nuvemshop",
+				"defaultValue": "token-nuvemshop-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopStoreId",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopStoreId"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Store ID",
+				"required": false,
+				"type": "string",
+				"description": "ID da loja Nuvemshop",
+				"defaultValue": "store-id-67890"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Nuvemshop está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoFogueteHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoFogueteHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Foguete Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Foguete está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__permiteContratosConcomintante",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"permiteContratosConcomintante"
+				],
+				"displayName": "Cliente — Empresa — Permite Contratos Concomintante",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa permite contratos concomitantes",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__pontuarApenasCampanhasAtivas",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"pontuarApenasCampanhasAtivas"
+				],
+				"displayName": "Cliente — Empresa — Pontuar Apenas Campanhas Ativas",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__utilizarPactoPrint",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizarPactoPrint"
+				],
+				"displayName": "Cliente — Empresa — Utilizar Pacto Print",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza PactoPrint",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__bvObrigatorio",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"bvObrigatorio"
+				],
+				"displayName": "Cliente — Empresa — Bv Obrigatorio",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o BV é obrigatório",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoManyChatHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoManyChatHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Many Chat Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoManyChatTokenApi",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoManyChatTokenApi"
+				],
+				"displayName": "Cliente — Empresa — Integracao Many Chat Token Api",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__nomeCurto",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nomeCurto"
+				],
+				"displayName": "Cliente — Empresa — Nome Curto",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarSescDf"
+				],
+				"displayName": "Cliente — Empresa — Usar Sesc Df",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSescDf"
+				],
+				"displayName": "Cliente — Empresa — Token Sesc Df",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__utilizaConfigCancelamentoSesc",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaConfigCancelamentoSesc"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Config Cancelamento Sesc",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__horariocapacidadeporcategoria",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"horariocapacidadeporcategoria"
+				],
+				"displayName": "Cliente — Empresa — Horariocapacidadeporcategoria",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__capacidadeSimultanea",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"capacidadeSimultanea"
+				],
+				"displayName": "Cliente — Empresa — Capacidade Simultanea",
+				"required": false,
+				"type": "number",
+				"description": "",
+				"defaultValue": "<integer>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenIntegracaoCatraca",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenIntegracaoCatraca"
+				],
+				"displayName": "Cliente — Empresa — Token Integracao Catraca",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__urlIntegrcaoCatraca",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlIntegrcaoCatraca"
+				],
+				"displayName": "Cliente — Empresa — URL Integrcao Catraca",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarApiSescRo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarApiSescRo"
+				],
+				"displayName": "Cliente — Empresa — Usar Api Sesc Ro",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSescRo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSescRo"
+				],
+				"displayName": "Cliente — Empresa — Token Sesc Ro",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — Usar Api Sesc Ce",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — Token Api Sesc Ce",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__urlApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — URL Api Sesc Ce",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__timeZoneDefault",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"timeZoneDefault"
+				],
+				"displayName": "Cliente — Empresa — Time Zone Default",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__habilitarIntegracaoGladiumSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"habilitarIntegracaoGladiumSescDf"
+				],
+				"displayName": "Cliente — Empresa — Habilitar Integracao Gladium Sesc Df",
+				"required": false,
+				"type": "boolean",
+				"description": "Habilitar a integração com a Gladium SESC DF",
+				"defaultValue": false
 			}
 		],
 		"requestBodyRequired": true,
@@ -736311,6 +740165,1799 @@ const PACTO_OPERATIONS_PART_7: PactoOperationDefinition[] = [
 				"type": "string",
 				"description": "",
 				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__ativa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"ativa"
+				],
+				"displayName": "Cliente — Empresa — Ativa",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa está ativa no sistema",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__setor",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"setor"
+				],
+				"displayName": "Cliente — Empresa — Setor",
+				"required": false,
+				"type": "string",
+				"description": "Setor ao qual a empresa pertence",
+				"defaultValue": "Academia"
+			},
+			{
+				"id": "body__cliente__empresa__estado__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Estado — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do estado",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__estado__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Estado — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo do estado",
+				"defaultValue": "Goiás"
+			},
+			{
+				"id": "body__cliente__empresa__estado__sigla",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"estado",
+					"sigla"
+				],
+				"displayName": "Cliente — Empresa — Estado — Sigla",
+				"required": false,
+				"type": "string",
+				"description": "Sigla oficial do estado",
+				"defaultValue": "GO"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador da cidade",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cidade__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo da cidade",
+				"defaultValue": "Goiânia"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do estado",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__nome",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"nome"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Nome",
+				"required": false,
+				"type": "string",
+				"description": "Nome completo do estado",
+				"defaultValue": "Goiás"
+			},
+			{
+				"id": "body__cliente__empresa__cidade__estado__sigla",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cidade",
+					"estado",
+					"sigla"
+				],
+				"displayName": "Cliente — Empresa — Cidade — Estado — Sigla",
+				"required": false,
+				"type": "string",
+				"description": "Sigla oficial do estado",
+				"defaultValue": "GO"
+			},
+			{
+				"id": "body__cliente__empresa__trabalharComPontuacao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"trabalharComPontuacao"
+				],
+				"displayName": "Cliente — Empresa — Trabalhar Com Pontuacao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa trabalha com pontuação",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarNfse",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarNfse"
+				],
+				"displayName": "Cliente — Empresa — Usar Nfse",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza NFSE (Nota Fiscal de Serviços Eletrônica)",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarNfce",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarNfce"
+				],
+				"displayName": "Cliente — Empresa — Usar Nfce",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza NFC-e (Nota Fiscal do Consumidor Eletrônica)",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellneHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellneHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellne Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração com MyWellness está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessEnviarVinculos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessEnviarVinculos"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Enviar Vinculos",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa envia vínculos para MyWellness",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessEnviarGrupos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessEnviarGrupos"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Enviar Grupos",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa envia grupos para MyWellness",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessFacilityUrl",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessFacilityUrl"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Facility URL",
+				"required": false,
+				"type": "string",
+				"description": "URL da instalação MyWellness Facility",
+				"defaultValue": "https://mywellness.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaMyWellneApiKey",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaMyWellneApiKey"
+				],
+				"displayName": "Cliente — Empresa — Integraca My Wellne Api Key",
+				"required": false,
+				"type": "string",
+				"description": "Chave API para integração com MyWellness",
+				"defaultValue": "api-key-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessUser"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação na integração MyWellness",
+				"defaultValue": "usuario-mywellness"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMyWellnessPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMyWellnessPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao My Wellness Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação na integração MyWellness",
+				"defaultValue": "senha-mywellness"
+			},
+			{
+				"id": "body__cliente__empresa__nrDiasVigenciaMyWellnessGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nrDiasVigenciaMyWellnessGymPass"
+				],
+				"displayName": "Cliente — Empresa — Nr Dias Vigencia My Wellness Gym Pass",
+				"required": false,
+				"type": "number",
+				"description": "Número de dias de vigência para GymPass na integração MyWellness",
+				"defaultValue": 30
+			},
+			{
+				"id": "body__cliente__empresa__tipoVigenciaMyWellnessGympass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tipoVigenciaMyWellnessGympass"
+				],
+				"displayName": "Cliente — Empresa — Tipo Vigencia My Wellness Gympass",
+				"required": false,
+				"type": "number",
+				"description": "Tipo de vigência para GymPass na integração MyWellness",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração MentorWeb está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebUrl",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebUrl"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web URL",
+				"required": false,
+				"type": "string",
+				"description": "URL para integração MentorWeb",
+				"defaultValue": "https://mentorweb.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebServico",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebServico"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Servico",
+				"required": false,
+				"type": "string",
+				"description": "Serviço utilizado na integração MentorWeb",
+				"defaultValue": "servico-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebUser"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação na integração MentorWeb",
+				"defaultValue": "usuario-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoMentorWebPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoMentorWebPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao Mentor Web Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação na integração MentorWeb",
+				"defaultValue": "senha-mentorweb"
+			},
+			{
+				"id": "body__cliente__empresa__utilizaSistemaEstacionamento",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaSistemaEstacionamento"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Sistema Estacionamento",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza sistema de estacionamento",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador da configuração de estacionamento",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpHost",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpHost"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Host",
+				"required": false,
+				"type": "string",
+				"description": "Host FTP utilizado para a integração com o sistema de estacionamento",
+				"defaultValue": "ftp.estacionamento.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpUser",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpUser"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário FTP para autenticação na integração",
+				"defaultValue": "usuario-ftp"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpPass"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Pass",
+				"required": false,
+				"type": "string",
+				"description": "Senha FTP para autenticação na integração",
+				"defaultValue": "senha-ftp"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__ftpPort",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"ftpPort"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Ftp Port",
+				"required": false,
+				"type": "number",
+				"description": "Porta FTP utilizada para a conexão",
+				"defaultValue": 21
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaValor",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaValor"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Valor",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o valor deve ser enviado ao sistema de estacionamento",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaHorario",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaHorario"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Horario",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o horário deve ser enviado ao sistema de estacionamento",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviaTelefoneEmail",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviaTelefoneEmail"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Envia Telefone E-mail",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o telefone e e-mail devem ser enviados ao sistema de estacionamento",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__nomeArquivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"nomeArquivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Nome Arquivo",
+				"required": false,
+				"type": "string",
+				"description": "Nome do arquivo gerado para integração com o sistema de estacionamento",
+				"defaultValue": "alunoEstacionamento.txt"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__produtosAdicionar",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"produtosAdicionar"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Produtos Adicionar",
+				"required": false,
+				"type": "string",
+				"description": "Lista de produtos que devem ser adicionados à integração",
+				"defaultValue": "PRODUTO1, PRODUTO2"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__empresa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"empresa"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Empresa",
+				"required": false,
+				"type": "number",
+				"description": "Código da empresa associada à configuração de estacionamento",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__enviarColaboradorAtivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"enviarColaboradorAtivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Enviar Colaborador Ativo",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se será gerado um novo txt com dados de colaboradores ativos para enviar ao FTP",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__nomeArquivoColaborador",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"nomeArquivoColaborador"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Nome Arquivo Colaborador",
+				"required": false,
+				"type": "string",
+				"description": "Nome do arquivo gerado para integração com o sistema de estacionamento",
+				"defaultValue": "nomearquivo_colaborador.txt"
+			},
+			{
+				"id": "body__cliente__empresa__empresaConfigEstacionamento__codificacaoArquivo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConfigEstacionamento",
+					"codificacaoArquivo"
+				],
+				"displayName": "Cliente — Empresa — Empresa Config Estacionamento — Codificacao Arquivo",
+				"required": false,
+				"type": "number",
+				"description": "Codificação do arquivo de estacionamento - Padrão UTF-8",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__usarParceiroFidelidade",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarParceiroFidelidade"
+				],
+				"displayName": "Cliente — Empresa — Usar Parceiro Fidelidade",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza parceiros de fidelidade",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigo"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código",
+				"required": false,
+				"type": "number",
+				"description": "Código único identificador do parceiro de fidelidade",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tipoParceiro",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tipoParceiro"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tipo Parceiro",
+				"required": false,
+				"type": "number",
+				"description": "Tipo do parceiro de fidelidade",
+				"defaultValue": 2
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__validarCliente",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"validarCliente"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Validar Cliente",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o cliente deve ser validado antes da integração",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientId",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientId"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client ID",
+				"required": false,
+				"type": "string",
+				"description": "ID do cliente utilizado na autenticação da API do parceiro",
+				"defaultValue": "client-id-12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientSecret",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientSecret"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client Secret",
+				"required": false,
+				"type": "string",
+				"description": "Segredo do cliente utilizado na autenticação da API do parceiro",
+				"defaultValue": "client-secret-67890"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientIdRedemption",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientIdRedemption"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client ID Redemption",
+				"required": false,
+				"type": "string",
+				"description": "ID do cliente utilizado para resgate de pontos",
+				"defaultValue": "redemption-client-id-12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__clientSecretRedemption",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"clientSecretRedemption"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Client Secret Redemption",
+				"required": false,
+				"type": "string",
+				"description": "Segredo do cliente utilizado para resgate de pontos",
+				"defaultValue": "redemption-client-secret-67890"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoLoja",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoLoja"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Loja",
+				"required": false,
+				"type": "string",
+				"description": "Código da loja associada ao parceiro de fidelidade",
+				"defaultValue": "LOJA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoMaquina",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoMaquina"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Maquina",
+				"required": false,
+				"type": "string",
+				"description": "Código da máquina utilizada na integração",
+				"defaultValue": "MAQUINA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoOferta",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoOferta"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Oferta",
+				"required": false,
+				"type": "string",
+				"description": "Código da oferta disponível no parceiro de fidelidade",
+				"defaultValue": "OFERTA-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__codigoResgate",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"codigoResgate"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Código Resgate",
+				"required": false,
+				"type": "string",
+				"description": "Código utilizado para resgate de pontos",
+				"defaultValue": "RESCATE-001"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tags",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tags"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tags",
+				"required": false,
+				"type": "string",
+				"description": "Tags associadas ao parceiro de fidelidade",
+				"defaultValue": "tag1, tag2, tag3"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__cpf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"cpf"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — CPF",
+				"required": false,
+				"type": "string",
+				"description": "CPF do cliente associado ao parceiro de fidelidade",
+				"defaultValue": "123.456.789-00"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__token",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"token"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Token",
+				"required": false,
+				"type": "string",
+				"description": "Token de autenticação gerado para o parceiro de fidelidade",
+				"defaultValue": "token-abcdef12345"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__dataExpiracaoToken",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"dataExpiracaoToken"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Data Expiracao Token",
+				"required": false,
+				"type": "dateTime",
+				"description": "Data de expiração do token de autenticação",
+				"defaultValue": "2023-12-31T23:59:59Z"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__ambienteProducao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"ambienteProducao"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Ambiente Producao",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o ambiente é de produção",
+				"defaultValue": true
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__parcelaVencidaGeraPonto",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"parcelaVencidaGeraPonto"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Parcela Vencida Gera Ponto",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se parcelas vencidas geram pontos no programa de fidelidade",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__empresa",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"empresa"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Empresa",
+				"required": false,
+				"type": "number",
+				"description": "Código da empresa associada ao parceiro de fidelidade",
+				"defaultValue": 10
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__tabelas",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"tabelas"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Tabelas",
+				"required": false,
+				"type": "array",
+				"description": "Lista de tabelas de fidelidade associadas ao parceiro"
+			},
+			{
+				"id": "body__cliente__empresa__parceiroFidelidade__produtos",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"parceiroFidelidade",
+					"produtos"
+				],
+				"displayName": "Cliente — Empresa — Parceiro Fidelidade — Produtos",
+				"required": false,
+				"type": "array",
+				"description": "Lista de produtos associados ao parceiro de fidelidade"
+			},
+			{
+				"id": "body__cliente__empresa__notificarWebhook",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"notificarWebhook"
+				],
+				"displayName": "Cliente — Empresa — Notificar Webhook",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa notifica via webhook",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__urlWebhookNotificar",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlWebhookNotificar"
+				],
+				"displayName": "Cliente — Empresa — URL Webhook Notificar",
+				"required": false,
+				"type": "string",
+				"description": "URL para notificação via webhook",
+				"defaultValue": "https://webhook.example.com/notify"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoAmigoFitHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoAmigoFitHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Amigo Fit Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração AmigoFit está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__nomeUsuarioAmigoFit",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nomeUsuarioAmigoFit"
+				],
+				"displayName": "Cliente — Empresa — Nome Usuario Amigo Fit",
+				"required": false,
+				"type": "string",
+				"description": "Nome de usuário para integração AmigoFit",
+				"defaultValue": "usuario-amigofit"
+			},
+			{
+				"id": "body__cliente__empresa__senhaUsuarioAmigoFit",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"senhaUsuarioAmigoFit"
+				],
+				"displayName": "Cliente — Empresa — Senha Usuario Amigo Fit",
+				"required": false,
+				"type": "string",
+				"description": "Senha para integração AmigoFit",
+				"defaultValue": "senha-amigofit"
+			},
+			{
+				"id": "body__cliente__empresa__cpfCodigoInternoWeHelp",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cpfCodigoInternoWeHelp"
+				],
+				"displayName": "Cliente — Empresa — CPF Código Interno We Help",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o CPF é usado como código interno no WeHelp",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__tokenBuzzLead",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenBuzzLead"
+				],
+				"displayName": "Cliente — Empresa — Token Buzz Lead",
+				"required": false,
+				"type": "string",
+				"description": "Token BuzzLead para integração",
+				"defaultValue": "token-buzzlead-12345"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSMS",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSMS"
+				],
+				"displayName": "Cliente — Empresa — Token SMS",
+				"required": false,
+				"type": "string",
+				"description": "Token SMS para envio de mensagens",
+				"defaultValue": "token-sms-67890"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSMSShortCode",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSMSShortCode"
+				],
+				"displayName": "Cliente — Empresa — Token SMSShort Code",
+				"required": false,
+				"type": "string",
+				"description": "Token ShortCode para envio de SMS",
+				"defaultValue": "shortcode-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360RelFatHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360RelFatHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Rel Fat Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração F360 Relatório Financeiro está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360FtpServer",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360FtpServer"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Ftp Server",
+				"required": false,
+				"type": "string",
+				"description": "Servidor FTP para integração F360",
+				"defaultValue": "ftp.f360.example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360FtpPort",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360FtpPort"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Ftp Port",
+				"required": false,
+				"type": "number",
+				"description": "Porta FTP para integração F360",
+				"defaultValue": 21
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360User",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360User"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360User",
+				"required": false,
+				"type": "string",
+				"description": "Usuário para autenticação FTP na integração F360",
+				"defaultValue": "usuario-f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Password",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Password"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para autenticação FTP na integração F360",
+				"defaultValue": "senha-f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Dir",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Dir"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Dir",
+				"required": false,
+				"type": "string",
+				"description": "Diretório FTP para integração F360",
+				"defaultValue": "/arquivos/f360"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoF360Quinzenal",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoF360Quinzenal"
+				],
+				"displayName": "Cliente — Empresa — Integracao F360Quinzenal",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração F360 é quinzenal",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__usarConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Usar Conciliadora",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza conciliadora",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__empresaConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"empresaConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Empresa Conciliadora",
+				"required": false,
+				"type": "string",
+				"description": "Nome da empresa conciliadora",
+				"defaultValue": "Conciliadora Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__senhaConciliadora",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"senhaConciliadora"
+				],
+				"displayName": "Cliente — Empresa — Senha Conciliadora",
+				"required": false,
+				"type": "string",
+				"description": "Senha da empresa conciliadora",
+				"defaultValue": "senha-conciliadora"
+			},
+			{
+				"id": "body__cliente__empresa__codigoGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"codigoGymPass"
+				],
+				"displayName": "Cliente — Empresa — Código Gym Pass",
+				"required": false,
+				"type": "string",
+				"description": "Código GymPass associado à empresa",
+				"defaultValue": "gym-pass-12345"
+			},
+			{
+				"id": "body__cliente__empresa__tokenApiGymPass",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenApiGymPass"
+				],
+				"displayName": "Cliente — Empresa — Token Api Gym Pass",
+				"required": false,
+				"type": "string",
+				"description": "Token API para integração GymPass",
+				"defaultValue": "api-token-gympass"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Spivi está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviSourceName",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviSourceName"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Source Name",
+				"required": false,
+				"type": "string",
+				"description": "Nome da fonte na integração Spivi",
+				"defaultValue": "Fonte Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviSiteID",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviSiteID"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Site ID",
+				"required": false,
+				"type": "number",
+				"description": "ID do site na integração Spivi",
+				"defaultValue": 12345
+			},
+			{
+				"id": "body__cliente__empresa__integracaoSpiviPassword",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoSpiviPassword"
+				],
+				"displayName": "Cliente — Empresa — Integracao Spivi Password",
+				"required": false,
+				"type": "string",
+				"description": "Senha para integração Spivi",
+				"defaultValue": "senha-spivi"
+			},
+			{
+				"id": "body__cliente__empresa__usaIntegracoesCrm",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usaIntegracoesCrm"
+				],
+				"displayName": "Cliente — Empresa — Usa Integracoes Crm",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza integrações CRM",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__carenciaRenovacao",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"carenciaRenovacao"
+				],
+				"displayName": "Cliente — Empresa — Carencia Renovacao",
+				"required": false,
+				"type": "number",
+				"description": "Período de carência para renovação em dias",
+				"defaultValue": 15
+			},
+			{
+				"id": "body__cliente__empresa__usarGestaoCreditosPersonal",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarGestaoCreditosPersonal"
+				],
+				"displayName": "Cliente — Empresa — Usar Gestao Creditos Personal",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza gestão de créditos personalizados",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__tipoGestaoNfse",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tipoGestaoNfse"
+				],
+				"displayName": "Cliente — Empresa — Tipo Gestao Nfse",
+				"required": false,
+				"type": "number",
+				"description": "Tipo de gestão de NFS-e",
+				"defaultValue": 1
+			},
+			{
+				"id": "body__cliente__empresa__cnpj",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"cnpj"
+				],
+				"displayName": "Cliente — Empresa — CNPJ",
+				"required": false,
+				"type": "string",
+				"description": "CNPJ da empresa",
+				"defaultValue": "12.345.678/0001-90"
+			},
+			{
+				"id": "body__cliente__empresa__razaoSocial",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"razaoSocial"
+				],
+				"displayName": "Cliente — Empresa — Razao Social",
+				"required": false,
+				"type": "string",
+				"description": "Razão social da empresa",
+				"defaultValue": "RAZÃO SOCIAL DA EMPRESA"
+			},
+			{
+				"id": "body__cliente__empresa__email",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"email"
+				],
+				"displayName": "Cliente — Empresa — E-mail",
+				"required": false,
+				"type": "string",
+				"description": "E-mail oficial da empresa",
+				"defaultValue": "contato@empresa.com"
+			},
+			{
+				"id": "body__cliente__empresa__arredondamento",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"arredondamento"
+				],
+				"displayName": "Cliente — Empresa — Arredondamento",
+				"required": false,
+				"type": "number",
+				"description": "Arredondamento utilizado pela empresa",
+				"defaultValue": 2
+			},
+			{
+				"id": "body__cliente__empresa__habilitarCadastroEmpresaSesi",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"habilitarCadastroEmpresaSesi"
+				],
+				"displayName": "Cliente — Empresa — Habilitar Cadastro Empresa Sesi",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o cadastro SESI da empresa está habilitado",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__utilizaGestaoClientesComRestricoes",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaGestaoClientesComRestricoes"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Gestao Clientes Com Restricoes",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza gestão de clientes com restrições",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopNomeApp",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopNomeApp"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Nome App",
+				"required": false,
+				"type": "string",
+				"description": "Nome do aplicativo Nuvemshop",
+				"defaultValue": "App Exemplo"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopEmail",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopEmail"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop E-mail",
+				"required": false,
+				"type": "string",
+				"description": "E-mail associado à conta Nuvemshop",
+				"defaultValue": "nuvemshop@example.com"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopTokenAcesso",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopTokenAcesso"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Token Acesso",
+				"required": false,
+				"type": "string",
+				"description": "Token de acesso para Nuvemshop",
+				"defaultValue": "token-nuvemshop-12345"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopStoreId",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopStoreId"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Store ID",
+				"required": false,
+				"type": "string",
+				"description": "ID da loja Nuvemshop",
+				"defaultValue": "store-id-67890"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoNuvemshopHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoNuvemshopHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Nuvemshop Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Nuvemshop está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoFogueteHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoFogueteHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Foguete Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a integração Foguete está habilitada",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__permiteContratosConcomintante",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"permiteContratosConcomintante"
+				],
+				"displayName": "Cliente — Empresa — Permite Contratos Concomintante",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa permite contratos concomitantes",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__pontuarApenasCampanhasAtivas",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"pontuarApenasCampanhasAtivas"
+				],
+				"displayName": "Cliente — Empresa — Pontuar Apenas Campanhas Ativas",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__utilizarPactoPrint",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizarPactoPrint"
+				],
+				"displayName": "Cliente — Empresa — Utilizar Pacto Print",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se a empresa utiliza PactoPrint",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__bvObrigatorio",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"bvObrigatorio"
+				],
+				"displayName": "Cliente — Empresa — Bv Obrigatorio",
+				"required": false,
+				"type": "boolean",
+				"description": "Indica se o BV é obrigatório",
+				"defaultValue": false
+			},
+			{
+				"id": "body__cliente__empresa__integracaoManyChatHabilitada",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoManyChatHabilitada"
+				],
+				"displayName": "Cliente — Empresa — Integracao Many Chat Habilitada",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__integracaoManyChatTokenApi",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"integracaoManyChatTokenApi"
+				],
+				"displayName": "Cliente — Empresa — Integracao Many Chat Token Api",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__nomeCurto",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"nomeCurto"
+				],
+				"displayName": "Cliente — Empresa — Nome Curto",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarSescDf"
+				],
+				"displayName": "Cliente — Empresa — Usar Sesc Df",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSescDf"
+				],
+				"displayName": "Cliente — Empresa — Token Sesc Df",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__utilizaConfigCancelamentoSesc",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"utilizaConfigCancelamentoSesc"
+				],
+				"displayName": "Cliente — Empresa — Utiliza Config Cancelamento Sesc",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__horariocapacidadeporcategoria",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"horariocapacidadeporcategoria"
+				],
+				"displayName": "Cliente — Empresa — Horariocapacidadeporcategoria",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__capacidadeSimultanea",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"capacidadeSimultanea"
+				],
+				"displayName": "Cliente — Empresa — Capacidade Simultanea",
+				"required": false,
+				"type": "number",
+				"description": "",
+				"defaultValue": "<integer>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenIntegracaoCatraca",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenIntegracaoCatraca"
+				],
+				"displayName": "Cliente — Empresa — Token Integracao Catraca",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__urlIntegrcaoCatraca",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlIntegrcaoCatraca"
+				],
+				"displayName": "Cliente — Empresa — URL Integrcao Catraca",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarApiSescRo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarApiSescRo"
+				],
+				"displayName": "Cliente — Empresa — Usar Api Sesc Ro",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenSescRo",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenSescRo"
+				],
+				"displayName": "Cliente — Empresa — Token Sesc Ro",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__usarApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"usarApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — Usar Api Sesc Ce",
+				"required": false,
+				"type": "boolean",
+				"description": "",
+				"defaultValue": "<boolean>"
+			},
+			{
+				"id": "body__cliente__empresa__tokenApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"tokenApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — Token Api Sesc Ce",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__urlApiSescCe",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"urlApiSescCe"
+				],
+				"displayName": "Cliente — Empresa — URL Api Sesc Ce",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__timeZoneDefault",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"timeZoneDefault"
+				],
+				"displayName": "Cliente — Empresa — Time Zone Default",
+				"required": false,
+				"type": "string",
+				"description": "",
+				"defaultValue": "<string>"
+			},
+			{
+				"id": "body__cliente__empresa__habilitarIntegracaoGladiumSescDf",
+				"location": "body",
+				"path": [
+					"cliente",
+					"empresa",
+					"habilitarIntegracaoGladiumSescDf"
+				],
+				"displayName": "Cliente — Empresa — Habilitar Integracao Gladium Sesc Df",
+				"required": false,
+				"type": "boolean",
+				"description": "Habilitar a integração com a Gladium SESC DF",
+				"defaultValue": false
 			}
 		],
 		"requestBodyRequired": true,

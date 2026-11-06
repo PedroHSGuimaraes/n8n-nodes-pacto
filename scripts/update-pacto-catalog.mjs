@@ -26,6 +26,7 @@ import {
 	buildLookups,
 	DOCS_URL,
 	NO_GET_REASON,
+	keepRetiredFields,
 	mergeLegacy,
 	repairBrokenText,
 	restoreAreaNames,
@@ -102,7 +103,8 @@ async function main() {
 		previous.areas.map((area) => area.value),
 	);
 	const { catalog: repaired, remaining } = repairBrokenText(restored, previous);
-	const catalog = mergeLegacy(repaired, previous);
+	// Primeiro as operações removidas entram como legacy; depois as vivas recuperam os campos que perderam.
+	const catalog = keepRetiredFields(mergeLegacy(repaired, previous), previous);
 	const liveOperations = catalog.operations.filter((operation) => !operation.legacy);
 	const lookupResult = buildLookups(spec, liveOperations);
 	assertLookupRoutes(spec, lookupResult.lookups);

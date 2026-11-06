@@ -380,6 +380,30 @@ export function mergeLegacy(catalog, previous) {
 	};
 }
 
+// Mantém, nas operações vivas, os campos que o catálogo anterior tinha e a documentação viva tirou.
+// Por quê: o workflow salvo na versão 1 guarda esses campos em `fields` e o node só envia o que o
+// catálogo conhece; sem eles, o PUT de Atividades perdia o body e passava a exigir outros campos.
+// O campo que volta é opcional, porque a documentação nova já não o exige, e vai depois dos campos
+// vivos. Rodar de novo sobre o próprio resultado não muda nada (o catálogo anterior já os tem).
+export function keepRetiredFields(catalog, previous) {
+	const before = new Map(
+		previous.operations.map((operation) => [`${operation.area}|${operation.key}`, operation]),
+	);
+	const operations = catalog.operations.map((operation) => {
+		const old = before.get(`${operation.area}|${operation.key}`);
+		// Operação legada já vem inteira do catálogo anterior; operação nova não tem passado.
+		if (operation.legacy || !old) return operation;
+		const present = new Set(operation.inputFields.map((field) => field.id));
+		const retired = old.inputFields
+			.filter((field) => !present.has(field.id))
+			.map((field) => ({ ...field, required: false }));
+		return retired.length === 0
+			? operation
+			: { ...operation, inputFields: [...operation.inputFields, ...retired] };
+	});
+	return { ...catalog, operations };
+}
+
 // Motivo da maioria das bases descartadas: a rota base nem existe como listagem.
 export const NO_GET_REASON = 'sem GET na base';
 

@@ -6,3 +6,5 @@ npm-debug.log*
 .env
 .codegraph
 *.tsbuildinfo
+# proofs.md é gerado por check_proofs.py para o HEAD atual; versioná-lo o deixaria sempre velho
+.specs/features/*/proofs.md

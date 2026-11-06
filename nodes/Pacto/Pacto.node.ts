@@ -12,7 +12,14 @@ import {
 	PACTO_AREA_OPTIONS,
 	type PactoOperationDefinition,
 } from './helpers/catalog.generated';
+import {
+	getPactoLookup,
+	PACTO_LOOKUP_OPERATION_KEYS,
+	PACTO_QUICK_SEARCH_OPERATION_KEYS,
+} from './helpers/lookups.generated';
 import { buildEndpointPath, extractPageItems } from './helpers/utils';
+import { mergeQuickSearch, withRecordId } from './helpers/versionedInputs';
+import { listSearch } from './methods/listSearch';
 import { loadOptions } from './methods/loadOptions';
 import { resourceMapping } from './methods/resourceMapping';
 import { pactoApiRequest, type PactoRequestOptions } from './transport';
@@ -194,6 +201,52 @@ export class Pacto implements INodeType {
 					'Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>',
 			},
 			{
+				// Seletor do registro (versão 2): lista pesquisável da API ou ID colado.
+				displayName: 'Registro',
+				// Nome novo: o ID de caminho da versão 1 mora dentro do `fields` e continua lá.
+				name: 'recordId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				description: 'Escolha o registro na lista ou cole o ID',
+				// Só node novo (versão 2) e só operações que a geração ligou a uma lista da API.
+				displayOptions: {
+					show: {
+						'@version': [{ _cnd: { gte: 2 } }],
+						operation: PACTO_LOOKUP_OPERATION_KEYS,
+					},
+				},
+				modes: [
+					{
+						displayName: 'Da Lista',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Escolha um registro...',
+						typeOptions: { searchListMethod: 'searchPactoRecords', searchable: true },
+					},
+					{
+						displayName: 'Por ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'ex.: 42',
+					},
+				],
+			},
+			{
+				// Busca Rápida (versão 2): vira o `quicksearchValue` dentro do JSON de `filters`.
+				displayName: 'Busca Rápida',
+				name: 'quickSearch',
+				type: 'string',
+				default: '',
+				description: 'Texto para buscar na listagem, sem escrever JSON no campo Filters',
+				displayOptions: {
+					show: {
+						'@version': [{ _cnd: { gte: 2 } }],
+						operation: PACTO_QUICK_SEARCH_OPERATION_KEYS,
+					},
+				},
+			},
+			{
 				displayName: 'Fields',
 				name: 'fields',
 				type: 'resourceMapper',
@@ -227,6 +280,7 @@ export class Pacto implements INodeType {
 	methods = {
 		loadOptions,
 		resourceMapping,
+		listSearch,
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
@@ -246,7 +300,18 @@ export class Pacto implements INodeType {
 					);
 				}
 
-				const values = getFieldValues(this, itemIndex);
+				let values = getFieldValues(this, itemIndex);
+				// Versão do node deste item: 1 lê tudo do `fields`; 2 também lê recordId e quickSearch.
+				const typeVersion = this.getNode().typeVersion;
+				const lookup = typeVersion >= 2 ? getPactoLookup(area, operationKey) : undefined;
+				// O ID escolhido no seletor ocupa o lugar do campo de caminho (antes digitado à mão).
+				if (lookup) values = withRecordId(this, itemIndex, lookup, values);
+				// A Busca Rápida entra no JSON de `filters` só nas operações que aceitam esse filtro.
+				if (typeVersion >= 2 && PACTO_QUICK_SEARCH_OPERATION_KEYS.includes(operationKey)) {
+					const quickSearch = this.getNodeParameter('quickSearch', itemIndex, '') as string;
+					const merged = mergeQuickSearch(this, itemIndex, values.query__filters, quickSearch);
+					values = { ...values, query__filters: merged as string };
+				}
 				const input = splitInputValues(this, itemIndex, operation, values);
 				const endpoint = buildEndpointPath(this, operation, input.path);
 				const request = createRequest(operation, input);

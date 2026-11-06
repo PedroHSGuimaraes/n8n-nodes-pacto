@@ -5,6 +5,7 @@ import type {
 } from 'n8n-workflow';
 
 import { getPactoOperation } from '../helpers/catalog.generated';
+import { getPactoLookup } from '../helpers/lookups.generated';
 
 const CREDENTIAL_FIELDS = new Set(['authorization', 'empresaid']);
 
@@ -15,10 +16,16 @@ export const resourceMapping = {
 		const operation = getPactoOperation(area, operationKey);
 		if (!operation) return { fields: [] };
 
+		// Na versão 2, o ID de caminho de uma operação com lista é escolhido no Resource Locator
+		// `recordId`; por isso o mapeador não mostra esse campo de novo (a versão 1 mostra).
+		const lookup = this.getNode().typeVersion >= 2 ? getPactoLookup(area, operationKey) : undefined;
+		const replacedByLocator = lookup ? `path__${lookup.pathParam}` : undefined;
+
 		const fields: ResourceMapperField[] = operation.inputFields
 			.filter(
 				(field) =>
-					field.location !== 'header' || !CREDENTIAL_FIELDS.has(field.path[0].toLowerCase()),
+					field.id !== replacedByLocator &&
+					(field.location !== 'header' || !CREDENTIAL_FIELDS.has(field.path[0].toLowerCase())),
 			)
 			.map((field) => ({
 				id: field.id,

@@ -153,7 +153,9 @@ export class Pacto implements INodeType {
 		name: 'pacto',
 		icon: { light: 'file:pacto.svg', dark: 'file:pacto.dark.svg' },
 		group: ['transform'],
-		version: 1,
+		// Versão leve: workflows salvos ficam na 1 (campos como no 1.0.3) e node novo nasce na 2.
+		version: [1, 2],
+		defaultVersion: 2,
 		subtitle: '={{$parameter["resource"] + ": " + $parameter["operation"]}}',
 		description:
 			'Use Pacto Soluções with friendly fields generated from the official API documentation.',

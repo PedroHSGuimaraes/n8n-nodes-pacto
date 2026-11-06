@@ -9,7 +9,7 @@
 
 O pacote `n8n-nodes-pacto` 1.0.3 compila com `tsc` + `gulp` e usa o plugin de lint 0.23. O `n8n-node lint` do `@n8n/node-cli` 0.55.5, que a guideline de verificação do n8n exige, acusa 13 erros neste código (medido em worktree descartável sobre a `master`): 6 `any` explícito, 1 import sem uso, 1 categoria `AI` inválida em `Pacto.node.json`, e 5 de texto e flag do parâmetro `operation` e do parâmetro `returnAll`. O pacote não tem teste, não tem workflow de CI e publica com `npm publish`, que o token "stage only" do dono recusa.
 
-Quem usa o node digita à mão o ID de cada registro (aluno, cliente, produto, plano, aula, aparelho, ativo do patrimônio). A API da Pacto tem a rota de listagem de cada um, mas o node mostra um campo de texto: a pessoa sai do n8n para achar o código. Filtrar uma lista exige escrever JSON à mão no campo `filters`. Além disso, o catálogo `catalog.generated.ts` (3.533 operações, 408 áreas, gerado em 17/07/2026) ficou velho: a documentação viva de 06/11/2026 tem 4.620 operações, e rodar o gerador de hoje sem cuidado tira 323 operações e 26 áreas que o 1.0.3 publica e põe `ï¿½` no nome de 22 áreas.
+Quem usa o node digita à mão o ID de cada registro (aluno, cliente, produto, plano, aula, aparelho, ativo do patrimônio). A API da Pacto tem a rota de listagem de cada um, mas o node mostra um campo de texto: a pessoa sai do n8n para achar o código. Filtrar uma lista exige escrever JSON à mão no campo `filters`. Além disso, o catálogo `catalog.generated.ts` (3.533 operações, 408 áreas, gerado em 17/07/2026) ficou velho: a documentação viva de 06/11/2026 tem 4.620 operações, e rodar o gerador de hoje sem cuidado tira 131 operações e 6 áreas que o 1.0.3 publica e põe `ï¿½` no nome de 22 áreas e em cerca de 240 textos de operação.
 
 Quando isso sair: o lint oficial passa com 0 erros, e em node novo as operações que têm lista mostram uma lista pesquisável com a opção de colar o ID. As operações com filtro de busca mostram um campo "Busca Rápida". Workflows salvos continuam funcionando sem edição.
 
@@ -107,11 +107,13 @@ Workflow salvo no 1.0.3 envia a mesma requisição, e o catálogo novo não perd
 2. WHEN o `execute` roda com `typeVersion` 1, `returnAll` verdadeiro e uma API que devolve 100 itens na página 0, 100 na página 1 e 30 na página 2 THEN o sistema SHALL pedir `page` 0, 1 e 2 com `size` 100 e devolver 230 itens
 3. The node SHALL listar, para `@version` 1, os parâmetros `resource` (options), `operation` (options), `fields` (resourceMapper) e `returnAll` (boolean) com o mesmo `name` e o mesmo `type` do 1.0.3
 4. WHEN `npm run update:catalog` roda contra a documentação viva THEN todo par `area` + `key` do 1.0.3 SHALL existir no catálogo gerado
-   - par ausente da documentação (323 hoje) → presente com `legacy: true`; par presente → sem `legacy`
+   - par ausente da documentação (131 hoje) → presente com `legacy: true`; par presente → sem `legacy`
 5. IF o nome de uma área na documentação viva tem `ï¿½` ou U+FFFD THEN o gerador SHALL trocá-lo pelo valor da área do 1.0.3 que casa com o nome trocando cada trecho `ï¿½` por qualquer caractere
    - `Armï¿½rio` → `Armário` (casa com um valor do 1.0.3); sem valor que case → o gerador sai com código 1 e lista o nome
 6. WHEN o catálogo gerado carrega THEN `PACTO_AREA_OPTIONS` SHALL ter 0 valores com `ï¿½` ou U+FFFD e todo valor de área do 1.0.3 que ainda tem operação SHALL estar nele
 7. WHEN a versão 2 lista as operações de uma área THEN `getPactoOperations` SHALL omitir as com `legacy: true`; WHEN a versão 1 lista THEN SHALL incluí-las
+8. IF o nome ou a descrição de uma operação ou de um campo chega da documentação com `ï¿½` THEN o gerador SHALL usar o texto do 1.0.3 para o mesmo campo da mesma operação quando ele casa, e SHALL imprimir quantos textos novos ficaram sem correspondência
+   - `Consultar armï¿½rios` → `Consultar armários` (operação do 1.0.3); `Lista ï¿½nica` (operação nova) → fica como veio e conta 1
 
 ### S3: IDs guiados na versão 2 (P1)
 
@@ -120,7 +122,7 @@ Em node novo, a operação com lista mostra o ID como lista pesquisável.
 **Acceptance Criteria**
 
 1. WHEN alguém adiciona o node a um workflow novo THEN o sistema SHALL criá-lo com `typeVersion` 2
-2. The gerador SHALL emitir uma entrada em `PACTO_LOOKUPS` para toda operação cujo primeiro parâmetro de caminho `{p}` tem uma rota `GET` na base (o trecho antes de `{p}`) com os parâmetros `page` e `size`, em que o item da resposta tem uma propriedade de nome `p` e uma propriedade `nome`, `descricao`, `name` ou `titulo`; hoje são 132 operações em 37 bases, e o gerador SHALL imprimir a lista das bases descartadas com o motivo (158 hoje)
+2. The gerador SHALL emitir uma entrada em `PACTO_LOOKUPS` para toda operação cujo primeiro parâmetro de caminho `{p}` tem uma rota `GET` na base (o trecho antes de `{p}`) com os parâmetros `page` e `size`, em que o item da resposta tem uma propriedade de nome `p` e uma propriedade `nome`, `descricao`, `name` ou `titulo`; hoje são 135 entradas (132 chaves de operação) em 37 bases, e o gerador SHALL imprimir as bases descartadas com o motivo (82 sem `page` e `size`, 27 sem rótulo, 49 sem o campo do ID, 673 sem `GET` na base)
 3. The gerador SHALL sair com código 1 e dizer a rota IF uma entrada aponta para uma rota que não existe na documentação
 4. WHEN o node mostra uma operação com entrada em `PACTO_LOOKUPS` na versão 2 THEN o sistema SHALL mostrar o parâmetro `recordId` como `resourceLocator` com os modos `list` (padrão, `searchable: true`, `searchListMethod: 'searchPactoRecords'`) e `id`, e o `resourceMapper` SHALL omitir o campo `path__<p>` dessa operação; na versão 1 e nas operações sem entrada, o `resourceMapper` mantém o campo
 5. WHEN o `execute` roda com `typeVersion` 2, `operation` `GET:/psec/alunos/{id}` e `recordId` `{ mode: 'list', value: '42' }` THEN o sistema SHALL chamar `GET /psec/alunos/42`
@@ -153,7 +155,7 @@ A versão nova chega ao npm com provenance, aprovada pelo dono.
 
 **Acceptance Criteria**
 
-1. The `package.json` SHALL ter `"version": "1.1.0"` e a seção Versões do README SHALL listar a migração para node-cli, a versão 2 do node, os IDs guiados, a Busca Rápida e a preservação das 323 operações
+1. The `package.json` SHALL ter `"version": "1.1.0"` e a seção Versões do README SHALL listar a migração para node-cli, a versão 2 do node, os IDs guiados, a Busca Rápida e a preservação das 131 operações
 2. WHEN a tag `v1.1.0` chega ao GitHub THEN o workflow de publicação SHALL deixar `n8n-nodes-pacto@1.1.0` na fila "Staged Packages" do npm; depois da aprovação do dono, `npm view n8n-nodes-pacto version` SHALL devolver `1.1.0`
 
 ## Out of scope
@@ -162,7 +164,7 @@ A versão nova chega ao npm com provenance, aprovada pelo dono.
 | --- | --- |
 | Seletor para ID dentro do corpo ou da query (`alunoId`, `professorId`, `codigoCliente`: cerca de 100 campos) | Esses campos vivem no `resourceMapper`, que não aceita Resource Locator por campo; a documentação também não diz de qual lista cada um vem |
 | Segundo parâmetro de caminho na mesma rota | O `recordId` cobre o primeiro; o resto continua no `resourceMapper` |
-| Lista para as 158 bases descartadas e para rotas com `paginadorDTO` no lugar de `page` e `size` | A documentação não confirma o nome do ID ou do rótulo, ou o formato da paginação; entram quando o dono confirmar a rota |
+| Lista para as bases descartadas e para rotas com `paginadorDTO` no lugar de `page` e `size` | A documentação não confirma o nome do ID ou do rótulo, ou o formato da paginação; entram quando o dono confirmar a rota |
 | Formato dos 616 campos de data sem descrição | A documentação não diz o formato; o node mantém o envio atual |
 | Campo de corpo em array (2.350) e de texto livre que a documentação não tipa | Sem tipo na documentação, o node não adivinha |
 | Novas operações ou rota própria além do catálogo | O pedido é sobre o preenchimento dos campos |
@@ -176,7 +178,7 @@ A versão nova chega ao npm com provenance, aprovada pelo dono.
 | O valor da lista é o campo com o mesmo nome do parâmetro de caminho (`id` para `{id}`, `codigo` para `{codigo}`) | Só a base cujo item tem esse campo vira lista | É a única ligação que a documentação sustenta; sem ela a base fica descartada e listada | n |
 | Tamanho da página do seletor | 20 itens | Mostra uma lista curta no editor e pede uma página por vez | n |
 | Idioma de rótulos e mensagens | PT-BR em Title Case sem preposição maiúscula, como o resto do node | O 1.0.3 já escreve em PT-BR | n |
-| As 323 operações que a documentação viva removeu | Ficam no catálogo com `legacy: true`, visíveis só na versão 1 (AD-009) | Workflow salvo guarda área e chave da operação; o dono decidiu que workflow salvo não quebra. Jev 1,00 contra remover 0,00 | y - user: "Aprovo com antecedência (Recomendado · Jev 0,96)" |
+| As 131 operações que a documentação viva removeu | Ficam no catálogo com `legacy: true`, visíveis só na versão 1 (AD-009) | Workflow salvo guarda área e chave da operação; o dono decidiu que workflow salvo não quebra. Jev 1,00 contra remover 0,00 | y - user: "Aprovo com antecedência (Recomendado · Jev 0,96)" |
 | Seletor para ID de query e de corpo | Fora deste lançamento (ver Out of scope) | Vivem no `resourceMapper`, que não aceita Resource Locator por campo | y - user: "Aprovo com antecedência (Recomendado · Jev 0,96)" |
 | Número de operações do README | Sai do catálogo regenerado no dia | O 3.499 do 1.0.3 é do catálogo de 17/07/2026 | n |
 | A documentação viva não muda a chave de uma operação que o 1.0.3 publica sem aviso | O gerador falha só se perder um par que não consegue marcar `legacy` | A chave é `METHOD:path`, o gerador a monta sozinho | n |

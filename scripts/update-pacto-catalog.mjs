@@ -1,166 +1,57 @@
-import { writeFile } from 'node:fs/promises';
+/*
+ * Atualiza os arquivos gerados do node Pacto (`catalog.generated.ts` e `lookups.generated.ts`).
+ *
+ * Uso:
+ *   npm run update:catalog                       lê a documentação viva da Pacto
+ *   node scripts/update-pacto-catalog.mjs --spec arquivo.json --previous catalogo.ts --out-dir pasta
+ *
+ * As opções `--spec`, `--previous` e `--out-dir` existem para os testes e para rodar sem rede:
+ * a primeira troca a documentação viva por um arquivo, a segunda diz qual catálogo anterior
+ * preservar e a terceira diz onde gravar. Exige Node 24 ou mais novo, porque lê o catálogo
+ * anterior (um arquivo .ts) direto, sem compilar.
+ *
+ * Toda a regra de montagem fica em `catalog-builder.mjs`; este arquivo só busca os dados,
+ * chama o gerador e grava o resultado.
+ */
+import { existsSync, readFileSync } from 'node:fs';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 import vm from 'node:vm';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
-const DOCS_URL = 'https://api-docs.pactosolucoes.com.br/';
-const API_BASE_URL = 'https://apigw.pactosolucoes.com.br';
-const HTTP_METHODS = new Set(['get', 'post', 'put', 'patch', 'delete', 'head', 'options', 'trace']);
+import {
+	assertLookupRoutes,
+	buildCatalog,
+	buildLookups,
+	DOCS_URL,
+	NO_GET_REASON,
+	mergeLegacy,
+	repairBrokenText,
+	restoreAreaNames,
+	serializeCatalog,
+	serializeLookups,
+} from './catalog-builder.mjs';
+
 const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
-const outputFile = path.resolve(currentDirectory, '../nodes/Pacto/helpers/catalog.generated.ts');
+const defaultOutDir = path.resolve(currentDirectory, '../nodes/Pacto/helpers');
+
+// Lê `--nome valor` da linha de comando.
+function readOption(name) {
+	const index = process.argv.indexOf(`--${name}`);
+	return index >= 0 ? process.argv[index + 1] : undefined;
+}
 
 async function fetchText(url) {
-	const response = await fetch(url);
+	// Sem timeout o download travaria o terminal se a documentação ficasse fora do ar.
+	const response = await fetch(url, { signal: AbortSignal.timeout(60_000) });
 	if (!response.ok) {
 		throw new Error(`Could not download ${url}: HTTP ${response.status}`);
 	}
 	return response.text();
 }
 
-function resolveReference(spec, value) {
-	if (!value?.$ref?.startsWith('#/')) return value;
-	return value.$ref
-		.slice(2)
-		.split('/')
-		.reduce(
-			(current, segment) => current?.[segment.replaceAll('~1', '/').replaceAll('~0', '~')],
-			spec,
-		);
-}
-
-function plainText(value = '') {
-	return value
-		.replace(/<[^>]+>/g, ' ')
-		.replace(/[#*_`>⚠️]/g, ' ')
-		.replace(/\s+/g, ' ')
-		.trim();
-}
-
-function schemaType(spec, schema) {
-	const resolved = resolveReference(spec, schema) ?? {};
-	if (resolved.type === 'array') {
-		return `array<${schemaType(spec, resolved.items) || 'object'}>`;
-	}
-	return resolved.type ?? (resolved.properties ? 'object' : undefined);
-}
-
-function mergeSchema(spec, schema) {
-	const resolved = resolveReference(spec, schema) ?? {};
-	if (!resolved.allOf?.length) return resolved;
-	return resolved.allOf.reduce(
-		(merged, part) => {
-			const next = mergeSchema(spec, part);
-			return {
-				...merged,
-				...next,
-				properties: { ...(merged.properties ?? {}), ...(next.properties ?? {}) },
-				required: [...new Set([...(merged.required ?? []), ...(next.required ?? [])])],
-			};
-		},
-		{ ...resolved, allOf: undefined },
-	);
-}
-
-function titleCase(value) {
-	const terms = {
-		dt: 'Data',
-		data: 'Data',
-		inicio: 'Início',
-		fim: 'Fim',
-		codigo: 'Código',
-		cnpj: 'CNPJ',
-		cpf: 'CPF',
-		email: 'E-mail',
-		id: 'ID',
-		matricula: 'Matrícula',
-		telefone: 'Telefone',
-		url: 'URL',
-	};
-	return value
-		.replace(/([a-z])([A-Z])/g, '$1 $2')
-		.replace(/[_-]+/g, ' ')
-		.split(' ')
-		.filter(Boolean)
-		.map((word) => terms[word.toLowerCase()] ?? `${word[0].toUpperCase()}${word.slice(1)}`)
-		.join(' ');
-}
-
-function isDateField(schema, name = '', description = '') {
-	return (
-		schema.format === 'date' ||
-		schema.format === 'date-time' ||
-		/(^|[_-])(dt|data|date)([_-]|$)/i.test(name) ||
-		/\bdata\b|\bdate\b|yyyy\s*[-/]?mm\s*[-/]?dd/i.test(description)
-	);
-}
-
-function mapperFieldType(schema, name, description) {
-	if (schema.enum?.length) return 'options';
-	if (schema.type === 'boolean') return 'boolean';
-	if (schema.type === 'integer' || schema.type === 'number') return 'number';
-	if (schema.type === 'array') return 'array';
-	if (isDateField(schema, name, description)) return 'dateTime';
-	return 'string';
-}
-
-function mapperOptions(schema) {
-	if (!schema.enum?.length) return undefined;
-	return schema.enum.map((value) => ({ name: titleCase(String(value)), value }));
-}
-
-function primitiveDefault(value) {
-	return ['string', 'number', 'boolean'].includes(typeof value) || value === null
-		? value
-		: undefined;
-}
-
-function getBodyFields(spec, schema, parent = [], required = false, depth = 0) {
-	const resolved = mergeSchema(spec, schema);
-	if (depth > 4 || !resolved.properties) return [];
-	const requiredProperties = new Set(resolved.required ?? []);
-	return Object.entries(resolved.properties).flatMap(([name, property]) => {
-		const propertySchema = mergeSchema(spec, property);
-		const propertyPath = [...parent, name];
-		const isRequired = required || requiredProperties.has(name);
-		if (propertySchema.properties) {
-			return getBodyFields(spec, propertySchema, propertyPath, isRequired, depth + 1);
-		}
-		return [
-			{
-				id: `body__${propertyPath.join('__')}`,
-				location: 'body',
-				path: propertyPath,
-				displayName: propertyPath.map(titleCase).join(' — '),
-				required: isRequired,
-				type: mapperFieldType(propertySchema, name, propertySchema.description),
-				options: mapperOptions(propertySchema),
-				description: plainText(propertySchema.description),
-				defaultValue: primitiveDefault(propertySchema.example ?? propertySchema.default),
-			},
-		];
-	});
-}
-
-function getInputFields(spec, parameters, requestBody) {
-	const parameterFields = parameters.map((parameter) => {
-		const schema = mergeSchema(spec, parameter.schema);
-		return {
-			id: `${parameter.in}__${parameter.name}`,
-			location: parameter.in,
-			path: [parameter.name],
-			displayName: titleCase(parameter.name),
-			required: parameter.required,
-			type: mapperFieldType(schema, parameter.name, parameter.description),
-			options: mapperOptions(schema),
-			description: parameter.description,
-			defaultValue: primitiveDefault(parameter.example ?? schema.example ?? schema.default),
-		};
-	});
-	const jsonSchema = requestBody?.content?.['application/json']?.schema;
-	return [...parameterFields, ...getBodyFields(spec, jsonSchema)];
-}
-
+// A documentação publicada é uma página React; a OpenAPI mora no source map do bloco `983`.
 async function loadOfficialSpec() {
 	const html = await fetchText(DOCS_URL);
 	const mainPath = html.match(/\/static\/js\/main\.[^"]+\.js/)?.[0];
@@ -186,156 +77,61 @@ async function loadOfficialSpec() {
 	return sandbox.__pactoApiDocs();
 }
 
-function buildCatalog(spec) {
-	const documentedTags = new Map((spec.tags ?? []).map((tag) => [tag.name, tag.description]));
-	const operations = [];
+// Carrega o catálogo anterior (arquivo .ts gerado por este mesmo script) para preservá-lo.
+async function loadPreviousCatalog(file) {
+	if (!existsSync(file)) return { areas: [], operations: [] };
+	const module = await import(pathToFileURL(file).href);
+	return { areas: module.PACTO_AREA_OPTIONS ?? [], operations: module.PACTO_OPERATIONS ?? [] };
+}
 
-	for (const [endpointPath, pathItem] of Object.entries(spec.paths ?? {})) {
-		const commonParameters = pathItem.parameters ?? [];
-		for (const [method, rawOperation] of Object.entries(pathItem)) {
-			if (!HTTP_METHODS.has(method)) continue;
-
-			const operation = resolveReference(spec, rawOperation);
-			const parameters = [...commonParameters, ...(operation.parameters ?? [])]
-				.map((parameter) => resolveReference(spec, parameter))
-				.filter(
-					(parameter) =>
-						parameter &&
-						typeof parameter.name === 'string' &&
-						['path', 'query', 'header', 'cookie'].includes(parameter.in),
-				)
-				.map((parameter) => ({
-					name: parameter.name,
-					in: parameter.in,
-					required: parameter.required === true,
-					type: schemaType(spec, parameter.schema),
-					description: plainText(parameter.description),
-					example: parameter.example ?? parameter.schema?.example,
-				}));
-			const requestBody = resolveReference(spec, operation.requestBody);
-			const contentTypes = Object.keys(requestBody?.content ?? {});
-			const tags = operation.tags?.length ? operation.tags : ['Other'];
-
-			for (const area of tags) {
-				const description = plainText(operation.description);
-				const scope =
-					operation['x-scope'] ??
-					description.match(
-						/Escopo de permissão necessário para uso do endpoint:\s*([^\s]+)/i,
-					)?.[1];
-				operations.push({
-					key: `${method.toUpperCase()}:${endpointPath}`,
-					area,
-					name:
-						plainText(operation.summary) ||
-						operation.operationId ||
-						`${method.toUpperCase()} ${endpointPath}`,
-					method: method.toUpperCase(),
-					path: endpointPath,
-					operationId: operation.operationId,
-					description,
-					scope,
-					parameters,
-					inputFields: getInputFields(spec, parameters, requestBody),
-					requestBodyRequired: requestBody?.required === true,
-					requestContentTypes: contentTypes,
-					responseContentTypes: [
-						...new Set(
-							Object.values(operation.responses ?? {}).flatMap((response) =>
-								Object.keys(resolveReference(spec, response)?.content ?? {}),
-							),
-						),
-					],
-				});
-			}
-		}
-	}
-
-	const uniqueAreas = [...new Set(operations.map((operation) => operation.area))];
-	const areas = uniqueAreas
-		.map((name) => ({
-			name,
-			value: name,
-			description: plainText(documentedTags.get(name) ?? `Operações da área ${name}`),
-		}))
-		.sort((left, right) => left.name.localeCompare(right.name, 'pt-BR'));
-	operations.sort(
-		(left, right) =>
-			left.area.localeCompare(right.area, 'pt-BR') ||
-			left.name.localeCompare(right.name, 'pt-BR') ||
-			left.path.localeCompare(right.path),
+async function main() {
+	const specFile = readOption('spec');
+	const outDir = path.resolve(readOption('out-dir') ?? defaultOutDir);
+	const previousFile = path.resolve(
+		readOption('previous') ?? path.join(defaultOutDir, 'catalog.generated.ts'),
 	);
 
-	return { areas, operations };
+	const spec = specFile ? JSON.parse(readFileSync(specFile, 'utf8')) : await loadOfficialSpec();
+	const previous = await loadPreviousCatalog(previousFile);
+
+	// Ordem importa: primeiro o nome da área volta ao valor antigo, depois o legado entra,
+	// e só então as listas são inferidas (elas usam o nome final da área).
+	const fresh = buildCatalog(spec);
+	const restored = restoreAreaNames(
+		fresh,
+		previous.areas.map((area) => area.value),
+	);
+	const { catalog: repaired, remaining } = repairBrokenText(restored, previous);
+	const catalog = mergeLegacy(repaired, previous);
+	const liveOperations = catalog.operations.filter((operation) => !operation.legacy);
+	const lookupResult = buildLookups(spec, liveOperations);
+	assertLookupRoutes(spec, lookupResult.lookups);
+
+	await mkdir(outDir, { recursive: true });
+	await writeFile(path.join(outDir, 'catalog.generated.ts'), serializeCatalog(catalog, spec), 'utf8');
+	await writeFile(path.join(outDir, 'lookups.generated.ts'), serializeLookups(lookupResult), 'utf8');
+
+	const legacyCount = catalog.operations.filter((operation) => operation.legacy).length;
+	console.log(
+		`Pacto catalog updated: ${catalog.areas.length} areas, ${catalog.operations.length} operations ` +
+			`(${legacyCount} legacy), ${Object.keys(lookupResult.lookups).length} lookups, ` +
+			`${Object.keys(spec.paths ?? {}).length} paths.`,
+	);
+	// Texto novo da documentação com acento perdido não tem como voltar; o aviso conta quantos.
+	if (remaining > 0) {
+		console.log(`Texto com caractere de substituição sem correspondência no 1.0.3: ${remaining}`);
+	}
+	// Lista as bases que não viraram seletor para o dono decidir se quer completar à mão.
+	// As bases sem GET (maioria) não são candidatas; elas entram só na contagem para não afogar o resto.
+	const withoutGet = lookupResult.skipped.filter((item) => item.reason === NO_GET_REASON);
+	console.log(`Lookup skipped: ${withoutGet.length} bases (${NO_GET_REASON})`);
+	for (const item of lookupResult.skipped.filter((entry) => entry.reason !== NO_GET_REASON)) {
+		console.log(`Lookup skipped: ${item.base} (${item.reason})`);
+	}
 }
 
-function serialize(catalog, spec) {
-	const generatedAt = new Date().toISOString();
-	return `/* eslint-disable */
-// Generated from ${DOCS_URL}
-// Run \`npm run update:catalog\` to refresh this file.
-
-import type { INodePropertyOptions } from 'n8n-workflow';
-
-export type PactoParameterLocation = 'path' | 'query' | 'header' | 'cookie';
-
-export interface PactoParameterDefinition {
-\tname: string;
-\tin: PactoParameterLocation;
-\trequired: boolean;
-\ttype?: string;
-\tdescription?: string;
-\texample?: unknown;
-}
-
-export interface PactoInputFieldDefinition {
-\tid: string;
-\tlocation: 'path' | 'query' | 'header' | 'body';
-\tpath: string[];
-\tdisplayName: string;
-\trequired: boolean;
-\ttype: 'boolean' | 'number' | 'string' | 'dateTime' | 'array' | 'options';
-\toptions?: INodePropertyOptions[];
-\tdescription?: string;
-\tdefaultValue?: string | number | boolean | null;
-}
-
-export interface PactoOperationDefinition {
-\tkey: string;
-\tarea: string;
-\tname: string;
-\tmethod: string;
-\tpath: string;
-\toperationId?: string;
-\tdescription?: string;
-\tscope?: string;
-\tparameters: PactoParameterDefinition[];
-\tinputFields: PactoInputFieldDefinition[];
-\trequestBodyRequired: boolean;
-\trequestContentTypes: string[];
-\tresponseContentTypes: string[];
-}
-
-export const PACTO_API_BASE_URL = ${JSON.stringify(API_BASE_URL)};
-export const PACTO_OPENAPI_VERSION = ${JSON.stringify(spec.openapi)};
-export const PACTO_CATALOG_GENERATED_AT = ${JSON.stringify(generatedAt)};
-export const PACTO_AREA_OPTIONS: INodePropertyOptions[] = ${JSON.stringify(catalog.areas, null, '\t')};
-export const PACTO_OPERATIONS = ${JSON.stringify(catalog.operations, null, '\t')} as unknown as PactoOperationDefinition[];
-
-const operationByKey = new Map(
-\tPACTO_OPERATIONS.map((operation) => [\`\${operation.area}:\${operation.key}\`, operation]),
-);
-
-export function getPactoOperation(area: string, key: string): PactoOperationDefinition | undefined {
-\treturn operationByKey.get(\`\${area}:\${key}\`);
-}
-`;
-}
-
-const spec = await loadOfficialSpec();
-const catalog = buildCatalog(spec);
-await writeFile(outputFile, serialize(catalog, spec), 'utf8');
-
-console.log(
-	`Pacto catalog updated: ${catalog.areas.length} areas, ${catalog.operations.length} tagged operations, ${Object.keys(spec.paths ?? {}).length} paths.`,
-);
+main().catch((error) => {
+	// Qualquer falha encerra com código 1 e diz o motivo, para o CI e o dono notarem.
+	console.error(`ERRO: ${error.message}`);
+	process.exit(1);
+});

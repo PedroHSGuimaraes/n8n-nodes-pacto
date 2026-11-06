@@ -6,7 +6,7 @@ Plan: `.specs/features/node-cli-campos-v2/plan.md`
 
 ## Intent
 
-36 checks in 5 slices · 4 one-way doors · 0 open
+37 checks in 5 slices · 4 one-way doors · 0 open
 
 ## Checks
 
@@ -49,15 +49,20 @@ Proof: run unit | ✔ [C11]
 
 **C12** - Todo par `area` + `key` do 1.0.3 existe no catálogo gerado, e o par ausente da documentação vem com `legacy: true` (S2 AC 4)
 Proof: run unit | ✔ [C12]
+Proof: run unit | ✔ [C12b]
 
 **C13** - O gerador troca `ï¿½` pelo valor da área do 1.0.3 que casa (`Armï¿½rio` → `Armário`) e sai com código 1 listando o nome sem correspondência (S2 AC 5)
 Proof: run unit | ✔ [C13]
+Proof: run unit | ✔ [C13b]
 
 **C14** - O catálogo carregado tem 0 áreas com `ï¿½` ou U+FFFD e mantém toda área do 1.0.3 que ainda tem operação (S2 AC 6)
 Proof: run unit | ✔ [C14]
 
 **C15** - A lista de operações da versão 2 omite as `legacy: true` e a da versão 1 as inclui (S2 AC 7)
 Proof: run unit | ✔ [C15]
+
+**C37** - O gerador usa o texto do 1.0.3 quando a documentação traz `ï¿½` no nome ou na descrição de uma operação que o 1.0.3 já publica, e conta os textos novos sem correspondência (S2 AC 8)
+Proof: run unit | ✔ [C37]
 
 **C36** - Um parâmetro de header que não é da credencial (ex.: `user-agent`) vai nos cabeçalhos da requisição, em vez de quebrar com `Cannot set properties of undefined` (S2 AC 1, achado do tsc estrito: o catálogo diz `header` e o objeto da requisição guarda `headers`)
 Proof: run unit | ✔ [C36]
@@ -122,7 +127,7 @@ Proof: run unit | ✔ [C33]
 
 ### S5 - Lançamento 1.1.0
 
-**C34** - O package.json tem versão 1.1.0 e a seção Versões do README lista node-cli, versão 2 do node, IDs guiados, Busca Rápida e as 323 operações preservadas (S5 AC 1)
+**C34** - O package.json tem versão 1.1.0 e a seção Versões do README lista node-cli, versão 2 do node, IDs guiados, Busca Rápida e as 131 operações preservadas (S5 AC 1)
 Proof: run unit | ✔ [C34]
 
 **C35** - O pacote 1.1.0 empacota o `dist` (`npm pack --dry-run` sai com 0 e lista o node, a credencial e os ícones) e o workflow de publicação aciona o `stage publish` na tag `v1.1.0`; a fila "Staged Packages" e a aprovação do dono acontecem depois do merge (S5 AC 2, parte local)

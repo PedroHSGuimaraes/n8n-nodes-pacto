@@ -52,7 +52,9 @@ export function mergeQuickSearch(
 	quickSearch: string,
 ): unknown {
 	// Texto só de espaços não é busca: sem isso o JSON ganharia um quicksearchValue em branco.
-	const text = quickSearch.trim();
+	// Uma expressão pode entregar número ou null no lugar do texto; `String(... ?? '')` evita o
+	// erro "trim is not a function" e trata null como busca vazia.
+	const text = String(quickSearch ?? '').trim();
 	if (text === '') return filters;
 
 	let current: IDataObject = {};

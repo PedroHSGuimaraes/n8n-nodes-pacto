@@ -42,6 +42,9 @@ describe('achados do Verifier', () => {
 		);
 		// Só espaços não é busca: o filters sai exatamente como veio.
 		assert.equal(await runAlunos('{"a":1}', '   '), '{"a":1}');
+		// Expressão pode entregar número ou null no lugar do texto: vira texto ou busca vazia.
+		assert.equal(await runAlunos('{"a":1}', 42), '{"a":1,"quicksearchValue":"42"}');
+		assert.equal(await runAlunos('{"a":1}', null), '{"a":1}');
 	});
 
 	it('[C38] erro 401 da API chega do execute como NodeApiError', async () => {

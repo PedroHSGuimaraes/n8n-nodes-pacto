@@ -25,7 +25,7 @@
 | C15 | `versoes.test.cjs` `[C15] a lista da versão 2 omite as operações legacy e a da versão 1 as inclui` | yes |
 | C16 | `versoes.test.cjs` `[C16] declara version [1, 2] e defaultVersion 2` | yes |
 | C17 | `catalogo.test.cjs` `[C17] cria lista só quando há GET paginado com campo do ID e rótulo, e explica o que descartou` | yes |
-| C18 | `catalogo.test.cjs` `[C18] recusa uma lista que aponta para rota ausente na documentação` | no - afirma o `throw` de `assertLookupRoutes`, não o código de saída 1 do gerador nem a rota na saída |
+| C18 | `catalogo.test.cjs` `[C18] recusa uma lista que aponta para rota ausente na documentação` | yes - o claim agora diz só que `assertLookupRoutes` lança citando a rota; o código de saída 1 é do C13b |
 | C19 | `ids.test.cjs` `[C19] recordId tem modos list (padrão, pesquisável) e id...` | yes |
 | C20 | `ids.test.cjs` `[C20] usa o ID escolhido na lista como ID de caminho` | yes |
 | C21 | `ids.test.cjs` `[C21] usa o ID colado e remove os espaços das pontas` | yes |
@@ -38,13 +38,17 @@
 | C28 | `ids.test.cjs` `[C28] returnAll na versão 2 pagina como na versão 1` | yes |
 | C29 | `busca.test.cjs` `[C29] aparece na versão 2 só nas operações cujo filters cita quicksearchValue` | yes |
 | C30 | `busca.test.cjs` `[C30] com filters vazio envia só o quicksearchValue` | yes |
-| C31 | `busca.test.cjs` `[C31] junta o texto ao JSON que já estava em filters` | yes |
+| C31 | `busca.test.cjs` `[C31] junta o texto ao JSON que já estava em filters` e `achados.test.cjs` `[C31b] mantém o filtro que chega como objeto (expressão) e ignora Busca Rápida só de espaços` | yes - o `[C31b]` afirma a string exata com o objeto e `filters` intacto com espaços; ver o achado novo sobre `quickSearch` que não é texto |
 | C32 | `busca.test.cjs` `[C32] recusa filters que não é objeto JSON quando há Busca Rápida` | yes |
 | C33 | `busca.test.cjs` `[C33] com Busca Rápida vazia envia filters exatamente como a pessoa escreveu` | yes |
 | C34 | `toolchain.test.cjs` `[C34] a versão é 1.1.0 e a seção Versões lista as mudanças` | yes |
-| C35 | `npm pack --dry-run` (só o código de saída decide) | no - o check diz que a saída lista o node, a credencial e os ícones; a prova não afirma nenhum arquivo |
+| C35 | `toolchain.test.cjs` `[C35] o pacote 1.1.0 empacota o node, a credencial e os ícones, e o publish aciona o stage na tag` | yes - lê `npm pack --dry-run --json` e afirma a versão e os 6 caminhos |
 | C36 | `node-v1.test.cjs` `[C36] envia no cabeçalho um parâmetro de header que não é da credencial` | yes |
 | C37 | `catalogo.test.cjs` `[C37] usa o texto do 1.0.3 para o mesmo campo e conta o que ficou sem correspondência` | yes |
+| C38 | `achados.test.cjs` `[C38] erro 401 da API chega do execute como NodeApiError` | yes |
+| C39 | `achados.test.cjs` `[C39] operação com corpo JSON envia o corpo montado e o Content-Type` | yes |
+| C40 | `achados.test.cjs` `[C40] o seletor mostra o ID quando o rótulo vem vazio e ignora token de página inválido` | yes |
+| C41 | `achados.test.cjs` `[C41] o teste da credencial tem timeout` | yes |
 
 ## Findings
 
@@ -58,3 +62,4 @@
 | Na versão 2, 6 áreas só têm operação `legacy` e aparecem no seletor `resource` com a lista de operações vazia | dist: `clientes-geral-controller`, `empresa-json-controle`, `Integração Olympia`, `log-controller`, `Selfloops`, `Token Segurança` têm 0 operações vivas | filtrar essas áreas da versão 2 ou registrar a decisão no plano | `03019bf` - registrado no `Out of scope` do plano; a área vazia na versão 2 não dá erro |
 | `searchPactoRecords` devolve `name` vazio quando o rótulo é texto vazio e gera `paginationToken` `NaN` com token inválido | exemplo descartável: item `{id:0, nome:''}` vira `{name:'', value:'0'}`; token `'abc'` devolve `paginationToken: 'NaN'` | usar o ID quando o rótulo é vazio; tratar token não numérico como página 0 | `03019bf` - o seletor usa o ID quando o rótulo é vazio e trata token inválido como página 0; C40 prova |
 | A chamada de teste da credencial não tem `timeout` | `credentials/PactoApi.credentials.ts`: `test.request` sem `timeout` (herdado do 1.0.3) | acrescentar `timeout: 30000` ou registrar a exceção no plano | `03019bf` - `test.request.timeout` 30000; C41 prova |
+| `mergeQuickSearch` quebra com `TypeError` quando `quickSearch` não é texto (número ou nulo vindo de expressão); antes da correção funcionava | exemplo descartável no HEAD 429c963: `quickSearch` 123 lança `quickSearch.trim is not a function`; `null` lança `Cannot read properties of null (reading 'trim')`; `versionedInputs.ts` chama `quickSearch.trim()` sem converter | converter com `String(quickSearch ?? '')` antes do `trim()` e acrescentar teste com número e `null` | `FIXHASH` - `String(quickSearch ?? '').trim()`; o teste [C31b] cobre número e null |

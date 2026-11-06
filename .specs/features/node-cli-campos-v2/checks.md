@@ -165,8 +165,8 @@ Proof: `npm pack --dry-run`
 
 ## Handoff
 
-- **Settled mid-build:** none
-- **Dispatched:** none
-- **Boundary:** nenhuma fatia fechada
-- **Abandoned:** none
+- **Settled mid-build:** nenhuma resposta nova do dono; o orquestrador fechou as três dúvidas abertas do plano (manter as operações legacy; paginação pelo número que a resposta devolve; IDs de query e corpo fora do escopo) e aprovou o plano com antecedência
+- **Dispatched:** Verifier (sonnet, subagente novo) em `195d34b`, enviado depois do commit das provas
+- **Boundary:** C1-C37 fechados em `195d34b`; `check_proofs.py` 40 pass, 0 fail
+- **Abandoned:** nada; o erro TS2590 (união grande demais) do catálogo de 4.751 operações foi resolvido gerando o catálogo em pedaços de 500, sem mudar o contrato
 - **Walked:** n/a - sem tela capturada

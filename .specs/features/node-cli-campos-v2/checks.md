@@ -6,7 +6,7 @@ Plan: `.specs/features/node-cli-campos-v2/plan.md`
 
 ## Intent
 
-41 checks in 5 slices · 4 one-way doors · 0 open
+44 checks in 5 slices · 4 one-way doors · 0 open
 
 ## Checks
 
@@ -63,6 +63,12 @@ Proof: run unit | ✔ [C15]
 
 **C37** - O gerador usa o texto do 1.0.3 quando a documentação traz `ï¿½` no nome ou na descrição de uma operação que o 1.0.3 já publica, e conta os textos novos sem correspondência (S2 AC 8)
 Proof: run unit | ✔ [C37]
+
+**C42** - O gerador mantém, como opcionais, os campos do catálogo anterior que a documentação viva tirou de uma operação viva, sem repetir campo e sem mudar operação `legacy` (S2 AC 4, achado F1 do revisor)
+Proof: run unit | ✔ [C42]
+
+**C43** - O catálogo gerado mantém os 397 campos que o 1.0.3 publicava e a documentação viva tirou de 7 operações vivas (S2 AC 1, achado F1 do revisor)
+Proof: run unit | ✔ [C43]
 
 **C36** - Um parâmetro de header que não é da credencial (ex.: `user-agent`) vai nos cabeçalhos da requisição, em vez de quebrar com `Cannot set properties of undefined` (S2 AC 1, achado do tsc estrito: o catálogo diz `header` e o objeto da requisição guarda `headers`)
 Proof: run unit | ✔ [C36]
@@ -131,6 +137,9 @@ Proof: run unit | ✔ [C33]
 **C34** - O package.json tem versão 1.1.0 e a seção Versões do README lista node-cli, versão 2 do node, IDs guiados, Busca Rápida e as 131 operações preservadas (S5 AC 1)
 Proof: run unit | ✔ [C34]
 
+**C44** - A seção de Tool de IA do README tem o passo a passo, a assinatura do `$fromAI`, exemplos com os campos do node (Registro por ID, Busca Rápida) e as referências (S5 AC 2, achado F2 do revisor)
+Proof: run unit | ✔ [C44]
+
 **C35** - O pacote 1.1.0 empacota o `dist` (`npm pack --dry-run --json` lista o node, a credencial e os quatro ícones) e o workflow de publicação aciona o `stage publish` na tag `v*.*.*`; a fila "Staged Packages" e a aprovação do dono acontecem depois do merge (S5 AC 2, parte local)
 Proof: run unit | ✔ [C35]
 
@@ -180,6 +189,7 @@ Proof: run unit | ✔ [C41]
 
 - **Settled mid-build:** nenhuma resposta nova do dono; o orquestrador fechou as três dúvidas abertas do plano (manter as operações legacy; paginação pelo número que a resposta devolve; IDs de query e corpo fora do escopo) e aprovou o plano com antecedência
 - **Dispatched:** Verifier (sonnet, subagente novo) em `195d34b`, enviado depois do commit das provas
-- **Boundary:** C1-C37 fechados em `195d34b`; `check_proofs.py` 40 pass, 0 fail
+- **Dispatched (revisor independente):** the-judge, rodada 1 no HEAD adf276d: https://github.com/PedroHSGuimaraes/n8n-nodes-pacto/pull/1#pullrequestreview-5807384718 (3 correções, 3 notas)
+- **Boundary:** C1-C41 fechados antes da revisão; C42-C44 fecham os achados F1 e F2 do revisor the-judge; C1-C37 fechados em `195d34b`; `check_proofs.py` 40 pass, 0 fail
 - **Abandoned:** nada; o erro TS2590 (união grande demais) do catálogo de 4.751 operações foi resolvido gerando o catálogo em pedaços de 500, sem mudar o contrato
 - **Walked:** n/a - sem tela capturada

@@ -4,7 +4,8 @@ on:
   push:
     tags:
       - 'v*.*.*'
-  # Deixa o dono republicar (e aprovar de novo) sem mover a tag.
+  # Deixa o dono republicar (e aprovar de novo) sem mover a tag. No disparo manual, escolha a tag em
+  # "Use workflow from": o passo "Validate release tag" falha quando a referência é uma branch.
   workflow_dispatch:
 
 permissions:

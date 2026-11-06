@@ -134,6 +134,33 @@ describe('documentação e lançamento', () => {
 		assert.ok(!readme.includes('3.499'), 'o número velho do 1.0.3 saiu do README');
 	});
 
+	// Regra protegida (achado F2 do revisor): a seção de Tool de IA ensina a ligar a tool, a usar o `$fromAI`
+	// nos campos reais do node (Registro, Busca Rápida, Fields) e lista as referências, como no padrão do RD CRM.
+	it('[C44] o README ensina a usar o node como Tool de IA, com campos reais', () => {
+		const readme = read('README.md');
+		const start = readme.search(/^##\s+(?:\S+\s+)?Usar como Tool de Agente de IA/m);
+		assert.notEqual(start, -1, 'falta a seção de Tool de IA');
+		const rest = readme.slice(start + 3);
+		const end = rest.search(/^## /m);
+		const section = rest.slice(0, end === -1 ? undefined : end);
+		for (const piece of [
+			/^###\s+Como ligar/m,
+			/N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true/,
+			/Docker \/ docker-compose/,
+			/\$fromAI\(key, description\?, type\?, defaultValue\?\)/,
+			/Let the model define this parameter/,
+			/Por ID/,
+			/\$fromAI\('alunoId'/,
+			/\$fromAI\('busca'/,
+			/Busca Rápida/,
+			/^###\s+Boas práticas/m,
+			/^###\s+Referências/m,
+			/https:\/\/docs\.n8n\.io\//,
+		]) {
+			assert.match(section, piece, `a seção de Tool de IA perdeu ${piece}`);
+		}
+	});
+
 	it('[C34] a versão é 1.1.0 e a seção Versões lista as mudanças', () => {
 		assert.equal(pkg.version, '1.1.0');
 		const versions = read('README.md').split(/^## .*Versões/m)[1] ?? '';

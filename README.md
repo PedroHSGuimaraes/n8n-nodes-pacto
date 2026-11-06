@@ -140,27 +140,74 @@ operação e o node monta o corpo sozinho.
 
 ## 🤖 Usar como Tool de Agente de IA
 
-O node `Pacto` pode ser ligado ao conector **Tool** de um **AI Agent** no n8n.
+O node `Pacto` é **usável como tool** por nós de **AI Agent** do n8n (Tools Agent). Isso deixa o modelo **executar ações na Pacto sozinho** — por exemplo: *"consulte o aluno de matrícula 1234 e me diga se o plano dele está ativo"*. A prática recomendada é criar uma tool por operação liberada para o agente.
 
-No servidor self-hosted, habilite community nodes como tools:
+### Como ligar (2 passos)
 
-```bash
-N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
+1. **No servidor n8n**, habilite o uso de community nodes como tools (por segurança, vem **desligado por padrão**). Defina a variável de ambiente:
+
+   ```bash
+   N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
+   ```
+
+   | Instalação | Onde definir |
+   | --- | --- |
+   | **Docker / docker-compose** | Adicione em `environment:` do serviço n8n (ou no `.env`) e recrie o container (`docker compose up -d`). |
+   | **npm / npx** | Exporte antes de subir: `export N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true && n8n start`. |
+   | **n8n Cloud** | Já habilitado nos planos que suportam community nodes. |
+
+   Sem essa variável o node **não aparece** na lista de tools do AI Agent — é a causa nº 1 de "não acho o node como tool".
+
+2. **No workflow**, adicione um node **AI Agent**, conecte um **Chat Model** e, no conector **Tool**, adicione o **Pacto**. Fixe a **Area** e a **Operation** que o agente pode usar (ex.: `Clientes` → `Consultar um aluno [GET]`). Crie uma tool por operação.
+
+### Deixe o modelo preencher os campos (`$fromAI`)
+
+Em cada campo do node em modo tool aparece o botão **"Let the model define this parameter"**, que usa a expressão:
+
+```javascript
+{{ $fromAI('busca', 'Nome ou parte do nome do aluno', 'string') }}
 ```
 
-Depois:
+- Assinatura: `$fromAI(key, description?, type?, defaultValue?)` — `key` de 1–64 caracteres (`[a-zA-Z0-9_-]`); `type` = `string` | `number` | `boolean` | `json`.
+- Você pode **misturar**: fixar a **Area** e a **Operation** e deixar o modelo preencher só o ID, a busca ou o corpo.
+- **Na versão 2 do node**, o **Registro** é um Resource Locator. Para o modelo preencher o ID, mude o campo para o modo **Por ID** e ponha a expressão `$fromAI` no valor. A lista **Da Lista** serve para a pessoa que monta o workflow, não para o agente.
+- A descrição de cada operação e de cada campo vem da documentação oficial da Pacto; quanto mais específico o System Message do agente, melhor o resultado.
 
-1. Adicione um **AI Agent**.
-2. Conecte um Chat Model.
-3. No conector **Tool**, adicione o node **Pacto**.
-4. Fixe **Area** e **Operation** para limitar o que o agente pode executar.
-5. Use **Let the model define this** nos parâmetros que o modelo deve preencher.
+### Exemplos com os campos do node
 
-Boas práticas:
+**Consultar um aluno** (`Clientes` → `Consultar um aluno [GET]`):
 
-- exponha uma operação por tool;
-- use Secret_Key dedicada e escopos mínimos;
-- não permita operações destrutivas sem confirmação humana.
+- **Registro**, modo **Por ID**: o ID vem de uma busca anterior, nunca inventado.
+
+  ```javascript
+  {{ $fromAI('alunoId', 'ID do aluno na Pacto, obtido de uma listagem anterior. Nunca invente.', 'string') }}
+  ```
+
+**Listar alunos** (`Clientes` → `Consultar alunos da academia [GET]`):
+
+- **Busca Rápida**: o modelo escreve só o texto; o node monta o JSON de `filters`.
+
+  ```javascript
+  {{ $fromAI('busca', 'Nome ou parte do nome do aluno a procurar', 'string') }}
+  ```
+
+- **Return All**: deixe desligado na tool, para o agente não baixar a base inteira.
+
+**Criar ou atualizar** (operações `POST`, `PUT`, `PATCH`): as colunas de **Fields** aceitam `$fromAI` uma a uma. Preencha com `$fromAI` só o que o usuário informou e fixe o resto.
+
+### Boas práticas
+
+- Exponha apenas as operações necessárias e prefira leitura antes de escrita.
+- Use uma Secret_Key dedicada ao agente, com escopos mínimos.
+- Nunca deixe o modelo inventar IDs: o ID vem de uma listagem anterior ou do usuário.
+- Para operações destrutivas, coloque uma etapa humana de confirmação quando o fluxo for sensível.
+- O **Registro** e a **Busca Rápida** só existem na versão 2; em workflow salvo na versão 1, o ID e o `filters` ficam dentro de **Fields**.
+
+### Referências
+
+- [Tools Agent — n8n Docs](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent/tools-agent)
+- [Let AI specify tool parameters (`$fromAI`) — n8n Docs](https://docs.n8n.io/advanced-ai/examples/using-the-fromai-function/)
+- [Variáveis de ambiente de nodes — n8n Docs](https://docs.n8n.io/hosting/configuration/environment-variables/nodes/)
 
 ## 🛠️ Desenvolvimento
 
@@ -234,7 +281,8 @@ Packages** do npmjs.com.
   `@n8n/node-cli` 0.55.5 (lint oficial sem erros, testes e CI), `n8n-workflow` 2.47, catálogo
   regenerado com 4.620 operações e as 131 operações removidas pela documentação preservadas
   (`legacy`) para workflows salvos. Corrige o cabeçalho que não é da credencial, que quebrava a
-  execução.
+  execução. Os campos que a documentação viva tirou de 7 operações continuam aceitos como opcionais; só o
+  `PUT /psec/atividades/{id}` muda de forma: a documentação hoje exige `Cod Atividade Original`.
 - **1.0.1–1.0.3** — Nomes de operação simplificados, Empresa ID na credencial e seletor de data nos campos de data. Veja o histórico no Git.
 - **1.0.0** — Lançamento: node unificado, catálogo OpenAPI, Secret_Key, paginação, AI Tool e npm
   provenance.

@@ -183,6 +183,7 @@ A versão nova chega ao npm com provenance, aprovada pelo dono.
 | Seletor para ID de query e de corpo | Fora deste lançamento (ver Out of scope) | Vivem no `resourceMapper`, que não aceita Resource Locator por campo | y - user: "Aprovo com antecedência (Recomendado · Jev 0,96)" |
 | Número de operações do README | Sai do catálogo regenerado no dia | O 3.499 do 1.0.3 é do catálogo de 17/07/2026 | n |
 | A documentação viva não muda a chave de uma operação que o 1.0.3 publica sem aviso | O gerador falha só se perder um par que não consegue marcar `legacy` | A chave é `METHOD:path`, o gerador a monta sozinho | n |
+| Campo que a documentação viva tirou de uma operação viva do 1.0.3 | O gerador o mantém como opcional (7 operações, 397 campos) | Workflow salvo na versão 1 guarda o valor em `fields`; sem o campo, o node deixava de enviá-lo em silêncio. A exceção é o `PUT /psec/atividades/{id}`: a documentação agora descreve outra ação (`Cod Atividade Original` e `Cod Atividade Substituir` obrigatórios em query), e o node segue a documentação | y - revisor the-judge, achado F1 |
 
 **Open questions:** none - all resolved or logged above.
 
